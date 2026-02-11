@@ -151,7 +151,7 @@
             <div class="category-grid" id="categoryGrid"></div>
             <div class="game-options">
                 <h3>⚙️ Spelinstellingen</h3>
-                <div style="margin-bottom: 15px;">
+                <div id="questionCountContainer" style="margin-bottom: 15px;">
                     <p style="margin-bottom: 8px; font-size: 0.9rem;">Aantal vragen:</p>
                     <select id="questionsPerRound" style="width: 100%; padding: 10px 15px; font-size: 1rem; background: #1a1a2e; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; cursor: pointer;">
                         <option value="20" selected>20 vragen</option>
@@ -161,6 +161,9 @@
                         <option value="400">400 vragen</option>
                         <option value="all">Alle vragen</option>
                     </select>
+                </div>
+                <div id="singleCategoryInfo" style="margin-bottom: 15px; display: none;">
+                    <p style="margin-bottom: 8px; font-size: 0.9rem; color: #4ecca3;">✓ Alle <span id="singleCategoryCount">0</span> vragen van deze categorie worden gebruikt</p>
                 </div>
                 <p style="margin-bottom: 8px; font-size: 0.9rem;">Spelmodus:</p>
                 <div class="mode-grid">
@@ -383,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v10');
+            const stored = localStorage.getItem('sportquiz_questions_v11');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -393,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v10', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v11', JSON.stringify(questions));
             updateStats();
         }
 
@@ -569,6 +572,27 @@
                 if (selectedCategories.size === 0) selectedCategories.add('all');
             }
             renderCategories();
+            updateQuestionCountVisibility();
+        }
+
+        function updateQuestionCountVisibility() {
+            const questionCountContainer = document.getElementById('questionCountContainer');
+            const singleCategoryInfo = document.getElementById('singleCategoryInfo');
+            const singleCategoryCount = document.getElementById('singleCategoryCount');
+
+            // Als precies 1 specifieke categorie is geselecteerd (niet 'all')
+            if (selectedCategories.size === 1 && !selectedCategories.has('all')) {
+                const selectedCategory = [...selectedCategories][0];
+                const categoryQuestionCount = questions.filter(q => q.category === selectedCategory).length;
+
+                questionCountContainer.style.display = 'none';
+                singleCategoryInfo.style.display = 'block';
+                singleCategoryCount.textContent = categoryQuestionCount;
+            } else {
+                // Meerdere categorieën of 'all' - toon de dropdown
+                questionCountContainer.style.display = 'block';
+                singleCategoryInfo.style.display = 'none';
+            }
         }
 
         function startQuiz() {
@@ -580,8 +604,19 @@
                 alert('Geen vragen beschikbaar.');
                 return;
             }
-            const questionSelection = document.getElementById('questionsPerRound').value;
-            const numQuestions = questionSelection === 'all' ? availableQuestions.length : parseInt(questionSelection);
+
+            // Bij 1 specifieke categorie: gebruik ALLE vragen van die categorie
+            // Bij meerdere of 'all': gebruik de dropdown selectie
+            let numQuestions;
+            if (selectedCategories.size === 1 && !selectedCategories.has('all')) {
+                // Enkele categorie geselecteerd - gebruik alle vragen
+                numQuestions = availableQuestions.length;
+            } else {
+                // Meerdere categorieën of alle - gebruik dropdown
+                const questionSelection = document.getElementById('questionsPerRound').value;
+                numQuestions = questionSelection === 'all' ? availableQuestions.length : parseInt(questionSelection);
+            }
+
             currentQuiz = shuffleArray([...availableQuestions]).slice(0, numQuestions);
             currentIndex = 0;
             score = 0;
