@@ -383,7 +383,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v9');
+            const stored = localStorage.getItem('sportquiz_questions_v10');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -393,7 +393,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v9', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v10', JSON.stringify(questions));
             updateStats();
         }
 
@@ -738,115 +738,319 @@
             const lc = correct.toLowerCase();
             const qt = questionText ? questionText.toLowerCase() : '';
 
-            // STAP 0: Is het antwoord een BESCHRIJVING/DEFINITIE? (lang antwoord met werkwoorden)
-            const isDescription = correct.length > 20 ||
-                lc.includes(' die ') || lc.includes(' dat ') || lc.includes(' een ') ||
-                lc.includes('renner') || lc.includes('speler') || lc.includes('specialist') ||
-                lc.includes('persoon') || lc.includes('iemand') || lc.includes('atleet');
-
-            // Wielrenner types (puncheur, sprinter, klimmer, etc.)
-            if (isDescription && category === 'Wielrennen') {
-                const wielrennerTypes = [
-                    'Renner die excelleert op korte steile hellingen',
-                    'Sprinter die wint in massaspurts',
-                    'Klimmer die uitblinkt in de bergen',
-                    'Tijdrijder gespecialiseerd in individuele races tegen de klok',
-                    'Klassementsrenner die meedoet voor eindzeges',
-                    'Rouleur die constant tempo kan rijden op vlakke wegen',
-                    'Allrounder die meerdere disciplines beheerst',
-                    'Aanvaller die vaak in ontsnappingen zit',
-                    'Knecht die werkt voor de kopman',
-                    'Baroudeur die vaak in vroege vluchten meegaat'
-                ];
-                const shuffled = shuffleArray([...wielrennerTypes]);
-                for (const fake of shuffled) {
-                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
-                }
+            // Skip verbetering voor Presentator categorie (heeft al goede antwoorden)
+            if (category === 'Presentator') {
+                return generateBasicFake(correct, existing);
             }
 
-            // Algemene beschrijvingen per categorie
-            if (isDescription) {
-                const descriptionPools = {
+            // === STAP 1: DETECTEER ANTWOORD TYPE ===
+
+            // Is het een persoonsnaam? (Voornaam + Achternaam patroon)
+            const isPersonName = /^[A-Z][a-zéèëêïîôûùàáâã]+(\s+[a-z]*\s*)?[A-Z][a-zéèëêïîôûùàáâã]+(-[A-Z][a-zéèëêïîôûùàáâã]+)?$/.test(correct) ||
+                                 /^[A-Z][a-z]+\s(van|de|der|den|het|ter)\s[A-Z]?[a-z]+/.test(correct);
+
+            // Is het een land?
+            const landen = ['nederland', 'duitsland', 'frankrijk', 'spanje', 'italië', 'engeland', 'belgië', 'portugal', 'brazilië', 'argentinië', 'vs', 'usa', 'amerika', 'china', 'japan', 'australië', 'rusland', 'polen', 'zweden', 'noorwegen', 'denemarken', 'zwitserland', 'oostenrijk', 'kroatië', 'servië', 'griekenland', 'turkije', 'mexico', 'canada', 'groot-brittannië', 'ierland', 'schotland', 'wales'];
+            const isLand = landen.includes(lc) || qt.includes('welk land') || qt.includes('uit welk land');
+
+            // Is het een stad?
+            const steden = ['amsterdam', 'rotterdam', 'parijs', 'londen', 'berlijn', 'madrid', 'barcelona', 'rome', 'milaan', 'münchen', 'tokio', 'beijing', 'peking', 'sydney', 'melbourne', 'los angeles', 'new york', 'rio de janeiro', 'athene', 'moskou', 'stockholm', 'oslo', 'kopenhagen', 'wenen', 'brussel', 'antwerpen', 'eindhoven', 'utrecht'];
+            const isStad = steden.includes(lc) || qt.includes('welke stad') || qt.includes('in welke stad') || qt.includes('waar ') && (qt.includes('gehouden') || qt.includes('georganiseerd') || qt.includes('plaatsvond'));
+
+            // Is het een club/team?
+            const clubs = ['ajax', 'psv', 'feyenoord', 'az', 'fc twente', 'fc utrecht', 'vitesse', 'real madrid', 'barcelona', 'bayern münchen', 'liverpool', 'manchester united', 'manchester city', 'chelsea', 'arsenal', 'tottenham', 'juventus', 'ac milan', 'inter milan', 'paris saint-germain', 'borussia dortmund', 'atletico madrid'];
+            const isClub = clubs.includes(lc) || qt.includes('welke club') || qt.includes('welk team') || qt.includes('voor welke');
+
+            // Is het een getal/aantal?
+            const isGetal = /^\d+$/.test(correct) || qt.includes('hoeveel') || qt.includes('aantal') || qt.includes('hoe vaak');
+
+            // Is het een jaar?
+            const isJaar = /^(19|20)\d{2}$/.test(correct) || qt.includes('welk jaar') || qt.includes('in welk jaar') || qt.includes('wanneer');
+
+            // Is het een score/uitslag?
+            const isScore = /^\d+-\d+$/.test(correct) || qt.includes('uitslag') || qt.includes('score') || qt.includes('eindstand');
+
+            // Is het een medaille type?
+            const isMedaille = lc.includes('goud') || lc.includes('zilver') || lc.includes('brons') || qt.includes('medaille');
+
+            // Is het een record/tijd?
+            const isTijd = /^\d+[:.]\d+/.test(correct) || qt.includes('record') || qt.includes('tijd') || qt.includes('snelste');
+
+            // === STAP 2: GENEREER OP BASIS VAN TYPE ===
+
+            // PERSONEN - uitgebreide pools per categorie
+            if (isPersonName) {
+                const personPools = {
                     'Voetbal': [
-                        'Speler die als laatste man verdedigt',
-                        'Aanvaller die in de spits speelt',
-                        'Middenvelder die het spel verdeelt',
-                        'Vleugelspeler die langs de lijn opkomt',
-                        'Verdediger die koppen wint',
-                        'Keeper die penalty\'s stopt',
-                        'Invaller die het verschil maakt'
+                        // Nederlandse voetballers
+                        'Johan Cruijff', 'Marco van Basten', 'Dennis Bergkamp', 'Ruud Gullit', 'Frank Rijkaard',
+                        'Arjen Robben', 'Robin van Persie', 'Wesley Sneijder', 'Clarence Seedorf', 'Patrick Kluivert',
+                        'Edwin van der Sar', 'Ruud van Nistelrooy', 'Rafael van der Vaart', 'Dirk Kuyt', 'Mark van Bommel',
+                        'Giovanni van Bronckhorst', 'Virgil van Dijk', 'Frenkie de Jong', 'Memphis Depay', 'Matthijs de Ligt',
+                        'Cody Gakpo', 'Steven Bergwijn', 'Daley Blind', 'Stefan de Vrij', 'Nathan Aké',
+                        // Internationale toppers
+                        'Lionel Messi', 'Cristiano Ronaldo', 'Zinedine Zidane', 'Diego Maradona', 'Pelé',
+                        'Franz Beckenbauer', 'Gerd Müller', 'Michel Platini', 'Thierry Henry', 'Ronaldinho',
+                        'Kylian Mbappé', 'Erling Haaland', 'Neymar', 'Robert Lewandowski', 'Karim Benzema',
+                        'Luka Modrić', 'Kevin De Bruyne', 'Mohamed Salah', 'Sadio Mané', 'Sergio Ramos'
+                    ],
+                    'Wielrennen': [
+                        'Eddy Merckx', 'Bernard Hinault', 'Miguel Indurain', 'Jacques Anquetil', 'Lance Armstrong',
+                        'Tom Boonen', 'Fabian Cancellara', 'Tadej Pogačar', 'Jonas Vingegaard', 'Primož Roglič',
+                        'Wout van Aert', 'Mathieu van der Poel', 'Peter Sagan', 'Mark Cavendish', 'Chris Froome',
+                        'Alberto Contador', 'Jan Ullrich', 'Joop Zoetemelk', 'Geraint Thomas', 'Egan Bernal',
+                        'Richard Carapaz', 'Remco Evenepoel', 'Julian Alaphilippe', 'Jasper Philipsen', 'Dylan Groenewegen',
+                        'Fabio Jakobsen', 'Bauke Mollema', 'Tom Dumoulin', 'Steven Kruijswijk', 'Wilco Kelderman'
                     ],
                     'Tennis': [
-                        'Speler met een sterke service',
-                        'Baseliner die vanaf de achterlijn speelt',
-                        'Net-speler die vaak naar voren komt',
-                        'Allrounder met compleet spel',
-                        'Specialist op gravel',
-                        'Specialist op gras'
+                        'Roger Federer', 'Rafael Nadal', 'Novak Djokovic', 'Andy Murray', 'Carlos Alcaraz',
+                        'Jannik Sinner', 'Daniil Medvedev', 'Alexander Zverev', 'Stefanos Tsitsipas', 'Casper Ruud',
+                        'Serena Williams', 'Venus Williams', 'Steffi Graf', 'Martina Navratilova', 'Monica Seles',
+                        'Iga Świątek', 'Aryna Sabalenka', 'Naomi Osaka', 'Simona Halep', 'Ashleigh Barty',
+                        'Björn Borg', 'John McEnroe', 'Pete Sampras', 'Andre Agassi', 'Boris Becker',
+                        'Richard Krajicek', 'Kiki Bertens', 'Robin Haase', 'Tallon Griekspoor', 'Botic van de Zandschulp'
                     ],
                     'Atletiek': [
-                        'Sprinter op korte afstanden',
-                        'Middenafstandsloper',
-                        'Langeafstandsloper',
-                        'Hordeloper die over horden springt',
-                        'Springer in het verspringen',
-                        'Werper van kogel of discus'
+                        'Usain Bolt', 'Carl Lewis', 'Mo Farah', 'Haile Gebrselassie', 'Kenenisa Bekele',
+                        'Eliud Kipchoge', 'Noah Lyles', 'Fred Kerley', 'Marcell Jacobs', 'Wayde van Niekerk',
+                        'Florence Griffith-Joyner', 'Shelly-Ann Fraser-Pryce', 'Elaine Thompson-Herah', 'Allyson Felix', 'Sha\'Carri Richardson',
+                        'Sifan Hassan', 'Dafne Schippers', 'Femke Bol', 'Nadine Visser', 'Churandy Martina',
+                        'Jesse Owens', 'Michael Johnson', 'Jackie Joyner-Kersee', 'Fanny Blankers-Koen', 'Ellen van Langen'
                     ],
                     'Zwemmen': [
-                        'Specialist in de vrije slag',
-                        'Specialist in de rugslag',
-                        'Specialist in de schoolslag',
-                        'Specialist in de vlinderslag',
-                        'Wisselslag zwemmer'
+                        'Michael Phelps', 'Katie Ledecky', 'Caeleb Dressel', 'Adam Peaty', 'Léon Marchand',
+                        'Ian Thorpe', 'Mark Spitz', 'Ryan Lochte', 'Sun Yang', 'Florent Manaudou',
+                        'Pieter van den Hoogenband', 'Ranomi Kromowidjojo', 'Inge de Bruijn', 'Femke Heemskerk', 'Kira Toussaint',
+                        'Arno Kamminga', 'Caspar Corbeau', 'Nyls Korstanje', 'Marrit Steenbergen', 'Sharon van Rouwendaal'
+                    ],
+                    'Motorsport': [
+                        'Max Verstappen', 'Lewis Hamilton', 'Michael Schumacher', 'Ayrton Senna', 'Alain Prost',
+                        'Sebastian Vettel', 'Fernando Alonso', 'Niki Lauda', 'Kimi Räikkönen', 'Mika Häkkinen',
+                        'Charles Leclerc', 'Lando Norris', 'George Russell', 'Carlos Sainz', 'Oscar Piastri',
+                        'Daniel Ricciardo', 'Valtteri Bottas', 'Sergio Pérez', 'Pierre Gasly', 'Esteban Ocon'
                     ],
                     'Turnen': [
-                        'Turner gespecialiseerd in vloeroefeningen',
-                        'Specialist op de balk',
-                        'Specialist aan de brug',
-                        'Specialist aan de ringen',
-                        'Allround turner'
+                        'Simone Biles', 'Nadia Comăneci', 'Kohei Uchimura', 'Larisa Latynina', 'Věra Čáslavská',
+                        'Sanne Wevers', 'Epke Zonderland', 'Lieke Wevers', 'Eythora Thorsdottir', 'Naomi Visser',
+                        'Gabby Douglas', 'Aly Raisman', 'Nastia Liukin', 'Shawn Johnson', 'Sunisa Lee'
+                    ],
+                    'Darts': [
+                        'Michael van Gerwen', 'Phil Taylor', 'Raymond van Barneveld', 'Gary Anderson', 'Peter Wright',
+                        'Gerwyn Price', 'Luke Littler', 'Luke Humphries', 'Michael Smith', 'Rob Cross',
+                        'James Wade', 'Dave Chisnall', 'Nathan Aspinall', 'Jonny Clayton', 'Danny Noppert'
+                    ],
+                    'Schaatsen': [
+                        'Sven Kramer', 'Ireen Wüst', 'Kjeld Nuis', 'Patrick Roest', 'Jutta Leerdam',
+                        'Ard Schenk', 'Yvonne van Gennip', 'Marianne Timmer', 'Jorien ter Mors', 'Thomas Krol',
+                        'Jorrit Bergsma', 'Suzanne Schulting', 'Irene Schouten', 'Antoinette de Jong', 'Kai Verbij'
+                    ],
+                    'Hockey': [
+                        'Pirmin Blaak', 'Eva de Goede', 'Lidewij Welten', 'Ellen Hoog', 'Naomi van As',
+                        'Teun de Nooijer', 'Jamie Dwyer', 'Floris Evers', 'Billy Bakker', 'Jeroen Hertzberger',
+                        'Xan de Waard', 'Marloes Keetels', 'Frédérique Matla', 'Felice Albers', 'Yibbi Jansen',
+                        'Thierry Brinkman', 'Jorrit Croon', 'Jonas de Geus', 'Jip Janssen', 'Joep de Mol'
+                    ],
+                    'Olympische Spelen': [
+                        'Usain Bolt', 'Michael Phelps', 'Simone Biles', 'Carl Lewis', 'Jesse Owens',
+                        'Nadia Comăneci', 'Mark Spitz', 'Katie Ledecky', 'Sifan Hassan', 'Femke Bol',
+                        'Ireen Wüst', 'Sven Kramer', 'Epke Zonderland', 'Ranomi Kromowidjojo', 'Anky van Grunsven'
+                    ],
+                    'Actualiteiten': [
+                        'Max Verstappen', 'Femke Bol', 'Sifan Hassan', 'Mathieu van der Poel', 'Wout van Aert',
+                        'Remco Evenepoel', 'Tadej Pogačar', 'Carlos Alcaraz', 'Novak Djokovic', 'Kylian Mbappé'
                     ]
                 };
-                const pool = descriptionPools[category];
-                if (pool) {
-                    const shuffled = shuffleArray([...pool]);
-                    for (const fake of shuffled) {
-                        if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+
+                // Gebruik de juiste pool of combineer meerdere pools
+                let pool = personPools[category] || [];
+                if (pool.length === 0) {
+                    // Combineer alle pools als fallback
+                    pool = Object.values(personPools).flat();
+                }
+
+                const shuffled = shuffleArray([...pool]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                        return fake;
                     }
                 }
             }
 
-            // STAP 1: Analyseer de vraag om het TYPE antwoord te bepalen
+            // LANDEN
+            if (isLand) {
+                const landenPool = [
+                    'Nederland', 'Duitsland', 'Frankrijk', 'Spanje', 'Italië', 'Engeland', 'België', 'Portugal',
+                    'Brazilië', 'Argentinië', 'Verenigde Staten', 'China', 'Japan', 'Australië', 'Rusland',
+                    'Polen', 'Zweden', 'Noorwegen', 'Denemarken', 'Zwitserland', 'Oostenrijk', 'Kroatië',
+                    'Servië', 'Griekenland', 'Turkije', 'Mexico', 'Canada', 'Groot-Brittannië', 'Ierland'
+                ];
+                const shuffled = shuffleArray([...landenPool]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                        return fake;
+                    }
+                }
+            }
+
+            // STEDEN
+            if (isStad) {
+                const stedenPool = [
+                    'Amsterdam', 'Rotterdam', 'Parijs', 'Londen', 'Berlijn', 'Madrid', 'Barcelona', 'Rome',
+                    'Milaan', 'München', 'Tokio', 'Beijing', 'Sydney', 'Melbourne', 'Los Angeles', 'New York',
+                    'Rio de Janeiro', 'Athene', 'Moskou', 'Stockholm', 'Oslo', 'Kopenhagen', 'Wenen', 'Brussel',
+                    'Atlanta', 'Seoul', 'Montreal', 'Mexico-Stad', 'Buenos Aires', 'Kaapstad'
+                ];
+                const shuffled = shuffleArray([...stedenPool]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                        return fake;
+                    }
+                }
+            }
+
+            // CLUBS/TEAMS
+            if (isClub) {
+                const clubPool = [
+                    'Ajax', 'PSV', 'Feyenoord', 'AZ', 'FC Twente', 'FC Utrecht', 'Vitesse',
+                    'Real Madrid', 'Barcelona', 'Atlético Madrid', 'Sevilla', 'Valencia',
+                    'Bayern München', 'Borussia Dortmund', 'RB Leipzig', 'Bayer Leverkusen',
+                    'Liverpool', 'Manchester United', 'Manchester City', 'Chelsea', 'Arsenal', 'Tottenham',
+                    'Juventus', 'AC Milan', 'Inter Milan', 'Napoli', 'AS Roma',
+                    'Paris Saint-Germain', 'Olympique Lyon', 'Olympique Marseille'
+                ];
+                const shuffled = shuffleArray([...clubPool]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                        return fake;
+                    }
+                }
+            }
+
+            // GETALLEN - slimmere variaties gebaseerd op grootte
+            if (isGetal) {
+                const num = parseInt(correct);
+                let variations = [];
+
+                if (num <= 10) {
+                    // Kleine getallen: dichtbij blijven
+                    variations = [num-2, num-1, num+1, num+2].filter(n => n >= 0);
+                } else if (num <= 50) {
+                    // Medium getallen
+                    variations = [num-5, num-3, num-2, num+2, num+3, num+5].filter(n => n > 0);
+                } else if (num <= 200) {
+                    // Grotere getallen
+                    variations = [num-20, num-10, num-5, num+5, num+10, num+20].filter(n => n > 0);
+                } else {
+                    // Zeer grote getallen
+                    variations = [Math.round(num*0.8), Math.round(num*0.9), Math.round(num*1.1), Math.round(num*1.2)];
+                }
+
+                const shuffledVars = shuffleArray(variations);
+                for (const v of shuffledVars) {
+                    const result = String(v);
+                    if (result !== correct && !existing.includes(result)) return result;
+                }
+            }
+
+            // JAREN - alleen even jaren voor OS, anders realistische variaties
+            if (isJaar) {
+                const year = parseInt(correct);
+                let variations = [];
+
+                if (qt.includes('olymp') || qt.includes(' os ') || qt.includes('spelen')) {
+                    // Olympische jaren zijn altijd even (deelbaar door 4 voor zomer)
+                    variations = [year-8, year-4, year+4, year+8];
+                } else if (qt.includes('wk') || qt.includes('wereldkampioenschap')) {
+                    // WK's zijn ook vaak in vaste cycli
+                    variations = [year-4, year-2, year+2, year+4];
+                } else {
+                    variations = [year-3, year-2, year-1, year+1, year+2, year+3];
+                }
+
+                const shuffledVars = shuffleArray(variations.filter(y => y > 1900 && y <= 2030));
+                for (const v of shuffledVars) {
+                    const result = String(v);
+                    if (result !== correct && !existing.includes(result)) return result;
+                }
+            }
+
+            // SCORES/UITSLAGEN
+            if (isScore) {
+                const parts = correct.split('-').map(Number);
+                if (parts.length === 2) {
+                    const [a, b] = parts;
+                    const variations = [
+                        `${a+1}-${b}`, `${a}-${b+1}`, `${a-1}-${b}`, `${a}-${b-1}`,
+                        `${a+1}-${b+1}`, `${a-1}-${b-1}`, `${b}-${a}` // omgekeerde score
+                    ].filter(s => !s.includes('-') || !s.startsWith('-'));
+
+                    const shuffledVars = shuffleArray(variations);
+                    for (const v of shuffledVars) {
+                        if (v !== correct && !existing.includes(v)) return v;
+                    }
+                }
+            }
+
+            // MEDAILLES
+            if (isMedaille) {
+                const medaillePool = ['Goud', 'Zilver', 'Brons', 'Geen medaille'];
+                const shuffled = shuffleArray([...medaillePool]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                        return fake;
+                    }
+                }
+            }
+
+            // TIJDEN/RECORDS - realistische variaties
+            if (isTijd) {
+                const timeMatch = correct.match(/^(\d+)[:\.](\d+)/);
+                if (timeMatch) {
+                    const mins = parseInt(timeMatch[1]);
+                    const secs = parseInt(timeMatch[2]);
+                    const separator = correct.includes(':') ? ':' : '.';
+
+                    const variations = [
+                        `${mins}${separator}${String(secs+1).padStart(2,'0')}`,
+                        `${mins}${separator}${String(secs+2).padStart(2,'0')}`,
+                        `${mins}${separator}${String(Math.max(0,secs-1)).padStart(2,'0')}`,
+                        `${mins+1}${separator}${String(secs).padStart(2,'0')}`
+                    ];
+
+                    const shuffledVars = shuffleArray(variations);
+                    for (const v of shuffledVars) {
+                        if (v !== correct && !existing.includes(v)) return v;
+                    }
+                }
+            }
+
+            // === STAP 3: VRAAG-GEBASEERDE DETECTIE ===
             const questionPatterns = {
                 sport: {
                     patterns: ['welke sport', 'welke sporten', 'welk onderdeel', 'welke discipline'],
-                    pool: ['Atletiek', 'Voetbal', 'Tennis', 'Zwemmen', 'Turnen', 'Wielrennen', 'Basketbal', 'Volleybal', 'Hockey', 'Handbal', 'Judo', 'Boksen', 'Worstelen', 'Roeien', 'Zeilen', 'Schieten', 'Schermen', 'Paardensport', 'Gymnastiek', 'Waterpolo', 'Rugby', 'Golf', 'Schaatsen', 'Skiën', 'Snowboarden', 'Tafeltennis', 'Badminton']
-                },
-                stad: {
-                    patterns: ['welke stad', 'in welke stad', 'waar werd', 'waar worden', 'waar vond', 'waar vindt', 'welk land', 'in welk land', 'gastland', 'gaststad'],
-                    pool: ['Parijs', 'Londen', 'Berlijn', 'Rome', 'Amsterdam', 'Barcelona', 'Athene', 'Tokio', 'Beijing', 'Sydney', 'Los Angeles', 'Rio de Janeiro', 'Moskou', 'Stockholm', 'München', 'Seoul', 'Atlanta', 'Milaan']
-                },
-                club: {
-                    patterns: ['welke club', 'welk team', 'voor welke club', 'bij welke club'],
-                    pool: ['Ajax', 'PSV', 'Feyenoord', 'Real Madrid', 'Barcelona', 'Bayern München', 'Liverpool', 'Manchester United', 'Manchester City', 'Chelsea', 'Juventus', 'AC Milan', 'Inter Milan', 'Borussia Dortmund', 'Paris Saint-Germain']
+                    pool: ['Voetbal', 'Tennis', 'Zwemmen', 'Atletiek', 'Wielrennen', 'Turnen', 'Hockey', 'Basketbal', 'Volleybal', 'Handbal', 'Judo', 'Boksen', 'Roeien', 'Zeilen', 'Golf', 'Rugby', 'Schaatsen', 'Skiën']
                 },
                 kleur: {
                     patterns: ['welke kleur', 'kleur heeft', 'kleur draagt'],
-                    pool: ['Geel', 'Groen', 'Rood', 'Blauw', 'Wit', 'Zwart', 'Oranje', 'Roze', 'Paars', 'Goud', 'Zilver', 'Brons']
+                    pool: ['Geel', 'Groen', 'Rood', 'Blauw', 'Wit', 'Zwart', 'Oranje', 'Roze', 'Paars']
                 },
                 trui: {
-                    patterns: ['welke trui', 'trui draagt', 'trui voor'],
-                    pool: ['Gele trui', 'Groene trui', 'Bolletjestrui', 'Witte trui', 'Rode trui', 'Blauwe trui', 'Roze trui']
+                    patterns: ['welke trui', 'trui draagt', 'trui voor', 'leiderstrui'],
+                    pool: ['Gele trui', 'Groene trui', 'Bolletjestrui', 'Witte trui', 'Rode trui', 'Roze trui']
                 },
                 positie: {
                     patterns: ['welke positie', 'op welke positie', 'als wat speelt', 'speelt als'],
-                    pool: ['Keeper', 'Verdediger', 'Middenvelder', 'Aanvaller', 'Spits', 'Centrale verdediger', 'Linksback', 'Rechtsback', 'Vleugelspeler', 'Controleur']
+                    pool: ['Keeper', 'Verdediger', 'Middenvelder', 'Aanvaller', 'Spits', 'Centrale verdediger', 'Linksback', 'Rechtsback', 'Vleugelspeler', 'Controleur', 'Nummer 10']
+                },
+                afstand: {
+                    patterns: ['welke afstand', 'over welke afstand', 'hoeveel meter', 'hoeveel kilometer'],
+                    pool: ['100 meter', '200 meter', '400 meter', '800 meter', '1500 meter', '5000 meter', '10000 meter', 'Marathon', '50 km', '100 km']
                 }
             };
 
             for (const [type, config] of Object.entries(questionPatterns)) {
                 for (const pattern of config.patterns) {
-                    if (qt.includes(pattern) && config.pool) {
+                    if (qt.includes(pattern)) {
                         const shuffled = shuffleArray([...config.pool]);
                         for (const fake of shuffled) {
                             if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
@@ -857,104 +1061,93 @@
                 }
             }
 
-            // STAP 2: Ja/Nee vragen
-            if (lc === 'ja' || lc === 'nee') {
-                const opts = ['Ja', 'Nee', 'Soms', 'Niet altijd'];
-                return opts.find(o => o !== correct && !existing.includes(o)) || 'Onbekend';
-            }
-
-            // STAP 3: Getallen
-            const numMatch = correct.match(/^(\d+)/);
-            if (numMatch) {
-                const num = parseInt(numMatch[1]);
-                const vars = [num-2, num-1, num+1, num+2, Math.round(num*1.5), Math.round(num*0.7)].filter(n => n > 0 && n !== num);
-                const pick = vars[Math.floor(Math.random() * vars.length)];
-                const result = correct.replace(/^\d+/, pick);
-                if (!existing.includes(result) && result !== correct) return result;
-            }
-
-            // STAP 4: Jaren
-            const yearMatch = correct.match(/(\d{4})/);
-            if (yearMatch) {
-                const year = parseInt(yearMatch[1]);
-                const vars = [year-4, year-2, year-1, year+1, year+2, year+4];
-                const pick = vars[Math.floor(Math.random() * vars.length)];
-                const result = correct.replace(/\d{4}/, pick);
-                if (!existing.includes(result) && result !== correct) return result;
-            }
-
-            // STAP 5: Specifieke sport termen
+            // === STAP 4: CONTEXT POOLS (specifieke termen) ===
             const contextPools = {
-                'pike': ['Layout (gestrekt)', 'Tuck (gehurkt)', 'Straddle (gespreid)', 'Hollow position'],
-                'tuck': ['Layout (gestrekt)', 'Pike (geplooid)', 'Straddle (gespreid)', 'Hollow position'],
-                'layout': ['Pike (geplooid)', 'Tuck (gehurkt)', 'Straddle (gespreid)', 'Arch position'],
+                // Wielrennen
+                'gele trui': ['Groene trui', 'Bolletjestrui', 'Witte trui'],
+                'groene trui': ['Gele trui', 'Bolletjestrui', 'Witte trui'],
+                'bolletjestrui': ['Gele trui', 'Groene trui', 'Witte trui'],
+                'tour de france': ['Giro d\'Italia', 'Vuelta a España', 'Parijs-Roubaix'],
+                'giro': ['Tour de France', 'Vuelta a España', 'Milaan-San Remo'],
+                'vuelta': ['Tour de France', 'Giro d\'Italia', 'Ronde van Vlaanderen'],
+
+                // Zwemmen
+                'vrije slag': ['Rugslag', 'Schoolslag', 'Vlinderslag'],
+                'rugslag': ['Vrije slag', 'Schoolslag', 'Vlinderslag'],
+                'schoolslag': ['Vrije slag', 'Rugslag', 'Vlinderslag'],
+                'vlinderslag': ['Vrije slag', 'Rugslag', 'Schoolslag'],
+
+                // Tennis
+                'wimbledon': ['Roland Garros', 'US Open', 'Australian Open'],
+                'roland garros': ['Wimbledon', 'US Open', 'Australian Open'],
+                'us open': ['Wimbledon', 'Roland Garros', 'Australian Open'],
+                'australian open': ['Wimbledon', 'Roland Garros', 'US Open'],
+
+                // Golf
                 'birdie': ['Eagle', 'Bogey', 'Par', 'Albatross'],
-                'eagle': ['Birdie', 'Bogey', 'Par', 'Double bogey'],
-                'par': ['Birdie', 'Bogey', 'Eagle', 'Double bogey'],
-                'gele trui': ['Groene trui', 'Bolletjestrui', 'Witte trui', 'Rode trui'],
-                'groene trui': ['Gele trui', 'Bolletjestrui', 'Witte trui', 'Blauwe trui'],
-                'vrije slag': ['Rugslag', 'Schoolslag', 'Vlinderslag', 'Wisselslag'],
-                'rugslag': ['Vrije slag', 'Schoolslag', 'Vlinderslag', 'Borstcrawl'],
-                'schoolslag': ['Vrije slag', 'Rugslag', 'Vlinderslag', 'Crawl'],
-                'vlinderslag': ['Vrije slag', 'Rugslag', 'Schoolslag', 'Dolfijnslag']
+                'eagle': ['Birdie', 'Bogey', 'Par'],
+                'bogey': ['Birdie', 'Eagle', 'Par'],
+                'par': ['Birdie', 'Eagle', 'Bogey'],
+
+                // Turnen
+                'salto': ['Flikflak', 'Schroef', 'Handstand'],
+                'balk': ['Vloer', 'Brug', 'Sprong'],
+                'vloer': ['Balk', 'Brug', 'Sprong'],
+
+                // Voetbal formaties
+                '4-3-3': ['4-4-2', '3-5-2', '4-2-3-1'],
+                '4-4-2': ['4-3-3', '3-5-2', '5-3-2'],
+                '3-5-2': ['4-3-3', '4-4-2', '4-2-3-1']
             };
 
             for (const [key, pool] of Object.entries(contextPools)) {
                 if (lc.includes(key)) {
                     const shuffled = shuffleArray([...pool]);
                     for (const fake of shuffled) {
-                        if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                        if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                            return fake;
+                        }
                     }
                 }
             }
 
-            // STAP 6: Categorie-gebaseerde personen pools
-            const personPools = {
-                'Voetbal': ['Johan Cruijff', 'Marco van Basten', 'Dennis Bergkamp', 'Ruud Gullit', 'Frank Rijkaard', 'Arjen Robben', 'Robin van Persie', 'Wesley Sneijder', 'Lionel Messi', 'Cristiano Ronaldo', 'Zinedine Zidane', 'Ronaldo', 'Diego Maradona', 'Pelé', 'Franz Beckenbauer', 'Gerd Müller', 'Michel Platini', 'Thierry Henry', 'Kylian Mbappé', 'Erling Haaland'],
-                'Wielrennen': ['Eddy Merckx', 'Bernard Hinault', 'Miguel Indurain', 'Jacques Anquetil', 'Tom Boonen', 'Fabian Cancellara', 'Tadej Pogacar', 'Jonas Vingegaard', 'Wout van Aert', 'Mathieu van der Poel', 'Peter Sagan', 'Mark Cavendish', 'Chris Froome', 'Alberto Contador', 'Jan Ullrich', 'Joop Zoetemelk', 'Geraint Thomas'],
-                'Tennis': ['Roger Federer', 'Rafael Nadal', 'Novak Djokovic', 'Andy Murray', 'Carlos Alcaraz', 'Jannik Sinner', 'Serena Williams', 'Steffi Graf', 'Martina Navratilova', 'Bjorn Borg', 'John McEnroe', 'Pete Sampras', 'Andre Agassi', 'Venus Williams', 'Naomi Osaka', 'Iga Swiatek'],
-                'Atletiek': ['Usain Bolt', 'Carl Lewis', 'Mo Farah', 'Haile Gebrselassie', 'Kenenisa Bekele', 'Eliud Kipchoge', 'Florence Griffith-Joyner', 'Shelly-Ann Fraser-Pryce', 'Sifan Hassan', 'Dafne Schippers', 'Jesse Owens', 'Jackie Joyner-Kersee', 'Michael Johnson', 'Noah Lyles'],
-                'Zwemmen': ['Michael Phelps', 'Katie Ledecky', 'Caeleb Dressel', 'Ian Thorpe', 'Mark Spitz', 'Pieter van den Hoogenband', 'Ranomi Kromowidjojo', 'Inge de Bruijn', 'Femke Heemskerk', 'Arno Kamminga'],
-                'Motorsport': ['Max Verstappen', 'Lewis Hamilton', 'Michael Schumacher', 'Ayrton Senna', 'Sebastian Vettel', 'Fernando Alonso', 'Niki Lauda', 'Alain Prost', 'Kimi Räikkönen', 'Charles Leclerc', 'Lando Norris', 'George Russell'],
-                'Turnen': ['Simone Biles', 'Nadia Comaneci', 'Kohei Uchimura', 'Sanne Wevers', 'Epke Zonderland', 'Lieke Wevers', 'Gabby Douglas', 'Larisa Latynina', 'Vera Caslavska'],
-                'Darts': ['Michael van Gerwen', 'Phil Taylor', 'Raymond van Barneveld', 'Gary Anderson', 'Peter Wright', 'Gerwyn Price', 'Luke Littler', 'Luke Humphries', 'Michael Smith', 'Rob Cross'],
-                'Schaatsen': ['Sven Kramer', 'Ireen Wüst', 'Kjeld Nuis', 'Patrick Roest', 'Jutta Leerdam', 'Ard Schenk', 'Yvonne van Gennip', 'Marianne Timmer', 'Jorien ter Mors', 'Thomas Krol']
+            // === STAP 5: CATEGORIE FALLBACK POOLS ===
+            const categoryPools = {
+                'Voetbal': ['Ajax', 'PSV', 'Feyenoord', 'Real Madrid', 'Barcelona', 'Bayern München', 'Liverpool', 'Manchester United', 'Juventus', 'AC Milan', 'Nederland', 'Duitsland', 'Brazilië', 'Argentinië', 'Spanje', 'Frankrijk', 'Italië', 'Engeland'],
+                'Wielrennen': ['Tour de France', 'Giro d\'Italia', 'Vuelta a España', 'Parijs-Roubaix', 'Ronde van Vlaanderen', 'Milaan-San Remo', 'Luik-Bastenaken-Luik', 'Amstel Gold Race', 'La Flèche Wallonne', 'Strade Bianche'],
+                'Tennis': ['Wimbledon', 'Roland Garros', 'US Open', 'Australian Open', 'ATP Finals', 'Davis Cup', 'Indian Wells', 'Miami Open'],
+                'Olympische Spelen': ['Atletiek', 'Zwemmen', 'Turnen', 'Wielrennen', 'Roeien', 'Zeilen', 'Judo', 'Hockey', 'Voetbal', 'Basketbal', 'Volleybal', 'Tennis', 'Boksen', 'Worstelen'],
+                'Atletiek': ['100 meter', '200 meter', '400 meter', '800 meter', '1500 meter', '5000 meter', '10000 meter', 'Marathon', 'Hoogspringen', 'Verspringen', 'Kogelstoten', 'Discuswerpen', 'Speerwerpen', 'Hordenlopen'],
+                'Motorsport': ['Red Bull Racing', 'Ferrari', 'Mercedes', 'McLaren', 'Aston Martin', 'Alpine', 'Williams', 'Haas'],
+                'Schaatsen': ['500 meter', '1000 meter', '1500 meter', '3000 meter', '5000 meter', '10000 meter', 'Massastart', 'Ploegenachtervolging'],
+                'Darts': ['180', 'Checkout', 'Bullseye', 'Triple 20', 'Dubbel 16', 'Dubbel 20', '9-darter'],
+                'Hockey': ['Strafcorner', 'Shoot-out', 'Halve finale', 'Finale', 'Groepsfase', 'Kwartfinale'],
+                'Zwemmen': ['50 meter', '100 meter', '200 meter', '400 meter', '800 meter', '1500 meter', 'Wisselslag', 'Estafette'],
+                'Turnen': ['Vloer', 'Balk', 'Brug', 'Sprong', 'Ringen', 'Rekstok', 'Paard', 'Meerkamp'],
+                'Actualiteiten': ['Februari 2026', 'Januari 2026', 'December 2025', 'November 2025', '2026', '2025', '2027'],
+                'Toekomstige Evenementen': ['Los Angeles 2028', 'Brisbane 2032', 'Milaan 2026', 'Parijs 2024', 'Tokio 2020', 'Beijing 2022', 'Qatar 2022', 'VS 2026']
             };
 
-            // Check of de vraag om een persoon vraagt
-            const personPatterns = ['wie ', 'wie is', 'wie was', 'wie won', 'wie werd', 'welke speler', 'welke atleet', 'welke sporter', 'welke renner'];
-            const isPersonQuestion = personPatterns.some(p => qt.includes(p));
-
-            if (isPersonQuestion && personPools[category]) {
-                const shuffled = shuffleArray([...personPools[category]]);
+            const pool = categoryPools[category];
+            if (pool) {
+                const shuffled = shuffleArray([...pool]);
                 for (const fake of shuffled) {
-                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                        return fake;
+                    }
                 }
             }
 
-            // STAP 7: Fallback categorie pools
-            const fakes = {
-                'Voetbal': ['Real Madrid', 'Bayern München', 'AC Milan', 'Barcelona', 'Liverpool', 'Ajax', 'PSV', 'Feyenoord', 'Juventus', 'Inter Milan', 'Chelsea', 'Manchester City', 'Manchester United', 'Duitsland', 'Brazilië', 'Argentinië', 'Spanje', 'Italië', 'Frankrijk', 'Nederland', 'Engeland', 'Portugal'],
-                'Wielrennen': ['Tour de France', 'Giro d\'Italia', 'Vuelta a España', 'Parijs-Roubaix', 'Ronde van Vlaanderen', 'Milaan-San Remo', 'Luik-Bastenaken-Luik', 'Amstel Gold Race'],
-                'Tennis': ['Wimbledon', 'Roland Garros', 'US Open', 'Australian Open', 'ATP Finals', 'Davis Cup', 'Fed Cup'],
-                'Olympische Spelen': ['Atletiek', 'Zwemmen', 'Turnen', 'Wielrennen', 'Roeien', 'Zeilen', 'Judo', 'Boksen', 'Worstelen', 'Schieten', 'Schermen', 'Paardensport', 'Hockey', 'Voetbal', 'Basketbal', 'Volleybal', 'Handbal', 'Waterpolo', 'Tennis', 'Tafeltennis'],
-                'Atletiek': ['100 meter', '200 meter', '400 meter', '800 meter', '1500 meter', '5000 meter', '10000 meter', 'Marathon', 'Hoogspringen', 'Verspringen', 'Kogelstoten', 'Discuswerpen', 'Speerwerpen', 'Hordenlopen', 'Estafette'],
-                'Motorsport': ['Red Bull Racing', 'Ferrari', 'Mercedes', 'McLaren', 'Aston Martin', 'Alpine', 'Williams', 'Haas', 'Alfa Romeo', 'AlphaTauri'],
-                'Wintersport': ['Schaatsen', 'Skiën', 'Snowboarden', 'Bobsleeën', 'Langlaufen', 'Biatlon', 'Schansspringen', 'Kunstrijden', 'IJshockey', 'Curling'],
-                'Darts': ['180', 'Checkout', 'Dubbel 20', 'Dubbel 16', 'Bullseye', 'Triple 20', 'Triple 19', 'Leg', 'Set'],
-                'Golf': ['Birdie', 'Eagle', 'Bogey', 'Par', 'Albatross', 'Double bogey', 'Hole-in-one', 'Putt', 'Drive', 'Chip'],
-                'Rugby': ['Try', 'Conversie', 'Penalty', 'Drop goal', 'Scrum', 'Line-out', 'Ruck', 'Maul', 'Tackle'],
-                'Basketbal': ['Dunk', 'Lay-up', 'Three-pointer', 'Free throw', 'Rebound', 'Assist', 'Block', 'Steal', 'Double-double', 'Triple-double'],
-                'Turnen': ['Salto', 'Flikflak', 'Schroef', 'Dubbele salto', 'Balk', 'Vloer', 'Brug', 'Ringen', 'Rekstok', 'Paard'],
-                'Zwemmen': ['Vrije slag', 'Rugslag', 'Schoolslag', 'Vlinderslag', 'Wisselslag', '50 meter', '100 meter', '200 meter', '400 meter', '1500 meter'],
-                'Toekomstige Evenementen': ['Barcelona', 'Edinburgh', 'Londen', 'Parijs', 'Monaco', 'Los Angeles', 'Brisbane', 'Milaan', 'Franse Alpen', 'Salt Lake City', 'New York', 'Madrid', 'Rome', 'Granada', 'Nessebar', 'Bulgarije', '2026', '2027', '2028', '2030', '2032', '2034', 'VS', 'Spanje', 'Italië', 'Engeland', 'Saudi-Arabië', 'Turkije'],
-                'Algemeen': ['Ja', 'Nee', 'Soms', 'Altijd', 'Nooit', 'Beide', 'Geen van beide', 'Onbekend']
-            };
+            // === STAP 6: ULTIMATE FALLBACK ===
+            return generateBasicFake(correct, existing);
+        }
 
-            const pool = fakes[category] || fakes['Algemeen'];
-            const shuffled = shuffleArray([...pool]);
+        // Helper functie voor simpele fallback
+        function generateBasicFake(correct, existing) {
+            const genericPool = ['Optie A', 'Optie B', 'Optie C', 'Optie D', 'Anders', 'Geen van bovenstaande', 'Onbekend', 'Alle bovenstaande'];
+            const shuffled = shuffleArray([...genericPool]);
             for (const fake of shuffled) {
-                if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                if (fake !== correct && !existing.includes(fake)) return fake;
             }
             return 'Anders';
         }
