@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sportquiz</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 15px; }
+        header { text-align: center; padding: 15px 0; }
+        header h1 { font-size: 2rem; color: #e94560; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 8px; }
+        .stats { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .stat-box { background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 10px; text-align: center; }
+        .stat-box .number { font-size: 1.5rem; font-weight: bold; color: #e94560; }
+        .stat-box .label { font-size: 0.8rem; opacity: 0.8; }
+        .menu-screen { text-align: center; padding: 30px 20px; }
+        .menu-btn { display: block; width: 100%; max-width: 400px; margin: 12px auto; padding: 18px 25px; font-size: 1.1rem; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .menu-btn.primary { background: linear-gradient(135deg, #e94560, #c73659); color: white; }
+        .menu-btn.secondary { background: rgba(255,255,255,0.15); color: white; border: 2px solid rgba(255,255,255,0.3); }
+        .menu-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3); }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 15px 0; }
+        .category-btn { padding: 15px; background: rgba(255,255,255,0.1); border: 2px solid transparent; border-radius: 10px; color: white; cursor: pointer; transition: all 0.3s ease; font-size: 0.95rem; }
+        .category-btn:hover, .category-btn.selected { border-color: #e94560; background: rgba(233, 69, 96, 0.2); }
+        .category-btn .count { display: block; font-size: 0.75rem; opacity: 0.7; margin-top: 3px; }
+        .quiz-screen { display: none; }
+        .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; margin-bottom: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #e94560, #ff6b6b); border-radius: 3px; transition: width 0.3s ease; }
+        .question-info { display: flex; justify-content: space-between; margin-bottom: 10px; opacity: 0.8; font-size: 0.9rem; }
+        .question-card { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-bottom: 15px; }
+        .question-text { font-size: 1.15rem; line-height: 1.5; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
+        .option-btn { padding: 12px 18px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; text-align: left; display: flex; align-items: center; gap: 12px; }
+        .option-btn:hover:not(.disabled) { background: rgba(255,255,255,0.2); border-color: #e94560; }
+        .option-btn .letter { width: 30px; height: 30px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 0.9rem; }
+        .option-btn.correct { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; }
+        .option-btn.correct .letter { background: #2ecc71; }
+        .option-btn.wrong { background: rgba(231, 76, 60, 0.3); border-color: #e74c3c; }
+        .option-btn.wrong .letter { background: #e74c3c; }
+        .option-btn.disabled { cursor: not-allowed; opacity: 0.7; }
+        .feedback { display: none; padding: 12px 15px; border-radius: 8px; margin-top: 12px; text-align: center; }
+        .feedback.correct { background: rgba(46, 204, 113, 0.2); border: 2px solid #2ecc71; }
+        .feedback.wrong { background: rgba(231, 76, 60, 0.2); border: 2px solid #e74c3c; }
+        .feedback h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .feedback.correct h3 { color: #2ecc71; }
+        .feedback.wrong h3 { color: #e74c3c; }
+        .correct-answer { margin-top: 8px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.95rem; }
+        .next-btn { display: none; margin: 12px auto 0; padding: 12px 40px; font-size: 1rem; background: linear-gradient(135deg, #e94560, #c73659); color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .next-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4); }
+        .results-screen { display: none; text-align: center; padding: 30px 20px; }
+        .results-card { background: rgba(255,255,255,0.1); border-radius: 15px; padding: 30px; margin-bottom: 20px; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #e94560, #c73659); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; }
+        .results-message { font-size: 1.3rem; margin-bottom: 15px; }
+        .add-screen, .import-export-screen { display: none; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 2px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 1rem; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #e94560; }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-group select option { background: #1a1a2e; color: white; }
+        select option { background: #1a1a2e; color: white; padding: 10px; }
+        .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { flex: 1; min-width: 140px; padding: 12px 20px; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #e94560, #c73659); color: white; }
+        .btn-secondary { background: rgba(255,255,255,0.15); color: white; }
+        .btn:hover { transform: translateY(-2px); }
+        .success-message { display: none; background: rgba(46, 204, 113, 0.2); border: 2px solid #2ecc71; padding: 12px; border-radius: 8px; margin-bottom: 15px; color: #2ecc71; }
+        .import-area { background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.3); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; }
+        .import-area textarea { width: 100%; min-height: 150px; background: rgba(255,255,255,0.1); border: none; border-radius: 8px; padding: 12px; color: white; font-family: monospace; margin-top: 10px; }
+        .hidden { display: none !important; }
+        /* Game mode styles */
+        .game-options { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .game-options h3 { text-align: center; margin-bottom: 15px; color: #e94560; }
+        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 15px; }
+        .mode-btn { padding: 12px 8px; background: rgba(255,255,255,0.1); border: 2px solid transparent; border-radius: 10px; color: white; cursor: pointer; transition: all 0.3s ease; font-size: 0.85rem; text-align: center; }
+        .mode-btn:hover { border-color: rgba(233, 69, 96, 0.5); }
+        .mode-btn.active { border-color: #e94560; background: rgba(233, 69, 96, 0.2); }
+        .mode-btn .mode-icon { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+        .mode-btn .mode-name { font-weight: 600; display: block; }
+        .mode-btn .mode-desc { font-size: 0.7rem; opacity: 0.7; display: block; margin-top: 3px; }
+        /* Timer styles */
+        .timer-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; margin-bottom: 10px; overflow: hidden; }
+        .timer-fill { height: 100%; background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c); border-radius: 4px; transition: width 0.1s linear; }
+        .timer-text { text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+        .timer-text.warning { color: #f1c40f; }
+        .timer-text.danger { color: #e74c3c; animation: pulse 0.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        /* Survival styles */
+        .lives-display { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .life { font-size: 1.5rem; transition: all 0.3s ease; }
+        .life.lost { opacity: 0.3; transform: scale(0.8); }
+        /* Streak styles */
+        .streak-display { text-align: center; margin-bottom: 10px; }
+        .streak-badge { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #f1c40f, #e67e22); border-radius: 20px; font-weight: bold; animation: streakGlow 1s infinite; }
+        @keyframes streakGlow { 0%, 100% { box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); } 50% { box-shadow: 0 0 20px rgba(241, 196, 15, 0.8); } }
+        .streak-bonus { color: #f1c40f; font-size: 0.9rem; margin-top: 5px; }
+        /* Player passport styles */
+        .passport-screen { display: none; }
+        .passport-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 3px solid #e94560; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .passport-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid rgba(255,255,255,0.1); }
+        .passport-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #e94560, #c73659); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+        .passport-info h2 { color: #e94560; margin-bottom: 5px; }
+        .passport-info p { opacity: 0.7; font-size: 0.9rem; }
+        .passport-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .passport-stat { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; text-align: center; }
+        .passport-stat .stat-value { font-size: 1.8rem; font-weight: bold; color: #e94560; }
+        .passport-stat .stat-label { font-size: 0.8rem; opacity: 0.7; }
+        .passport-badges { margin-top: 15px; }
+        .passport-badges h4 { margin-bottom: 10px; color: #f1c40f; }
+        .badge-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .badge { padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 20px; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+        .badge.earned { background: linear-gradient(135deg, #f1c40f, #e67e22); color: #1a1a2e; }
+        .badge.locked { opacity: 0.4; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.6rem; }
+            .question-text { font-size: 1rem; }
+            .option-btn { font-size: 0.9rem; padding: 10px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sportquiz</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="number" id="totalQuestions">0</div>
+                    <div class="label">Vragen</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="totalCategories">0</div>
+                    <div class="label">Categorieen</div>
+                </div>
+            </div>
+        </header>
+        <div class="menu-screen" id="menuScreen">
+            <button class="menu-btn primary" onclick="startQuizSelection()">Start Quiz</button>
+            <button class="menu-btn secondary" onclick="showAddScreen()">Vraag Toevoegen</button>
+            <button class="menu-btn secondary" onclick="showImportExport()">Importeren / Exporteren</button>
+            <button class="menu-btn secondary" onclick="showRefreshInfo()" style="border-color: #e94560;">🔄 Actualiteit Updaten</button>
+            <button class="menu-btn secondary" onclick="showPassport()" style="border-color: #f1c40f;">🎖️ Mijn Paspoort</button>
+            <button class="menu-btn secondary" onclick="window.location.href='logo_quiz.html'" style="margin-top: 20px;">⚽ Logo Quiz</button>
+        </div>
+        <div class="category-screen hidden" id="categoryScreen">
+            <h2 style="text-align: center; margin-bottom: 15px;">Kies categorie(en)</h2>
+            <div class="category-grid" id="categoryGrid"></div>
+            <div class="game-options">
+                <h3>⚙️ Spelinstellingen</h3>
+                <div style="margin-bottom: 15px;">
+                    <p style="margin-bottom: 8px; font-size: 0.9rem;">Aantal vragen:</p>
+                    <select id="questionsPerRound" style="width: 100%; padding: 10px 15px; font-size: 1rem; background: #1a1a2e; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; cursor: pointer;">
+                        <option value="20" selected>20 vragen</option>
+                        <option value="50">50 vragen</option>
+                        <option value="100">100 vragen</option>
+                        <option value="200">200 vragen</option>
+                        <option value="400">400 vragen</option>
+                        <option value="all">Alle vragen</option>
+                    </select>
+                </div>
+                <p style="margin-bottom: 8px; font-size: 0.9rem;">Spelmodus:</p>
+                <div class="mode-grid">
+                    <button class="mode-btn active" onclick="selectMode('normaal')" id="mode-normaal">
+                        <span class="mode-icon">📝</span>
+                        <span class="mode-name">Normaal</span>
+                        <span class="mode-desc">Geen tijdslimiet</span>
+                    </button>
+                    <button class="mode-btn" onclick="selectMode('tijdsdruk')" id="mode-tijdsdruk">
+                        <span class="mode-icon">⏱️</span>
+                        <span class="mode-name">Tijdsdruk</span>
+                        <span class="mode-desc">20 sec per vraag</span>
+                    </button>
+                    <button class="mode-btn" onclick="selectMode('survival')" id="mode-survival">
+                        <span class="mode-icon">💀</span>
+                        <span class="mode-name">Survival</span>
+                        <span class="mode-desc">3 levens</span>
+                    </button>
+                    <button class="mode-btn" onclick="selectMode('streak')" id="mode-streak">
+                        <span class="mode-icon">🔥</span>
+                        <span class="mode-name">Streak</span>
+                        <span class="mode-desc">Bonus punten</span>
+                    </button>
+                </div>
+            </div>
+            <div class="btn-row" style="margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="showMenu()">Terug</button>
+                <button class="btn btn-primary" onclick="startQuiz()">Start!</button>
+            </div>
+        </div>
+        <div class="quiz-screen" id="quizScreen">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <!-- Timer voor tijdsdruk modus -->
+            <div id="timerContainer" class="hidden">
+                <div class="timer-text" id="timerText">20</div>
+                <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+            </div>
+            <!-- Levens voor survival modus -->
+            <div id="livesContainer" class="hidden">
+                <div class="lives-display">
+                    <span class="life" id="life1">❤️</span>
+                    <span class="life" id="life2">❤️</span>
+                    <span class="life" id="life3">❤️</span>
+                </div>
+            </div>
+            <!-- Streak display -->
+            <div id="streakContainer" class="hidden">
+                <div class="streak-display">
+                    <span class="streak-badge" id="streakBadge">🔥 0</span>
+                    <div class="streak-bonus" id="streakBonus"></div>
+                </div>
+            </div>
+            <div class="question-info">
+                <span id="questionNumber">Vraag 1 van 10</span>
+                <span id="currentScore">Score: 0</span>
+            </div>
+            <div class="question-card">
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback" id="feedback">
+                    <h3 id="feedbackTitle"></h3>
+                    <div class="correct-answer" id="correctAnswer"></div>
+                </div>
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Volgende vraag</button>
+            </div>
+        </div>
+        <div class="results-screen" id="resultsScreen">
+            <div class="results-card">
+                <div class="score-circle" id="finalScore"></div>
+                <div class="results-message" id="resultsMessage"></div>
+                <p id="resultsDetails"></p>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="showMenu()">Hoofdmenu</button>
+                <button class="btn btn-primary" onclick="startQuizSelection()">Opnieuw spelen</button>
+            </div>
+        </div>
+        <!-- Spelerspaspoort scherm -->
+        <div class="passport-screen" id="passportScreen">
+            <h2 style="text-align: center; margin-bottom: 20px;">🎖️ Mijn Spelerspaspoort</h2>
+            <div class="passport-card">
+                <div class="passport-header">
+                    <div class="passport-avatar" id="passportAvatar">🏆</div>
+                    <div class="passport-info">
+                        <h2 id="passportRank">Beginner</h2>
+                        <p id="passportTitle">Sport Enthousiasteling</p>
+                    </div>
+                </div>
+                <div class="passport-stats">
+                    <div class="passport-stat">
+                        <div class="stat-value" id="passportGamesPlayed">0</div>
+                        <div class="stat-label">Gespeelde rondes</div>
+                    </div>
+                    <div class="passport-stat">
+                        <div class="stat-value" id="passportTotalCorrect">0</div>
+                        <div class="stat-label">Goede antwoorden</div>
+                    </div>
+                    <div class="passport-stat">
+                        <div class="stat-value" id="passportAccuracy">0%</div>
+                        <div class="stat-label">Nauwkeurigheid</div>
+                    </div>
+                    <div class="passport-stat">
+                        <div class="stat-value" id="passportBestStreak">0</div>
+                        <div class="stat-label">Beste streak</div>
+                    </div>
+                </div>
+                <div class="passport-badges">
+                    <h4>🏅 Badges</h4>
+                    <div class="badge-grid" id="badgeGrid">
+                        <!-- Badges worden dynamisch toegevoegd -->
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="resetPassport()" style="width: 100%; margin-bottom: 10px; background: rgba(231, 76, 60, 0.3); border: 2px solid #e74c3c;">🗑️ Reset Paspoort</button>
+            <button class="btn btn-secondary" onclick="showMenu()" style="width: 100%;">Terug naar menu</button>
+        </div>
+        <div class="add-screen" id="addScreen">
+            <h2 style="text-align: center; margin-bottom: 20px;">Nieuwe vraag toevoegen</h2>
+            <div class="success-message" id="successMessage">Vraag succesvol toegevoegd!</div>
+            <div class="form-group">
+                <label>Categorie</label>
+                <select id="newCategory">
+                    <option value="Algemeen">Algemeen</option>
+                    <option value="Olympische Spelen">Olympische Spelen</option>
+                    <option value="Voetbal">Voetbal</option>
+                    <option value="Wielrennen">Wielrennen</option>
+                    <option value="Atletiek">Atletiek</option>
+                    <option value="Tennis">Tennis</option>
+                    <option value="Motorsport">Motorsport</option>
+                    <option value="Wintersport">Wintersport</option>
+                    <option value="Basketbal">Basketbal</option>
+                    <option value="Zwemmen">Zwemmen</option>
+                    <option value="Darts">Darts</option>
+                    <option value="Golf">Golf</option>
+                    <option value="Rugby">Rugby</option>
+                    <option value="IJshockey">IJshockey</option>
+                    <option value="American Football">American Football</option>
+                    <option value="Boksen">Boksen</option>
+                    <option value="Snooker">Snooker</option>
+                    <option value="Roeien">Roeien</option>
+                    <option value="Zeilen">Zeilen</option>
+                    <option value="Turnen">Turnen</option>
+                    <option value="Actualiteit">Actualiteit</option>
+                    <option value="Toekomstige Evenementen">Toekomstige Evenementen</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Vraag</label>
+                <textarea id="newQuestion" placeholder="Typ hier je vraag..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Correct antwoord</label>
+                <input type="text" id="newAnswer" placeholder="Het juiste antwoord">
+            </div>
+            <div class="form-group">
+                <label>Fout antwoord 1 (optioneel)</label>
+                <input type="text" id="wrongAnswer1" placeholder="Fout antwoord 1">
+            </div>
+            <div class="form-group">
+                <label>Fout antwoord 2 (optioneel)</label>
+                <input type="text" id="wrongAnswer2" placeholder="Fout antwoord 2">
+            </div>
+            <div class="form-group">
+                <label>Fout antwoord 3 (optioneel)</label>
+                <input type="text" id="wrongAnswer3" placeholder="Fout antwoord 3">
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="showMenu()">Terug</button>
+                <button class="btn btn-primary" onclick="addQuestion()">Toevoegen</button>
+            </div>
+        </div>
+        <div class="import-export-screen" id="importExportScreen">
+            <h2 style="text-align: center; margin-bottom: 20px;">Importeren / Exporteren</h2>
+            <h3 style="margin-bottom: 10px;">Exporteren</h3>
+            <p style="margin-bottom: 10px; opacity: 0.8;">Download alle vragen als JSON:</p>
+            <button class="btn btn-primary" onclick="exportQuestions()" style="margin-bottom: 20px;">Download vragen (JSON)</button>
+            <h3 style="margin-bottom: 10px;">Importeren</h3>
+            <div class="import-area">
+                <p>Plak hier JSON data:</p>
+                <textarea id="importData" placeholder='[{"question": "Vraag?", "answer": "Antwoord", "category": "Voetbal"}]'></textarea>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="showMenu()">Terug</button>
+                <button class="btn btn-primary" onclick="importQuestions()">Importeer</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let questions = [];
+        let currentQuiz = [];
+        let currentIndex = 0;
+        let score = 0;
+        let selectedCategories = new Set(['all']);
+
+        // Nieuwe game mode variabelen
+        let gameMode = 'normaal';
+        let lives = 3;
+        let streak = 0;
+        let bestStreakThisGame = 0;
+        let timer = null;
+        let timeLeft = 20;
+        let totalAnswered = 0;
+
+        // Spelerspaspoort data
+        let playerStats = {
+            gamesPlayed: 0,
+            totalCorrect: 0,
+            totalAnswered: 0,
+            bestStreak: 0,
+            survivalWins: 0,
+            perfectGames: 0,
+            speedDemon: 0,
+            marathonComplete: 0
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestions();
+            loadPlayerStats();
+            updateStats();
+        });
+
+        function loadQuestions() {
+            const stored = localStorage.getItem('sportquiz_questions_v7');
+            if (stored) {
+                questions = JSON.parse(stored);
+            } else {
+                questions = getDefaultQuestions();
+                saveQuestions();
+            }
+        }
+
+        function saveQuestions() {
+            localStorage.setItem('sportquiz_questions_v7', JSON.stringify(questions));
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('totalQuestions').textContent = questions.length;
+            const categories = new Set(questions.map(q => q.category));
+            document.getElementById('totalCategories').textContent = categories.size;
+        }
+
+        function showMenu() {
+            hideAllScreens();
+            document.getElementById('menuScreen').classList.remove('hidden');
+        }
+
+        function showAddScreen() {
+            hideAllScreens();
+            document.getElementById('addScreen').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showImportExport() {
+            hideAllScreens();
+            document.getElementById('importExportScreen').style.display = 'block';
+        }
+
+        function showRefreshInfo() {
+            alert('🔄 ACTUALITEIT UPDATEN\n\nGa naar Claude en zeg:\n\n"Update de sportquiz actualiteit"\n\nClaude doorzoekt dan NOS Sport, AD, Sporza etc. en maakt nieuwe vragen die je hier kunt importeren.\n\nTip: Vraag ook om specifieke onderwerpen zoals "Maak vragen over de Tour de France 2026"');
+        }
+
+        function hideAllScreens() {
+            document.getElementById('menuScreen').classList.add('hidden');
+            document.getElementById('categoryScreen').classList.add('hidden');
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('addScreen').style.display = 'none';
+            document.getElementById('importExportScreen').style.display = 'none';
+            document.getElementById('passportScreen').style.display = 'none';
+            // Stop timer als die loopt
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        // === SPELMODUS FUNCTIES ===
+        function selectMode(mode) {
+            gameMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('mode-' + mode).classList.add('active');
+        }
+
+        // === SPELERSPASPOORT FUNCTIES ===
+        function loadPlayerStats() {
+            const stored = localStorage.getItem('sportquiz_player_stats');
+            if (stored) {
+                playerStats = JSON.parse(stored);
+            }
+        }
+
+        function savePlayerStats() {
+            localStorage.setItem('sportquiz_player_stats', JSON.stringify(playerStats));
+        }
+
+        function showPassport() {
+            hideAllScreens();
+            document.getElementById('passportScreen').style.display = 'block';
+            updatePassportDisplay();
+        }
+
+        function updatePassportDisplay() {
+            const accuracy = playerStats.totalAnswered > 0
+                ? Math.round((playerStats.totalCorrect / playerStats.totalAnswered) * 100)
+                : 0;
+
+            document.getElementById('passportGamesPlayed').textContent = playerStats.gamesPlayed;
+            document.getElementById('passportTotalCorrect').textContent = playerStats.totalCorrect;
+            document.getElementById('passportAccuracy').textContent = accuracy + '%';
+            document.getElementById('passportBestStreak').textContent = playerStats.bestStreak;
+
+            // Bepaal rank en titel
+            let rank, title, avatar;
+            if (playerStats.gamesPlayed >= 100) {
+                rank = 'Legende'; title = 'Sport Encyclopedie'; avatar = '👑';
+            } else if (playerStats.gamesPlayed >= 50) {
+                rank = 'Expert'; title = 'Trivia Meester'; avatar = '🏆';
+            } else if (playerStats.gamesPlayed >= 25) {
+                rank = 'Gevorderd'; title = 'Sport Kenner'; avatar = '🥇';
+            } else if (playerStats.gamesPlayed >= 10) {
+                rank = 'Amateur'; title = 'Quiz Liefhebber'; avatar = '🥈';
+            } else if (playerStats.gamesPlayed >= 5) {
+                rank = 'Rookie'; title = 'Startende Speler'; avatar = '🥉';
+            } else {
+                rank = 'Beginner'; title = 'Sport Enthousiasteling'; avatar = '⭐';
+            }
+
+            document.getElementById('passportRank').textContent = rank;
+            document.getElementById('passportTitle').textContent = title;
+            document.getElementById('passportAvatar').textContent = avatar;
+
+            // Render badges
+            renderBadges();
+        }
+
+        function renderBadges() {
+            const badges = [
+                { id: 'first_game', icon: '🎮', name: 'Eerste Ronde', desc: 'Speel je eerste quiz', earned: playerStats.gamesPlayed >= 1 },
+                { id: 'ten_games', icon: '🔟', name: '10 Rondes', desc: 'Speel 10 quizzen', earned: playerStats.gamesPlayed >= 10 },
+                { id: 'fifty_games', icon: '5️⃣0️⃣', name: '50 Rondes', desc: 'Speel 50 quizzen', earned: playerStats.gamesPlayed >= 50 },
+                { id: 'streak_5', icon: '🔥', name: 'On Fire', desc: '5 op een rij goed', earned: playerStats.bestStreak >= 5 },
+                { id: 'streak_10', icon: '💥', name: 'Onstopbaar', desc: '10 op een rij goed', earned: playerStats.bestStreak >= 10 },
+                { id: 'streak_20', icon: '🌟', name: 'Fenomeen', desc: '20 op een rij goed', earned: playerStats.bestStreak >= 20 },
+                { id: 'perfect', icon: '💯', name: 'Perfect', desc: 'Foutloze ronde', earned: playerStats.perfectGames >= 1 },
+                { id: 'survivor', icon: '💀', name: 'Survivor', desc: 'Win survival modus', earned: playerStats.survivalWins >= 1 },
+                { id: 'marathon', icon: '🏃', name: 'Marathonloper', desc: 'Speel 100+ vragen', earned: playerStats.marathonComplete >= 1 },
+                { id: 'accurate', icon: '🎯', name: 'Scherpschutter', desc: '80%+ nauwkeurigheid', earned: playerStats.totalAnswered >= 50 && (playerStats.totalCorrect / playerStats.totalAnswered) >= 0.8 }
+            ];
+
+            const grid = document.getElementById('badgeGrid');
+            grid.innerHTML = badges.map(b => `
+                <div class="badge ${b.earned ? 'earned' : 'locked'}" title="${b.desc}">
+                    ${b.icon} ${b.name}
+                </div>
+            `).join('');
+        }
+
+        function resetPassport() {
+            if (confirm('Weet je zeker dat je je paspoort wilt resetten? Al je statistieken worden gewist!')) {
+                playerStats = {
+                    gamesPlayed: 0,
+                    totalCorrect: 0,
+                    totalAnswered: 0,
+                    bestStreak: 0,
+                    survivalWins: 0,
+                    perfectGames: 0,
+                    speedDemon: 0,
+                    marathonComplete: 0
+                };
+                savePlayerStats();
+                updatePassportDisplay();
+            }
+        }
+
+        function startQuizSelection() {
+            hideAllScreens();
+            document.getElementById('categoryScreen').classList.remove('hidden');
+            renderCategories();
+        }
+
+        function renderCategories() {
+            const categories = {};
+            questions.forEach(q => {
+                if (!categories[q.category]) categories[q.category] = 0;
+                categories[q.category]++;
+            });
+            const grid = document.getElementById('categoryGrid');
+            grid.innerHTML = `<button class="category-btn ${selectedCategories.has('all') ? 'selected' : ''}" onclick="toggleCategory('all')">Alle categorieen<span class="count">${questions.length} vragen</span></button>`;
+            Object.entries(categories).sort((a, b) => b[1] - a[1]).forEach(([cat, count]) => {
+                grid.innerHTML += `<button class="category-btn ${selectedCategories.has(cat) ? 'selected' : ''}" onclick="toggleCategory('${cat}')">${cat}<span class="count">${count} vragen</span></button>`;
+            });
+        }
+
+        function toggleCategory(category) {
+            if (category === 'all') {
+                selectedCategories.clear();
+                selectedCategories.add('all');
+            } else {
+                selectedCategories.delete('all');
+                if (selectedCategories.has(category)) {
+                    selectedCategories.delete(category);
+                } else {
+                    selectedCategories.add(category);
+                }
+                if (selectedCategories.size === 0) selectedCategories.add('all');
+            }
+            renderCategories();
+        }
+
+        function startQuiz() {
+            let availableQuestions = questions;
+            if (!selectedCategories.has('all')) {
+                availableQuestions = questions.filter(q => selectedCategories.has(q.category));
+            }
+            if (availableQuestions.length === 0) {
+                alert('Geen vragen beschikbaar.');
+                return;
+            }
+            const questionSelection = document.getElementById('questionsPerRound').value;
+            const numQuestions = questionSelection === 'all' ? availableQuestions.length : parseInt(questionSelection);
+            currentQuiz = shuffleArray([...availableQuestions]).slice(0, numQuestions);
+            currentIndex = 0;
+            score = 0;
+            totalAnswered = 0;
+
+            // Reset game mode specifieke variabelen
+            lives = 3;
+            streak = 0;
+            bestStreakThisGame = 0;
+
+            // Setup UI voor gekozen modus
+            setupGameModeUI();
+
+            hideAllScreens();
+            document.getElementById('quizScreen').style.display = 'block';
+            showQuestion();
+        }
+
+        function setupGameModeUI() {
+            // Hide alle mode-specifieke UI
+            document.getElementById('timerContainer').classList.add('hidden');
+            document.getElementById('livesContainer').classList.add('hidden');
+            document.getElementById('streakContainer').classList.add('hidden');
+
+            // Reset survival lives display
+            document.getElementById('life1').classList.remove('lost');
+            document.getElementById('life2').classList.remove('lost');
+            document.getElementById('life3').classList.remove('lost');
+
+            // Toon relevante UI op basis van modus
+            if (gameMode === 'tijdsdruk') {
+                document.getElementById('timerContainer').classList.remove('hidden');
+            } else if (gameMode === 'survival') {
+                document.getElementById('livesContainer').classList.remove('hidden');
+            } else if (gameMode === 'streak') {
+                document.getElementById('streakContainer').classList.remove('hidden');
+                updateStreakDisplay();
+            }
+        }
+
+        function showQuestion() {
+            const question = currentQuiz[currentIndex];
+            const total = currentQuiz.length;
+            document.getElementById('questionNumber').textContent = `Vraag ${currentIndex + 1} van ${total}`;
+            document.getElementById('currentScore').textContent = `Score: ${score}`;
+            document.getElementById('progressFill').style.width = `${((currentIndex) / total) * 100}%`;
+            document.getElementById('questionText').textContent = question.question;
+            const options = generateOptions(question);
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt}</span>`;
+                btn.onclick = () => selectAnswer(opt, question.answer, btn);
+                container.appendChild(btn);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            // Start timer voor tijdsdruk modus
+            if (gameMode === 'tijdsdruk') {
+                startTimer();
+            }
+        }
+
+        // === TIMER FUNCTIES ===
+        function startTimer() {
+            timeLeft = 20;
+            updateTimerDisplay();
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft -= 0.1;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timer = null;
+                    handleTimeUp();
+                }
+            }, 100);
+        }
+
+        function updateTimerDisplay() {
+            const timerText = document.getElementById('timerText');
+            const timerFill = document.getElementById('timerFill');
+            timerText.textContent = Math.ceil(timeLeft);
+            timerFill.style.width = (timeLeft / 20 * 100) + '%';
+
+            timerText.classList.remove('warning', 'danger');
+            if (timeLeft <= 5) {
+                timerText.classList.add('danger');
+            } else if (timeLeft <= 10) {
+                timerText.classList.add('warning');
+            }
+        }
+
+        function handleTimeUp() {
+            // Simuleer fout antwoord
+            const question = currentQuiz[currentIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.textContent.includes(question.answer)) {
+                    btn.classList.add('correct');
+                }
+            });
+            showFeedback(false, question.answer);
+            totalAnswered++;
+
+            // Streak reset
+            streak = 0;
+            if (gameMode === 'streak') updateStreakDisplay();
+        }
+
+        // === STREAK FUNCTIES ===
+        function updateStreakDisplay() {
+            document.getElementById('streakBadge').textContent = '🔥 ' + streak;
+            const bonus = getStreakBonus();
+            document.getElementById('streakBonus').textContent = bonus > 0 ? `+${bonus} bonus punten per vraag!` : '';
+        }
+
+        function getStreakBonus() {
+            if (streak >= 10) return 5;
+            if (streak >= 7) return 3;
+            if (streak >= 5) return 2;
+            if (streak >= 3) return 1;
+            return 0;
+        }
+
+        // === SURVIVAL FUNCTIES ===
+        function loseLife() {
+            lives--;
+            document.getElementById('life' + (lives + 1)).classList.add('lost');
+            if (lives <= 0) {
+                setTimeout(() => showResults(), 500);
+                return true; // Game over
+            }
+            return false;
+        }
+
+        function generateOptions(question) {
+            const correct = question.answer;
+            let wrongs = question.wrongAnswers ? [...question.wrongAnswers] : [];
+            while (wrongs.length < 3) {
+                const fake = generateFakeAnswer(correct, question.category, wrongs, question.question);
+                if (fake && !wrongs.includes(fake)) wrongs.push(fake);
+            }
+            const options = [correct, ...wrongs.slice(0, 3)];
+            return shuffleArray(options);
+        }
+
+        function generateFakeAnswer(correct, category, existing, questionText) {
+            const lc = correct.toLowerCase();
+            const qt = questionText ? questionText.toLowerCase() : '';
+
+            // STAP 0: Is het antwoord een BESCHRIJVING/DEFINITIE? (lang antwoord met werkwoorden)
+            const isDescription = correct.length > 20 ||
+                lc.includes(' die ') || lc.includes(' dat ') || lc.includes(' een ') ||
+                lc.includes('renner') || lc.includes('speler') || lc.includes('specialist') ||
+                lc.includes('persoon') || lc.includes('iemand') || lc.includes('atleet');
+
+            // Wielrenner types (puncheur, sprinter, klimmer, etc.)
+            if (isDescription && category === 'Wielrennen') {
+                const wielrennerTypes = [
+                    'Renner die excelleert op korte steile hellingen',
+                    'Sprinter die wint in massaspurts',
+                    'Klimmer die uitblinkt in de bergen',
+                    'Tijdrijder gespecialiseerd in individuele races tegen de klok',
+                    'Klassementsrenner die meedoet voor eindzeges',
+                    'Rouleur die constant tempo kan rijden op vlakke wegen',
+                    'Allrounder die meerdere disciplines beheerst',
+                    'Aanvaller die vaak in ontsnappingen zit',
+                    'Knecht die werkt voor de kopman',
+                    'Baroudeur die vaak in vroege vluchten meegaat'
+                ];
+                const shuffled = shuffleArray([...wielrennerTypes]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                }
+            }
+
+            // Algemene beschrijvingen per categorie
+            if (isDescription) {
+                const descriptionPools = {
+                    'Voetbal': [
+                        'Speler die als laatste man verdedigt',
+                        'Aanvaller die in de spits speelt',
+                        'Middenvelder die het spel verdeelt',
+                        'Vleugelspeler die langs de lijn opkomt',
+                        'Verdediger die koppen wint',
+                        'Keeper die penalty\'s stopt',
+                        'Invaller die het verschil maakt'
+                    ],
+                    'Tennis': [
+                        'Speler met een sterke service',
+                        'Baseliner die vanaf de achterlijn speelt',
+                        'Net-speler die vaak naar voren komt',
+                        'Allrounder met compleet spel',
+                        'Specialist op gravel',
+                        'Specialist op gras'
+                    ],
+                    'Atletiek': [
+                        'Sprinter op korte afstanden',
+                        'Middenafstandsloper',
+                        'Langeafstandsloper',
+                        'Hordeloper die over horden springt',
+                        'Springer in het verspringen',
+                        'Werper van kogel of discus'
+                    ],
+                    'Zwemmen': [
+                        'Specialist in de vrije slag',
+                        'Specialist in de rugslag',
+                        'Specialist in de schoolslag',
+                        'Specialist in de vlinderslag',
+                        'Wisselslag zwemmer'
+                    ],
+                    'Turnen': [
+                        'Turner gespecialiseerd in vloeroefeningen',
+                        'Specialist op de balk',
+                        'Specialist aan de brug',
+                        'Specialist aan de ringen',
+                        'Allround turner'
+                    ]
+                };
+                const pool = descriptionPools[category];
+                if (pool) {
+                    const shuffled = shuffleArray([...pool]);
+                    for (const fake of shuffled) {
+                        if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                    }
+                }
+            }
+
+            // STAP 1: Analyseer de vraag om het TYPE antwoord te bepalen
+            const questionPatterns = {
+                sport: {
+                    patterns: ['welke sport', 'welke sporten', 'welk onderdeel', 'welke discipline'],
+                    pool: ['Atletiek', 'Voetbal', 'Tennis', 'Zwemmen', 'Turnen', 'Wielrennen', 'Basketbal', 'Volleybal', 'Hockey', 'Handbal', 'Judo', 'Boksen', 'Worstelen', 'Roeien', 'Zeilen', 'Schieten', 'Schermen', 'Paardensport', 'Gymnastiek', 'Waterpolo', 'Rugby', 'Golf', 'Schaatsen', 'Skiën', 'Snowboarden', 'Tafeltennis', 'Badminton']
+                },
+                stad: {
+                    patterns: ['welke stad', 'in welke stad', 'waar werd', 'waar worden', 'waar vond', 'waar vindt', 'welk land', 'in welk land', 'gastland', 'gaststad'],
+                    pool: ['Parijs', 'Londen', 'Berlijn', 'Rome', 'Amsterdam', 'Barcelona', 'Athene', 'Tokio', 'Beijing', 'Sydney', 'Los Angeles', 'Rio de Janeiro', 'Moskou', 'Stockholm', 'München', 'Seoul', 'Atlanta', 'Milaan']
+                },
+                club: {
+                    patterns: ['welke club', 'welk team', 'voor welke club', 'bij welke club'],
+                    pool: ['Ajax', 'PSV', 'Feyenoord', 'Real Madrid', 'Barcelona', 'Bayern München', 'Liverpool', 'Manchester United', 'Manchester City', 'Chelsea', 'Juventus', 'AC Milan', 'Inter Milan', 'Borussia Dortmund', 'Paris Saint-Germain']
+                },
+                kleur: {
+                    patterns: ['welke kleur', 'kleur heeft', 'kleur draagt'],
+                    pool: ['Geel', 'Groen', 'Rood', 'Blauw', 'Wit', 'Zwart', 'Oranje', 'Roze', 'Paars', 'Goud', 'Zilver', 'Brons']
+                },
+                trui: {
+                    patterns: ['welke trui', 'trui draagt', 'trui voor'],
+                    pool: ['Gele trui', 'Groene trui', 'Bolletjestrui', 'Witte trui', 'Rode trui', 'Blauwe trui', 'Roze trui']
+                },
+                positie: {
+                    patterns: ['welke positie', 'op welke positie', 'als wat speelt', 'speelt als'],
+                    pool: ['Keeper', 'Verdediger', 'Middenvelder', 'Aanvaller', 'Spits', 'Centrale verdediger', 'Linksback', 'Rechtsback', 'Vleugelspeler', 'Controleur']
+                }
+            };
+
+            for (const [type, config] of Object.entries(questionPatterns)) {
+                for (const pattern of config.patterns) {
+                    if (qt.includes(pattern) && config.pool) {
+                        const shuffled = shuffleArray([...config.pool]);
+                        for (const fake of shuffled) {
+                            if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) {
+                                return fake;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // STAP 2: Ja/Nee vragen
+            if (lc === 'ja' || lc === 'nee') {
+                const opts = ['Ja', 'Nee', 'Soms', 'Niet altijd'];
+                return opts.find(o => o !== correct && !existing.includes(o)) || 'Onbekend';
+            }
+
+            // STAP 3: Getallen
+            const numMatch = correct.match(/^(\d+)/);
+            if (numMatch) {
+                const num = parseInt(numMatch[1]);
+                const vars = [num-2, num-1, num+1, num+2, Math.round(num*1.5), Math.round(num*0.7)].filter(n => n > 0 && n !== num);
+                const pick = vars[Math.floor(Math.random() * vars.length)];
+                const result = correct.replace(/^\d+/, pick);
+                if (!existing.includes(result) && result !== correct) return result;
+            }
+
+            // STAP 4: Jaren
+            const yearMatch = correct.match(/(\d{4})/);
+            if (yearMatch) {
+                const year = parseInt(yearMatch[1]);
+                const vars = [year-4, year-2, year-1, year+1, year+2, year+4];
+                const pick = vars[Math.floor(Math.random() * vars.length)];
+                const result = correct.replace(/\d{4}/, pick);
+                if (!existing.includes(result) && result !== correct) return result;
+            }
+
+            // STAP 5: Specifieke sport termen
+            const contextPools = {
+                'pike': ['Layout (gestrekt)', 'Tuck (gehurkt)', 'Straddle (gespreid)', 'Hollow position'],
+                'tuck': ['Layout (gestrekt)', 'Pike (geplooid)', 'Straddle (gespreid)', 'Hollow position'],
+                'layout': ['Pike (geplooid)', 'Tuck (gehurkt)', 'Straddle (gespreid)', 'Arch position'],
+                'birdie': ['Eagle', 'Bogey', 'Par', 'Albatross'],
+                'eagle': ['Birdie', 'Bogey', 'Par', 'Double bogey'],
+                'par': ['Birdie', 'Bogey', 'Eagle', 'Double bogey'],
+                'gele trui': ['Groene trui', 'Bolletjestrui', 'Witte trui', 'Rode trui'],
+                'groene trui': ['Gele trui', 'Bolletjestrui', 'Witte trui', 'Blauwe trui'],
+                'vrije slag': ['Rugslag', 'Schoolslag', 'Vlinderslag', 'Wisselslag'],
+                'rugslag': ['Vrije slag', 'Schoolslag', 'Vlinderslag', 'Borstcrawl'],
+                'schoolslag': ['Vrije slag', 'Rugslag', 'Vlinderslag', 'Crawl'],
+                'vlinderslag': ['Vrije slag', 'Rugslag', 'Schoolslag', 'Dolfijnslag']
+            };
+
+            for (const [key, pool] of Object.entries(contextPools)) {
+                if (lc.includes(key)) {
+                    const shuffled = shuffleArray([...pool]);
+                    for (const fake of shuffled) {
+                        if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                    }
+                }
+            }
+
+            // STAP 6: Categorie-gebaseerde personen pools
+            const personPools = {
+                'Voetbal': ['Johan Cruijff', 'Marco van Basten', 'Dennis Bergkamp', 'Ruud Gullit', 'Frank Rijkaard', 'Arjen Robben', 'Robin van Persie', 'Wesley Sneijder', 'Lionel Messi', 'Cristiano Ronaldo', 'Zinedine Zidane', 'Ronaldo', 'Diego Maradona', 'Pelé', 'Franz Beckenbauer', 'Gerd Müller', 'Michel Platini', 'Thierry Henry', 'Kylian Mbappé', 'Erling Haaland'],
+                'Wielrennen': ['Eddy Merckx', 'Bernard Hinault', 'Miguel Indurain', 'Jacques Anquetil', 'Tom Boonen', 'Fabian Cancellara', 'Tadej Pogacar', 'Jonas Vingegaard', 'Wout van Aert', 'Mathieu van der Poel', 'Peter Sagan', 'Mark Cavendish', 'Chris Froome', 'Alberto Contador', 'Jan Ullrich', 'Joop Zoetemelk', 'Geraint Thomas'],
+                'Tennis': ['Roger Federer', 'Rafael Nadal', 'Novak Djokovic', 'Andy Murray', 'Carlos Alcaraz', 'Jannik Sinner', 'Serena Williams', 'Steffi Graf', 'Martina Navratilova', 'Bjorn Borg', 'John McEnroe', 'Pete Sampras', 'Andre Agassi', 'Venus Williams', 'Naomi Osaka', 'Iga Swiatek'],
+                'Atletiek': ['Usain Bolt', 'Carl Lewis', 'Mo Farah', 'Haile Gebrselassie', 'Kenenisa Bekele', 'Eliud Kipchoge', 'Florence Griffith-Joyner', 'Shelly-Ann Fraser-Pryce', 'Sifan Hassan', 'Dafne Schippers', 'Jesse Owens', 'Jackie Joyner-Kersee', 'Michael Johnson', 'Noah Lyles'],
+                'Zwemmen': ['Michael Phelps', 'Katie Ledecky', 'Caeleb Dressel', 'Ian Thorpe', 'Mark Spitz', 'Pieter van den Hoogenband', 'Ranomi Kromowidjojo', 'Inge de Bruijn', 'Femke Heemskerk', 'Arno Kamminga'],
+                'Motorsport': ['Max Verstappen', 'Lewis Hamilton', 'Michael Schumacher', 'Ayrton Senna', 'Sebastian Vettel', 'Fernando Alonso', 'Niki Lauda', 'Alain Prost', 'Kimi Räikkönen', 'Charles Leclerc', 'Lando Norris', 'George Russell'],
+                'Turnen': ['Simone Biles', 'Nadia Comaneci', 'Kohei Uchimura', 'Sanne Wevers', 'Epke Zonderland', 'Lieke Wevers', 'Gabby Douglas', 'Larisa Latynina', 'Vera Caslavska'],
+                'Darts': ['Michael van Gerwen', 'Phil Taylor', 'Raymond van Barneveld', 'Gary Anderson', 'Peter Wright', 'Gerwyn Price', 'Luke Littler', 'Luke Humphries', 'Michael Smith', 'Rob Cross'],
+                'Schaatsen': ['Sven Kramer', 'Ireen Wüst', 'Kjeld Nuis', 'Patrick Roest', 'Jutta Leerdam', 'Ard Schenk', 'Yvonne van Gennip', 'Marianne Timmer', 'Jorien ter Mors', 'Thomas Krol']
+            };
+
+            // Check of de vraag om een persoon vraagt
+            const personPatterns = ['wie ', 'wie is', 'wie was', 'wie won', 'wie werd', 'welke speler', 'welke atleet', 'welke sporter', 'welke renner'];
+            const isPersonQuestion = personPatterns.some(p => qt.includes(p));
+
+            if (isPersonQuestion && personPools[category]) {
+                const shuffled = shuffleArray([...personPools[category]]);
+                for (const fake of shuffled) {
+                    if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+                }
+            }
+
+            // STAP 7: Fallback categorie pools
+            const fakes = {
+                'Voetbal': ['Real Madrid', 'Bayern München', 'AC Milan', 'Barcelona', 'Liverpool', 'Ajax', 'PSV', 'Feyenoord', 'Juventus', 'Inter Milan', 'Chelsea', 'Manchester City', 'Manchester United', 'Duitsland', 'Brazilië', 'Argentinië', 'Spanje', 'Italië', 'Frankrijk', 'Nederland', 'Engeland', 'Portugal'],
+                'Wielrennen': ['Tour de France', 'Giro d\'Italia', 'Vuelta a España', 'Parijs-Roubaix', 'Ronde van Vlaanderen', 'Milaan-San Remo', 'Luik-Bastenaken-Luik', 'Amstel Gold Race'],
+                'Tennis': ['Wimbledon', 'Roland Garros', 'US Open', 'Australian Open', 'ATP Finals', 'Davis Cup', 'Fed Cup'],
+                'Olympische Spelen': ['Atletiek', 'Zwemmen', 'Turnen', 'Wielrennen', 'Roeien', 'Zeilen', 'Judo', 'Boksen', 'Worstelen', 'Schieten', 'Schermen', 'Paardensport', 'Hockey', 'Voetbal', 'Basketbal', 'Volleybal', 'Handbal', 'Waterpolo', 'Tennis', 'Tafeltennis'],
+                'Atletiek': ['100 meter', '200 meter', '400 meter', '800 meter', '1500 meter', '5000 meter', '10000 meter', 'Marathon', 'Hoogspringen', 'Verspringen', 'Kogelstoten', 'Discuswerpen', 'Speerwerpen', 'Hordenlopen', 'Estafette'],
+                'Motorsport': ['Red Bull Racing', 'Ferrari', 'Mercedes', 'McLaren', 'Aston Martin', 'Alpine', 'Williams', 'Haas', 'Alfa Romeo', 'AlphaTauri'],
+                'Wintersport': ['Schaatsen', 'Skiën', 'Snowboarden', 'Bobsleeën', 'Langlaufen', 'Biatlon', 'Schansspringen', 'Kunstrijden', 'IJshockey', 'Curling'],
+                'Darts': ['180', 'Checkout', 'Dubbel 20', 'Dubbel 16', 'Bullseye', 'Triple 20', 'Triple 19', 'Leg', 'Set'],
+                'Golf': ['Birdie', 'Eagle', 'Bogey', 'Par', 'Albatross', 'Double bogey', 'Hole-in-one', 'Putt', 'Drive', 'Chip'],
+                'Rugby': ['Try', 'Conversie', 'Penalty', 'Drop goal', 'Scrum', 'Line-out', 'Ruck', 'Maul', 'Tackle'],
+                'Basketbal': ['Dunk', 'Lay-up', 'Three-pointer', 'Free throw', 'Rebound', 'Assist', 'Block', 'Steal', 'Double-double', 'Triple-double'],
+                'Turnen': ['Salto', 'Flikflak', 'Schroef', 'Dubbele salto', 'Balk', 'Vloer', 'Brug', 'Ringen', 'Rekstok', 'Paard'],
+                'Zwemmen': ['Vrije slag', 'Rugslag', 'Schoolslag', 'Vlinderslag', 'Wisselslag', '50 meter', '100 meter', '200 meter', '400 meter', '1500 meter'],
+                'Toekomstige Evenementen': ['Barcelona', 'Edinburgh', 'Londen', 'Parijs', 'Monaco', 'Los Angeles', 'Brisbane', 'Milaan', 'Franse Alpen', 'Salt Lake City', 'New York', 'Madrid', 'Rome', 'Granada', 'Nessebar', 'Bulgarije', '2026', '2027', '2028', '2030', '2032', '2034', 'VS', 'Spanje', 'Italië', 'Engeland', 'Saudi-Arabië', 'Turkije'],
+                'Algemeen': ['Ja', 'Nee', 'Soms', 'Altijd', 'Nooit', 'Beide', 'Geen van beide', 'Onbekend']
+            };
+
+            const pool = fakes[category] || fakes['Algemeen'];
+            const shuffled = shuffleArray([...pool]);
+            for (const fake of shuffled) {
+                if (fake.toLowerCase() !== lc && !existing.map(e=>e.toLowerCase()).includes(fake.toLowerCase())) return fake;
+            }
+            return 'Anders';
+        }
+
+        function selectAnswer(selected, correct, clickedBtn) {
+            // Stop timer als die loopt
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('disabled');
+                const text = btn.querySelector('span:last-child').textContent;
+                if (text === correct) btn.classList.add('correct');
+                else if (text === selected && selected !== correct) btn.classList.add('wrong');
+            });
+
+            totalAnswered++;
+            const isCorrect = selected === correct;
+
+            // Bereken score met streak bonus
+            let pointsEarned = 0;
+            if (isCorrect) {
+                streak++;
+                if (streak > bestStreakThisGame) bestStreakThisGame = streak;
+                pointsEarned = 1;
+                if (gameMode === 'streak') {
+                    pointsEarned += getStreakBonus();
+                }
+                score += pointsEarned;
+            } else {
+                streak = 0;
+            }
+
+            // Update streak display
+            if (gameMode === 'streak') {
+                updateStreakDisplay();
+            }
+
+            // Survival modus: verlies leven bij fout
+            if (gameMode === 'survival' && !isCorrect) {
+                if (loseLife()) return; // Game over
+            }
+
+            showFeedback(isCorrect, correct, pointsEarned);
+        }
+
+        function showFeedback(isCorrect, correct, pointsEarned = 1) {
+            const feedback = document.getElementById('feedback');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const correctAnswer = document.getElementById('correctAnswer');
+
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                let title = 'Goed!';
+                if (gameMode === 'streak' && pointsEarned > 1) {
+                    title = `Goed! +${pointsEarned} punten 🔥`;
+                }
+                feedbackTitle.textContent = title;
+                correctAnswer.innerHTML = `<strong>Antwoord:</strong> ${correct}`;
+            } else {
+                feedback.className = 'feedback wrong';
+                let title = 'Fout!';
+                if (gameMode === 'survival') {
+                    title = `Fout! ${lives > 0 ? '❤️'.repeat(lives) + ' over' : 'Game Over!'}`;
+                }
+                feedbackTitle.textContent = title;
+                correctAnswer.innerHTML = `<strong>Juiste antwoord:</strong> ${correct}`;
+            }
+
+            feedback.style.display = 'block';
+            document.getElementById('currentScore').textContent = `Score: ${score}`;
+            const nextBtn = document.getElementById('nextBtn');
+
+            // Check of game over (survival) of laatste vraag
+            if (gameMode === 'survival' && lives <= 0) {
+                nextBtn.textContent = 'Resultaat';
+            } else {
+                nextBtn.textContent = currentIndex < currentQuiz.length - 1 ? 'Volgende' : 'Resultaat';
+            }
+            nextBtn.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            // Check survival game over
+            if (gameMode === 'survival' && lives <= 0) {
+                showResults();
+                return;
+            }
+
+            currentIndex++;
+            if (currentIndex < currentQuiz.length) showQuestion();
+            else showResults();
+        }
+
+        function showResults() {
+            // Stop timer
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+
+            hideAllScreens();
+            document.getElementById('resultsScreen').style.display = 'block';
+
+            const total = gameMode === 'survival' && lives <= 0 ? currentIndex + 1 : currentQuiz.length;
+            const actualTotal = currentQuiz.length;
+            const percentage = Math.round((score / (gameMode === 'streak' ? totalAnswered : total)) * 100);
+
+            document.getElementById('finalScore').textContent = `${score}/${totalAnswered}`;
+
+            let details = `${score} van ${totalAnswered} goed`;
+            if (gameMode === 'streak' && bestStreakThisGame > 0) {
+                details += ` | Beste streak: ${bestStreakThisGame} 🔥`;
+            }
+            if (gameMode === 'survival') {
+                if (lives > 0) {
+                    details += ` | Overleefd met ${lives} ❤️`;
+                } else {
+                    details += ` | Uitgeschakeld bij vraag ${currentIndex + 1}`;
+                }
+            }
+            document.getElementById('resultsDetails').textContent = details;
+
+            // Bepaal bericht
+            let message;
+            if (gameMode === 'survival' && lives > 0 && currentIndex >= currentQuiz.length - 1) {
+                message = '🎉 Overleefd!';
+            } else if (percentage === 100) {
+                message = 'Perfect! 🏆';
+            } else if (percentage >= 80) {
+                message = 'Geweldig! 🥇';
+            } else if (percentage >= 60) {
+                message = 'Goed gedaan! 🥈';
+            } else if (percentage >= 40) {
+                message = 'Niet slecht! 🥉';
+            } else {
+                message = 'Blijf oefenen! 💪';
+            }
+            document.getElementById('resultsMessage').textContent = message;
+
+            // Update spelerspaspoort
+            updatePlayerStats();
+        }
+
+        function updatePlayerStats() {
+            playerStats.gamesPlayed++;
+            playerStats.totalCorrect += score;
+            playerStats.totalAnswered += totalAnswered;
+
+            if (bestStreakThisGame > playerStats.bestStreak) {
+                playerStats.bestStreak = bestStreakThisGame;
+            }
+
+            // Check voor badges
+            if (score === totalAnswered && totalAnswered >= 10) {
+                playerStats.perfectGames++;
+            }
+
+            if (gameMode === 'survival' && lives > 0 && currentIndex >= currentQuiz.length - 1) {
+                playerStats.survivalWins++;
+            }
+
+            if (totalAnswered >= 100) {
+                playerStats.marathonComplete++;
+            }
+
+            savePlayerStats();
+        }
+
+        function addQuestion() {
+            const category = document.getElementById('newCategory').value;
+            const questionText = document.getElementById('newQuestion').value.trim();
+            const answer = document.getElementById('newAnswer').value.trim();
+            const wrong1 = document.getElementById('wrongAnswer1').value.trim();
+            const wrong2 = document.getElementById('wrongAnswer2').value.trim();
+            const wrong3 = document.getElementById('wrongAnswer3').value.trim();
+            if (!questionText || !answer) { alert('Vul vraag en antwoord in.'); return; }
+            questions.push({ question: questionText, answer: answer, category: category, wrongAnswers: [wrong1, wrong2, wrong3].filter(w => w) });
+            saveQuestions();
+            document.getElementById('newQuestion').value = '';
+            document.getElementById('newAnswer').value = '';
+            document.getElementById('wrongAnswer1').value = '';
+            document.getElementById('wrongAnswer2').value = '';
+            document.getElementById('wrongAnswer3').value = '';
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => document.getElementById('successMessage').style.display = 'none', 3000);
+        }
+
+        function exportQuestions() {
+            const data = JSON.stringify(questions, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sportquiz_vragen.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importQuestions() {
+            const data = document.getElementById('importData').value.trim();
+            if (!data) { alert('Plak eerst JSON data.'); return; }
+            try {
+                const imported = JSON.parse(data);
+                if (!Array.isArray(imported)) throw new Error('Data moet een array zijn');
+                let added = 0;
+                imported.forEach(q => {
+                    if (q.question && q.answer) {
+                        questions.push({ question: q.question, answer: q.answer, category: q.category || 'Algemeen', wrongAnswers: q.wrongAnswers || [] });
+                        added++;
+                    }
+                });
+                saveQuestions();
+                alert(`${added} vragen geimporteerd!`);
+                document.getElementById('importData').value = '';
+                showMenu();
+            } catch (e) { alert('Fout: ' + e.message); }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getDefaultQuestions() {
+            return [
+                // === DOCUMENT 1: circa 536 vragen ===
+                // Algemeen / Basis
+                {q:"Tot welke nationale bond behoren de voetbalploegen van Liechtenstein?",a:"De Zwitserse voetbalbond",c:"Algemeen"},
+                {q:"Hoeveel banen heeft een olympisch zwembad en hoe lang is het?",a:"Acht banen en vijftig meter",c:"Zwemmen"},
+                {q:"Wie won zes opeenvolgende Wimbledon-titels in de jaren tachtig?",a:"Martina Navratilova",c:"Tennis"},
+                {q:"Welke Portugese voetballer was topscorer op de wereldbeker in 1966?",a:"Eusebio",c:"Voetbal"},
+                {q:"Welk Aziatisch land bereikte als eerste de halve finale op een WK voetbal in 2002?",a:"Zuid-Korea",c:"Voetbal"},
+                {q:"Wat was het eerste land dat twee maal de wereldbeker voetbal won?",a:"Italie",c:"Voetbal"},
+                {q:"Hoe noemt men acrobatisch touwtjespringen nog?",a:"Rope Skipping",c:"Algemeen"},
+                {q:"Waarin moeten je voeten zitten bij het paardrijden?",a:"Stijgbeugels",c:"Algemeen"},
+                {q:"Is kogelstoten een atletieksport?",a:"Ja",c:"Atletiek"},
+                {q:"Hoeveel spelers staan er in totaal op een basketbalveld?",a:"Tien (5 tegen 5)",c:"Basketbal"},
+                {q:"Hoe wordt de Belgische nationale voetbalploeg genoemd?",a:"De Rode Duivels",c:"Voetbal"},
+                {q:"In welk land werd in 1998 het WK voetbal georganiseerd?",a:"Frankrijk",c:"Voetbal"},
+                {q:"Met hoeveel pijltjes mag men in een beurt bij darts naar het bord gooien?",a:"Drie",c:"Darts"},
+                {q:"Welke sport beoefent J.-M. Saive?",a:"Tafeltennis",c:"Algemeen"},
+                {q:"Wie bedoelt men met 'de zwarte' bij sportwedstrijden?",a:"De scheidsrechter",c:"Algemeen"},
+                {q:"Bij welke balsport is de bal niet rond?",a:"Rugby",c:"Rugby"},
+                {q:"Waar vonden de Olympische Zomerspelen in 2004 plaats?",a:"Athene",c:"Olympische Spelen"},
+                {q:"Wat is de naam van het vierkante binnenveld bij honkbal?",a:"De diamant",c:"Algemeen"},
+                {q:"Hoe noemt men de sport die men met een trimaran beoefent?",a:"Zeilen",c:"Zeilen"},
+                {q:"In welk land werd het werelduurrecord van Eddy Merckx gevestigd?",a:"Mexico (Mexico-Stad)",c:"Wielrennen"},
+                {q:"Is touwklimmen ooit een onderdeel van de Olympische Spelen geweest?",a:"Ja",c:"Olympische Spelen"},
+                {q:"Hoe heet het beroemde paardenras in de Spaanse rijschool in Wenen?",a:"Lippizaner",c:"Algemeen"},
+                {q:"Voor welke wielrenner met bijnaam 'de laatste Flandrien' werd een standbeeld opgericht?",a:"Briek Schotte",c:"Wielrennen"},
+                {q:"Wie won Parijs-Roubaix in 2005?",a:"Tom Boonen",c:"Wielrennen"},
+                {q:"Welke Belgische wielrenner won 5 keer Luik-Bastenaken-Luik?",a:"Eddy Merckx",c:"Wielrennen"},
+                {q:"Van welke sport ken je Lucien Bianchi?",a:"Autosport",c:"Motorsport"},
+                {q:"Hoeveel maal mag een schansspringer in een wedstrijd springen?",a:"3",c:"Wintersport"},
+                {q:"Hoe noemt men de oprichter van de moderne Olympische Spelen?",a:"Pierre de Coubertin",c:"Olympische Spelen"},
+                {q:"In welke wielerklassieker moeten de renners over de Kemmelberg?",a:"Gent-Wevelgem",c:"Wielrennen"},
+                {q:"Hoeveel keer werd Stefan Everts wereldkampioen motorcross?",a:"Tien",c:"Motorsport"},
+                {q:"In welke sport kan men posities innemen zoals fine leg, silly point, cover point?",a:"Cricket",c:"Algemeen"},
+                {q:"Welk land werd op 30 juni 1996 Europees kampioen voetbal?",a:"Duitsland",c:"Voetbal"},
+                {q:"Wie won in 1982 de WK-finale voetbal in Spanje?",a:"Italie",c:"Voetbal"},
+                {q:"Welk Australisch werptuig komt terug als het gegooid is?",a:"De boemerang",c:"Algemeen"},
+                {q:"Hoe noemt men de extra rit voorafgaande aan de eerste rit?",a:"Proloog",c:"Wielrennen"},
+                // Olympische Spelen
+                {q:"In welke stad vonden de eerste moderne Olympische Spelen plaats (1896)?",a:"Athene",c:"Olympische Spelen"},
+                {q:"Waar waren de eerste Winterspelen (1924)?",a:"Chamonix (Frankrijk)",c:"Olympische Spelen"},
+                {q:"Wat is het olympisch motto (klassiek) in het Latijn?",a:"Citius, Altius, Fortius",c:"Olympische Spelen"},
+                {q:"Hoe heet het olympisch motto inclusief de toevoeging sinds 2021?",a:"Citius, Altius, Fortius - Communiter",c:"Olympische Spelen"},
+                {q:"Wat zijn de vijf kleuren van de olympische ringen?",a:"Blauw, geel, zwart, groen, rood",c:"Olympische Spelen"},
+                {q:"Hoeveel ringen bevat het olympische symbool?",a:"Vijf",c:"Olympische Spelen"},
+                {q:"Wat is de standaardlengte van een olympisch zwembad?",a:"50 meter",c:"Zwemmen"},
+                {q:"Hoeveel lanes heeft een olympisch zwembad standaard?",a:"8",c:"Zwemmen"},
+                {q:"Welke vlam wordt ontstoken in Olympia en reist naar de gaststad?",a:"De olympische vlam",c:"Olympische Spelen"},
+                {q:"Welke sport staat sinds 1896 op elke Zomerspelen-editie op het programma?",a:"Atletiek",c:"Olympische Spelen"},
+                {q:"Welke sport is voor Nederland historisch het succesvolst op de Winterspelen?",a:"Langebaanschaatsen",c:"Wintersport"},
+                {q:"Wat is het verschil tussen een NOK en IOC?",a:"NOK is nationaal olympisch comite; IOC is het internationale olympische comite",c:"Olympische Spelen"},
+                {q:"Hoe heet de openingsceremonie-traditie waarbij landen binnenkomen?",a:"Parade of Nations",c:"Olympische Spelen"},
+                {q:"Welke kleur trui is in wielrennen de leiderstrui in de Tour de France?",a:"Geel",c:"Wielrennen"},
+                {q:"In welk jaar organiseerde Beijing de Olympische Zomerspelen?",a:"2008",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde London de Olympische Zomerspelen?",a:"2012",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Rio de Janeiro de Olympische Zomerspelen?",a:"2016",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Tokyo de Olympische Zomerspelen?",a:"2020",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Paris de Olympische Zomerspelen?",a:"2024",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Salt Lake City de Olympische Winterspelen?",a:"2002",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Turin de Olympische Winterspelen?",a:"2006",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Vancouver de Olympische Winterspelen?",a:"2010",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Sochi de Olympische Winterspelen?",a:"2014",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde PyeongChang de Olympische Winterspelen?",a:"2018",c:"Olympische Spelen"},
+                {q:"In welk jaar organiseerde Beijing de Olympische Winterspelen?",a:"2022",c:"Olympische Spelen"},
+                {q:"Welke sport maakte zijn intrede op de Spelen van 2020 (Tokio-nieuwkomer)?",a:"Skateboarden",c:"Olympische Spelen"},
+                {q:"Welke klimsport werd nieuw op de Spelen van 2020?",a:"Sportklimmen",c:"Olympische Spelen"},
+                {q:"Welke watersport werd nieuw op de Spelen van 2020?",a:"Surfen",c:"Olympische Spelen"},
+                {q:"Welke vechtsport was nieuw op Tokio 2020 maar keert niet terug?",a:"Karate",c:"Olympische Spelen"},
+                {q:"Wat is Biatlon?",a:"Langlaufen en schieten",c:"Wintersport"},
+                {q:"Wat is Noordse combinatie?",a:"Schansspringen en langlaufen",c:"Wintersport"},
+                {q:"Wat is Skeleton?",a:"Sleeen met het hoofd eerst, individueel",c:"Wintersport"},
+                {q:"Wat is Bobslee?",a:"Team-slee met cockpit; snelheid + stuurwerk",c:"Wintersport"},
+                {q:"Wat is Curling?",a:"Stenen schuiven over ijs en vegen voor snelheid/krul",c:"Wintersport"},
+                {q:"Wat is Shorttrack?",a:"Schaatsen op korte baan met inhaalduels",c:"Wintersport"},
+                // Atletiek
+                {q:"Wie heeft het wereldrecord 100 m mannen en wat is de tijd?",a:"Usain Bolt - 9,58",c:"Atletiek"},
+                {q:"Wie heeft het wereldrecord 200 m mannen?",a:"Usain Bolt - 19,19",c:"Atletiek"},
+                {q:"Wie heeft het wereldrecord 100 m vrouwen?",a:"Florence Griffith-Joyner - 10,49",c:"Atletiek"},
+                {q:"Wie heeft het wereldrecord 800 m vrouwen?",a:"Jarmila Kratochvilova - 1:53,28",c:"Atletiek"},
+                {q:"Wie heeft het wereldrecord Marathon mannen (2023)?",a:"Kelvin Kiptum - 2:00:35",c:"Atletiek"},
+                {q:"Wat betekent 'Fosbury flop'?",a:"Hoogspringtechniek waarbij je met de rug over de lat gaat",c:"Atletiek"},
+                {q:"Wat betekent 'Split times'?",a:"Tussentijden per ronde/segment",c:"Atletiek"},
+                {q:"Wat betekent 'DQ' in uitslagen?",a:"Disqualified: gediskwalificeerd",c:"Atletiek"},
+                {q:"Wat betekent 'False start'?",a:"Valse start; bij sprint kan dat diskwalificatie betekenen",c:"Atletiek"},
+                {q:"Wat is kogelstoten?",a:"Stoten van een metalen kogel; niet werpen bovenhands",c:"Atletiek"},
+                {q:"Wat is discuswerpen?",a:"Werp een discus na rotatie in de ring",c:"Atletiek"},
+                {q:"Wat is speerwerpen?",a:"Werp een speer; geldige worp vereist correcte landing met punt",c:"Atletiek"},
+                {q:"Wat is hamerslingeren?",a:"Slingeren en werpen van kogel aan draad met handvat",c:"Atletiek"},
+                {q:"Wat is verspringen?",a:"Spring zo ver mogelijk na aanloop; afzet achter de balk",c:"Atletiek"},
+                {q:"Wat is hink-stap-sprong?",a:"Triple jump: hop, step, jump",c:"Atletiek"},
+                {q:"Wat is polsstokhoogspringen?",a:"Over een lat springen met behulp van een polsstok",c:"Atletiek"},
+                {q:"Hoeveel rondes heeft een standaard 400 m baan?",a:"1 ronde is 400 meter",c:"Atletiek"},
+                {q:"Wat is het verschil tussen 10.000 m en 10 km op de weg?",a:"10.000 m is baan; 10 km is wegwedstrijd",c:"Atletiek"},
+                {q:"Wat is een 'negative split' in duurloop?",a:"Tweede helft sneller lopen dan eerste helft",c:"Atletiek"},
+                {q:"Hoeveel onderdelen telt de tienkamp?",a:"10",c:"Atletiek"},
+                {q:"Hoeveel onderdelen telt de zevenkamp?",a:"7",c:"Atletiek"},
+                {q:"Wat betekent 'DNS' in uitslagen?",a:"Did Not Start",c:"Atletiek"},
+                {q:"Wat betekent 'DNF' in uitslagen?",a:"Did Not Finish",c:"Atletiek"},
+                // Wielrennen
+                {q:"Noem de drie Grand Tours.",a:"Tour de France, Giro d'Italia, Vuelta a Espana",c:"Wielrennen"},
+                {q:"Welke trui is voor de leider in het algemeen klassement in de Tour?",a:"De gele trui",c:"Wielrennen"},
+                {q:"Welke trui is voor de puntenleider in de Tour?",a:"De groene trui",c:"Wielrennen"},
+                {q:"Welke trui is voor de beste klimmer in de Tour?",a:"De bolletjestrui",c:"Wielrennen"},
+                {q:"Wat betekent DNF in wieleruitslagen?",a:"Did Not Finish",c:"Wielrennen"},
+                {q:"Wat zijn 'waaiers' (echelons)?",a:"Zijwind breekt het peloton in schuine formaties",c:"Wielrennen"},
+                {q:"Noem de vijf wielermonumenten.",a:"Milaan-San Remo, Ronde van Vlaanderen, Parijs-Roubaix, Luik-Bastenaken-Luik, Ronde van Lombardije",c:"Wielrennen"},
+                {q:"Wat is een 'Domestique'?",a:"Helper/ploegmaat die werkt voor de kopman",c:"Wielrennen"},
+                {q:"Wat is een 'Lead-out'?",a:"Sprinttrein die sprinter in perfecte positie afzet",c:"Wielrennen"},
+                {q:"Wat is een 'Bidon'?",a:"Drinkfles",c:"Wielrennen"},
+                {q:"Wat is 'Lactaatdrempel'?",a:"Intensiteit waarbij lactaatproductie snel toeneemt",c:"Wielrennen"},
+                {q:"Wat is 'Cadans'?",a:"Omwentelingen per minuut (rpm) tijdens trappen",c:"Wielrennen"},
+                {q:"Wat is een 'Kassei'?",a:"Keien; klassieke ondergrond zoals in Parijs-Roubaix",c:"Wielrennen"},
+                {q:"Wat is een 'Kopgroep'?",a:"Vroege ontsnapping; probeert peloton voor te blijven",c:"Wielrennen"},
+                {q:"Wat is het verschil tussen een proloog en een individuele tijdrit?",a:"Proloog is kort en voor etappe 1; ITT kan elke lengte",c:"Wielrennen"},
+                {q:"Wat is een 'bonificatie'?",a:"Tijdaftrek voor hoge daguitslagen/tussensprints",c:"Wielrennen"},
+                {q:"Wat betekent 'lanterne rouge' in de Tour?",a:"Laatste in het eindklassement",c:"Wielrennen"},
+                {q:"Wat is een 'baroudeur'?",a:"Renner die vaak aanvalt/ontsnapt",c:"Wielrennen"},
+                {q:"Wat is een 'puncheur'?",a:"Renner die excelleert op korte steile hellingen",c:"Wielrennen"},
+                {q:"Wie wordt 'De Kannibaal' genoemd?",a:"Eddy Merckx",c:"Wielrennen"},
+                {q:"Welke koers staat bekend als 'De Hel van het Noorden'?",a:"Parijs-Roubaix",c:"Wielrennen"},
+                // Voetbal
+                {q:"Hoeveel spelers staan er per team in het veld bij de aftrap (incl. keeper)?",a:"11",c:"Voetbal"},
+                {q:"Wat is buitenspel in een zin?",a:"Aanvaller staat bij passen dichter bij doellijn dan bal en voorlaatste verdediger",c:"Voetbal"},
+                {q:"Wat is een hattrick?",a:"Drie goals door dezelfde speler in een wedstrijd",c:"Voetbal"},
+                {q:"Hoe heet de prijs voor de WK-topscorer?",a:"Gouden Schoen",c:"Voetbal"},
+                {q:"In welk jaar won Nederland het EK?",a:"1988",c:"Voetbal"},
+                {q:"Welke club heeft historisch de meeste Champions League-titels?",a:"Real Madrid",c:"Voetbal"},
+                {q:"Wat betekent 'VAR'?",a:"Video Assistant Referee",c:"Voetbal"},
+                {q:"Wat betekent 'DOGSO'?",a:"Denial of an Obvious Goal-Scoring Opportunity",c:"Voetbal"},
+                {q:"Wat betekent 'Advantage'?",a:"Scheids laat doorspelen als dat voordelig is voor benadeelde ploeg",c:"Voetbal"},
+                {q:"Wat is een 'Panenka'?",a:"Stift-strafschop door het midden",c:"Voetbal"},
+                {q:"Wat is een 'Sweeper-keeper'?",a:"Keeper die ver uit goal speelt als extra verdediger",c:"Voetbal"},
+                {q:"Wat is een 'False nine'?",a:"Spits die terugzakt in middenveld, ruimte creeert",c:"Voetbal"},
+                {q:"Wat is 'Gegenpress'?",a:"Direct druk zetten na balverlies om bal terug te winnen",c:"Voetbal"},
+                {q:"Hoeveel minuten duurt een reguliere wedstrijd (excl. extra tijd)?",a:"90 minuten",c:"Voetbal"},
+                {q:"Wat betekent 'stoppage time'?",a:"Extra tijd toegevoegd voor blessures/wissels/tijdrekken",c:"Voetbal"},
+                {q:"Wat betekent 'xG'?",a:"Expected Goals: kanswaarde van schot op basis van data",c:"Voetbal"},
+                {q:"Wat is een 'clean sheet'?",a:"Wedstrijd zonder tegendoelpunt",c:"Voetbal"},
+                {q:"Wie scoorde het beroemde volley-doelpunt in de EK-finale 1988?",a:"Marco van Basten",c:"Voetbal"},
+                {q:"Wie won het WK 2014?",a:"Duitsland",c:"Voetbal"},
+                // Wintersport
+                {q:"Wat is een 'Klapschaats'?",a:"Schaats met scharnier waardoor langer contact met ijs",c:"Wintersport"},
+                {q:"Wat is 'Mass start'?",a:"Schaatswedstrijd met pelotonstart",c:"Wintersport"},
+                {q:"Wat is 'Allround'?",a:"Meerkamp over meerdere afstanden",c:"Wintersport"},
+                {q:"Wat is 'Super-G'?",a:"Alpineski: snelheid, tussen downhill en reuzenslalom",c:"Wintersport"},
+                {q:"Wat is 'Ski cross'?",a:"Meerdere skieers tegelijk op parcours met sprongen/bochten",c:"Wintersport"},
+                {q:"Wat is 'Halfpipe'?",a:"Snowboard/ski: trucs in halve pijp",c:"Wintersport"},
+                {q:"Wat is het kernverschil tussen slalom en reuzenslalom?",a:"Slalom: kortere bochten/poorten dichter; reuzenslalom: verder uit elkaar",c:"Wintersport"},
+                {q:"Wat is 'telemark landing' in schansspringen?",a:"Landingsstijl met een ski voor de ander, knieen gebogen",c:"Wintersport"},
+                {q:"Wat is het verschil tussen skeleton en rodelen in houding?",a:"Skeleton: op buik hoofd eerst; rodelen: op rug voeten eerst",c:"Wintersport"},
+                // Motorsport
+                {q:"Wie hebben het record voor meeste F1-wereldtitels en hoeveel?",a:"Lewis Hamilton en Michael Schumacher - 7",c:"Motorsport"},
+                {q:"Wat betekent 'pole position'?",a:"Startplek 1 na kwalificatie",c:"Motorsport"},
+                {q:"Wat is een 'undercut' in F1?",a:"Eerder pitten om met verse banden positie te winnen",c:"Motorsport"},
+                {q:"Wat is een 'overcut' in F1?",a:"Later pitten en langer doorrijden om voordeel te pakken",c:"Motorsport"},
+                {q:"Wat betekent DRS?",a:"Drag Reduction System: achtervleugel open voor minder luchtweerstand",c:"Motorsport"},
+                {q:"Wat is parc ferme?",a:"Regime waarin auto-instellingen na kwalificatie nauwelijks aangepast mogen worden",c:"Motorsport"},
+                {q:"Wat is het verschil tussen safety car en virtual safety car?",a:"Safety car: veld achter safety car; VSC: iedereen vertraagt tot delta",c:"Motorsport"},
+                {q:"Wat betekent 'apex' in bochtentechniek?",a:"Binnenste punt van de bocht waar je het dichtst langs stuurt",c:"Motorsport"},
+                {q:"Wat is slipstreaming?",a:"Rijden in de luwte om minder weerstand te hebben",c:"Motorsport"},
+                {q:"Wat betekent 'Red flag'?",a:"Race stilgelegd",c:"Motorsport"},
+                {q:"Wat zijn 'Slicks'?",a:"Droogweerbanden zonder profiel",c:"Motorsport"},
+                {q:"Wat zijn 'Intermediates'?",a:"Banden voor licht natte baan",c:"Motorsport"},
+                {q:"Wat zijn 'Wets'?",a:"Volle regenbanden met diep profiel",c:"Motorsport"},
+                // Tennis
+                {q:"Wat betekent 'Love' in tennis?",a:"Nul punten",c:"Tennis"},
+                {q:"Wat betekent 'Deuce' in tennis?",a:"Gelijkstand op 40-40",c:"Tennis"},
+                {q:"Wat betekent 'Advantage' in tennis?",a:"Voordeel na deuce",c:"Tennis"},
+                {q:"Wat is een 'Tiebreak'?",a:"Beslissend spel tot 7 punten met 2 verschil",c:"Tennis"},
+                {q:"Wat is een 'Grand Slam' in tennis?",a:"Australian Open, Roland Garros, Wimbledon, US Open",c:"Tennis"},
+                {q:"Wat is een 'Golden Slam'?",a:"Alle 4 Grand Slams + olympisch goud in 1 jaar",c:"Tennis"},
+                {q:"Wat is een 'Break point'?",a:"Kans om servicegame van tegenstander te breken",c:"Tennis"},
+                {q:"Wat is een 'Ace'?",a:"Service waartegen geen racketcontact komt",c:"Tennis"},
+                {q:"Wat is een 'Double fault'?",a:"Twee opeenvolgende foutieve services",c:"Tennis"},
+                {q:"Wat is een 'Let'?",a:"Service raakt netband maar valt goed; service overnieuw",c:"Tennis"},
+                {q:"Wie heeft de meeste Grand Slam herensingles-titels (record)?",a:"Novak Djokovic - 24",c:"Tennis"},
+                {q:"Op welke ondergrond wordt Roland Garros gespeeld?",a:"Gravel (rood gravel/clay)",c:"Tennis"},
+                {q:"Wat betekent 'bagel' in tennis?",a:"Een set winnen met 6-0",c:"Tennis"},
+                // Zwemmen
+                {q:"Noem de vier officiele zwemslagen.",a:"Vrije slag, rugslag, schoolslag, vlinderslag",c:"Zwemmen"},
+                {q:"Wat is het verschil tussen wisselslag en vrije slag?",a:"Wisselslag: combinatie van slagen in vaste volgorde; vrije slag: meestal crawl",c:"Zwemmen"},
+                {q:"Wat is een 'flip turn'?",a:"Koprolkeer bij keerpunt",c:"Zwemmen"},
+                {q:"Welke slag vereist tweehandige aanraking bij keerpunt en finish?",a:"Schoolslag en vlinderslag",c:"Zwemmen"},
+                {q:"Wat betekent 'SCM' en 'LCM' in recordlijsten?",a:"Short Course (25m) en Long Course (50m)",c:"Zwemmen"},
+                // Basketbal
+                {q:"Wat is een 'triple-double'?",a:"Dubbele cijfers in drie statistieken",c:"Basketbal"},
+                {q:"Hoeveel punten is een driepunter waard?",a:"3",c:"Basketbal"},
+                {q:"Wat is een 'and-one'?",a:"Score ondanks fout + extra vrije worp",c:"Basketbal"},
+                {q:"Wat is 'goaltending'?",a:"Bal blokkeren terwijl die op neergaande baan richting ring is",c:"Basketbal"},
+                {q:"Wat is een 'shot clock' en hoe lang is die in de NBA?",a:"Aanvalstijd; 24 seconden",c:"Basketbal"},
+                {q:"Hoeveel spelers staan er per team tegelijk op het veld?",a:"5",c:"Basketbal"},
+                {q:"Wie brak Oscar Robertson's record voor meeste career triple-doubles?",a:"Russell Westbrook",c:"Basketbal"},
+                // Darts
+                {q:"Wat is de maximale score met een dartpijl?",a:"60 (triple 20)",c:"Darts"},
+                {q:"Hoeveel punten is bullseye (rode bull)?",a:"50",c:"Darts"},
+                {q:"Hoeveel punten is outer bull (groene ring)?",a:"25",c:"Darts"},
+                {q:"Wat is de hoogste mogelijke checkout?",a:"170 (T20, T20, bull)",c:"Darts"},
+                {q:"Wat is de som van alle getallen op een standaard dartbord (1 t/m 20)?",a:"210",c:"Darts"},
+                {q:"Hoeveel darts zitten er in een volledige leg als je 501 uitgooit met 9-darter?",a:"9 darts",c:"Darts"},
+                // Rugby
+                {q:"Hoeveel punten is een try in rugby union?",a:"5",c:"Rugby"},
+                {q:"Hoeveel punten is een conversie?",a:"2",c:"Rugby"},
+                {q:"Hoeveel punten is een penalty kick in rugby?",a:"3",c:"Rugby"},
+                {q:"Hoeveel punten is een drop goal?",a:"3",c:"Rugby"},
+                {q:"Wat is een scrum?",a:"Hervatting met pakketten spelers die duwen om bal te winnen",c:"Rugby"},
+                {q:"Wat is een line-out?",a:"Inworp na bal buiten zijlijn; spelers springen/liften",c:"Rugby"},
+                {q:"Wat betekent 'knock-on'?",a:"Bal vooruit uit handen; overtreding",c:"Rugby"},
+                {q:"Wat is het verschil tussen rugby union en league?",a:"League heeft 13 spelers en set of six tackles; union 15 en rucks/mauls",c:"Rugby"},
+                // Golf
+                {q:"Wat is een 'Birdie' in golf?",a:"Een slag onder par op een hole",c:"Golf"},
+                {q:"Wat is een 'Eagle' in golf?",a:"Twee slagen onder par op een hole",c:"Golf"},
+                {q:"Wat is een 'Albatross' in golf?",a:"Drie slagen onder par op een hole",c:"Golf"},
+                {q:"Wat is 'Par' in golf?",a:"Standaard aantal slagen voor een hole",c:"Golf"},
+                {q:"Wat is 'Handicap' in golf?",a:"Correctie om spelers van verschillend niveau te vergelijken",c:"Golf"},
+                {q:"Wat is de 'Green' in golf?",a:"Gemaaid gebied rond de hole",c:"Golf"},
+                {q:"Wat is de 'Fairway' in golf?",a:"Kort gemaaid deel tussen tee en green",c:"Golf"},
+                {q:"Wat is de 'Rough' in golf?",a:"Lang gras naast fairway",c:"Golf"},
+                {q:"Wat is een 'Bunker' in golf?",a:"Zandhindernis",c:"Golf"},
+                {q:"Wat is een 'Hole-in-one'?",a:"In een slag in de hole",c:"Golf"},
+                {q:"Noem de 4 majors in golf.",a:"Masters, PGA Championship, US Open, The Open Championship",c:"Golf"},
+                // IJshockey
+                {q:"Wat is de 'Puck' in ijshockey?",a:"De schijf waarmee gespeeld wordt",c:"IJshockey"},
+                {q:"Wat is 'Powerplay' in ijshockey?",a:"Situatie met man-meer door tijdstraf tegenstander",c:"IJshockey"},
+                {q:"Wat is 'Penalty kill'?",a:"Verdedigen met man-minder",c:"IJshockey"},
+                {q:"Wat is 'Icing'?",a:"Puck van eigen helft over doellijn zonder aanraking; spelstillegging",c:"IJshockey"},
+                {q:"Wat is 'Offside' in ijshockey?",a:"Aanvaller gaat de zone in voor de puck",c:"IJshockey"},
+                {q:"Wat is een 'Face-off'?",a:"Inworp waarbij puck wordt gedropt tussen twee spelers",c:"IJshockey"},
+                {q:"Wat is een 'Hat trick' in ijshockey?",a:"Drie goals door een speler",c:"IJshockey"},
+                {q:"Wat is een 'Empty-net goal'?",a:"Doelpunt in leeg doel wanneer keeper eruit is",c:"IJshockey"},
+                {q:"Wat is een 'Shorthanded goal'?",a:"Doelpunt gemaakt met man-minder",c:"IJshockey"},
+                {q:"Wat is een 'Slapshot'?",a:"Harde slagschot-techniek",c:"IJshockey"},
+                {q:"Hoeveel spelers staan er maximaal op het ijs per team (incl. keeper)?",a:"6",c:"IJshockey"},
+                // American Football
+                {q:"Wat is een 'Touchdown'?",a:"Score door bal in end zone te brengen: 6 punten",c:"American Football"},
+                {q:"Wat is een 'Extra point'?",a:"Kick na touchdown: 1 punt",c:"American Football"},
+                {q:"Wat is een 'Two-point conversion'?",a:"Spel na touchdown voor 2 punten i.p.v. kick",c:"American Football"},
+                {q:"Wat is een 'Field goal'?",a:"Trap tussen palen: 3 punten",c:"American Football"},
+                {q:"Wat is een 'Safety'?",a:"Tackle/penalty in eigen end zone: 2 punten voor verdediging",c:"American Football"},
+                {q:"Wat is een 'Down'?",a:"Poging; aanval heeft 4 downs om 10 yards te halen",c:"American Football"},
+                {q:"Wat is de 'Line of scrimmage'?",a:"Startlijn van de play",c:"American Football"},
+                {q:"Wat is een 'Quarterback'?",a:"Spelverdeler die passes geeft/hand-offs",c:"American Football"},
+                {q:"Wat is een 'Interception'?",a:"Verdediging vangt pass; balbezit wisselt",c:"American Football"},
+                {q:"Wat is een 'Fumble'?",a:"Balverlies door loslaten; bal is vrij",c:"American Football"},
+                {q:"Wat is een 'Sack'?",a:"Quarterback achter de line getackeld",c:"American Football"},
+                {q:"Wat is een 'Punt'?",a:"Wegschop om veldpositie te wisselen",c:"American Football"},
+                {q:"Wat is een 'Blitz'?",a:"Extra rushers sturen om QB onder druk te zetten",c:"American Football"},
+                {q:"Wat is een 'Hail Mary'?",a:"Lange wanhoopspass aan het einde",c:"American Football"},
+                {q:"Wat is een 'Pick-six'?",a:"Interception teruggelopen voor TD",c:"American Football"},
+                {q:"Hoeveel downs heeft een aanval om 10 yards te halen?",a:"4",c:"American Football"},
+                // Boksen
+                {q:"Wat is een 'Jab' in boksen?",a:"Snelle rechte stoot met voorhand",c:"Boksen"},
+                {q:"Wat is een 'Cross' in boksen?",a:"Rechte stoot met achterhand",c:"Boksen"},
+                {q:"Wat is een 'Hook' in boksen?",a:"Haakstoot van opzij",c:"Boksen"},
+                {q:"Wat is een 'Uppercut' in boksen?",a:"Opwaartse stoot van onderen",c:"Boksen"},
+                {q:"Wat is een 'Southpaw'?",a:"Linkshandige stand (rechtsvoor)",c:"Boksen"},
+                {q:"Wat is 'Orthodox' in boksen?",a:"Rechtshandige stand (linksvoor)",c:"Boksen"},
+                {q:"Wat betekent 'TKO'?",a:"Technische knock-out: scheids/arts stopt gevecht",c:"Boksen"},
+                {q:"Wat betekent 'KO'?",a:"Knock-out: vechter telt uit",c:"Boksen"},
+                {q:"Wat is een 'Clinch'?",a:"Vastpakken om actie te stoppen",c:"Boksen"},
+                {q:"Wat is een 'Knockdown'?",a:"Vechter gaat naar canvas door geldige stoot",c:"Boksen"},
+                {q:"Wat is een 'Split decision'?",a:"Uitslag: jury verdeeld, maar meerderheid een winnaar",c:"Boksen"},
+                {q:"Wat is een 'Unanimous decision'?",a:"Alle juryleden zelfde winnaar",c:"Boksen"},
+                {q:"Hoeveel minuten duurt een boksenronde bij profboksen meestal?",a:"3 minuten",c:"Boksen"},
+                // Snooker
+                {q:"Wat is een 'Frame' in snooker?",a:"Een spel/ronde binnen een match",c:"Snooker"},
+                {q:"Wat is een 'Break' in snooker?",a:"Aaneengesloten serie punten in een beurt",c:"Snooker"},
+                {q:"Wat is een 'Century break'?",a:"Break van 100+ punten",c:"Snooker"},
+                {q:"Wat is een 'Maximum break' in snooker?",a:"147 punten in een break",c:"Snooker"},
+                {q:"Wat is 'The D' in snooker?",a:"Halve cirkel in baulk area",c:"Snooker"},
+                {q:"Wat is een 'Safety' shot in snooker?",a:"Verdedigende stoot om tegenstander te bemoeilijken",c:"Snooker"},
+                {q:"Wat is een 'Snooker'?",a:"Situatie: direct zicht op gewenste bal geblokkeerd",c:"Snooker"},
+                {q:"Wat is een 'Pot' in snooker?",a:"Bal in pocket spelen",c:"Snooker"},
+                {q:"Hoeveel rode ballen liggen er bij de start?",a:"15",c:"Snooker"},
+                {q:"Wat is de kleurenvolgorde na alle reds?",a:"Geel, groen, bruin, blauw, roze, zwart",c:"Snooker"},
+                // Roeien
+                {q:"Wat is een 'Skiff'?",a:"Eenpersoons roeiboot (1x)",c:"Roeien"},
+                {q:"Wat is een 'Acht'?",a:"Achtpersoons met stuurman (8+)",c:"Roeien"},
+                {q:"Wat is de 'Slag' in roeien?",a:"Roeier die tempo bepaalt (stroke)",c:"Roeien"},
+                {q:"Wat is de 'Catch'?",a:"Moment dat blad het water pakt",c:"Roeien"},
+                {q:"Wat is 'Rate' in roeien?",a:"Slagfrequentie (spm)",c:"Roeien"},
+                {q:"Wat is een 'Power ten'?",a:"Tien krachtige slagen om te versnellen",c:"Roeien"},
+                {q:"Wat is een 'Coxswain'?",a:"Stuurman/coach in boot",c:"Roeien"},
+                {q:"Wat is 'Sweep rowing'?",a:"Een riem per roeier",c:"Roeien"},
+                {q:"Wat is 'Sculling'?",a:"Twee riemen per roeier",c:"Roeien"},
+                // Zeilen
+                {q:"Wat is 'Bakboord'?",a:"Linkerkant van schip; rode zijde",c:"Zeilen"},
+                {q:"Wat is 'Stuurboord'?",a:"Rechterkant; groene zijde",c:"Zeilen"},
+                {q:"Wat is 'Overstag'?",a:"Tack: boeg door de wind, wissel van tack",c:"Zeilen"},
+                {q:"Wat is 'Gijpen'?",a:"Gybe: kont door de wind, koerswissel",c:"Zeilen"},
+                {q:"Wat is 'Aan de wind'?",a:"Zo hoog mogelijk tegen de wind in varen",c:"Zeilen"},
+                {q:"Wat is 'Voor de wind'?",a:"Wind recht van achteren",c:"Zeilen"},
+                {q:"Wat is een 'Spinnaker'?",a:"Groot bol zeil voor downwind",c:"Zeilen"},
+                {q:"Wat is 'Foiling'?",a:"Varen op draagvleugels boven water",c:"Zeilen"},
+                // Turnen
+                {q:"Wat is de 'Sprong' in turnen?",a:"Toestel: aanloop en sprong over tafel",c:"Turnen"},
+                {q:"Wat is 'Brug ongelijk'?",a:"Toestel voor vrouwen: two bars",c:"Turnen"},
+                {q:"Wat is de 'Balk'?",a:"Smalle balk waarop oefeningen worden gedaan",c:"Turnen"},
+                {q:"Wat is de 'Vloer' in turnen?",a:"Toestel: vloeroefening",c:"Turnen"},
+                {q:"Wat zijn de 'Ringen'?",a:"Toestel voor mannen: kracht en swings",c:"Turnen"},
+                {q:"Wat is de 'Rekstok'?",a:"Toestel voor mannen: high bar",c:"Turnen"},
+                {q:"Wat is 'D-score'?",a:"Difficulty score: moeilijkheid",c:"Turnen"},
+                {q:"Wat is 'E-score'?",a:"Execution score: uitvoering",c:"Turnen"},
+                {q:"Wat is een 'Stick landing'?",a:"Stabiele landing zonder stap",c:"Turnen"},
+                {q:"Wat is 'Layout'?",a:"Gestrekte salto",c:"Turnen"},
+                {q:"Wat is 'Tuck'?",a:"Opgetrokken houding in salto",c:"Turnen"},
+                {q:"Wat is 'Pike'?",a:"Gebogen heupen, benen recht",c:"Turnen"},
+                // Gewichtheffen
+                {q:"Wat is 'Snatch' in gewichtheffen?",a:"In een beweging van grond naar boven hoofd",c:"Algemeen"},
+                {q:"Wat is 'Clean & jerk'?",a:"In twee delen: clean naar schouders, jerk boven hoofd",c:"Algemeen"},
+                {q:"Wat is 'Total' in gewichtheffen?",a:"Som van beste snatch en beste clean & jerk",c:"Algemeen"},
+                // Handbal
+                {q:"Wat is een 'Zevenmeter' in handbal?",a:"Penaltyworp van 7 meter",c:"Algemeen"},
+                {q:"Wat is 'Passief spel' in handbal?",a:"Scheids waarschuwt en dwingt aanval tot afronden",c:"Algemeen"},
+                {q:"Wat is een '2-minuten straf' in handbal?",a:"Tijdstraf; team speelt met een minder",c:"Algemeen"},
+                // Volleybal
+                {q:"Wat is een 'Libero' in volleybal?",a:"Verdedigingsspecialist, andere kleding, beperkte aanvallen",c:"Algemeen"},
+                {q:"Wat is een 'Block' in volleybal?",a:"Netverdediging met handen boven net",c:"Algemeen"},
+                {q:"Wat is een 'Ace' in volleybal?",a:"Servicepunt",c:"Algemeen"},
+                {q:"Welke score haal je om een set te winnen in volleybal?",a:"25 punten, minimaal 2 punten verschil",c:"Algemeen"},
+                // Badminton
+                {q:"Wat is de 'Shuttle' in badminton?",a:"De 'bal' (pluim) waarmee je speelt",c:"Algemeen"},
+                {q:"Wat is een 'Smash' in badminton?",a:"Harde neerwaartse slag",c:"Algemeen"},
+                // Honkbal
+                {q:"Hoeveel strikes is een strike-out?",a:"3",c:"Algemeen"},
+                {q:"Hoeveel balls is een walk in honkbal?",a:"4",c:"Algemeen"},
+                {q:"Wat is een 'home run'?",a:"Bal buiten het veld slaan, alle honken rond",c:"Algemeen"},
+                {q:"Wat is een 'double play'?",a:"Twee uit in een spelsituatie",c:"Algemeen"},
+                {q:"Hoeveel innings is een standaard MLB-wedstrijd?",a:"9",c:"Algemeen"},
+                // Schaken
+                {q:"Wat betekent 'FIDE' in schaken?",a:"Wereldschaakbond",c:"Algemeen"},
+                {q:"Wat is 'Rokade' in schaken?",a:"Koningszet met toren om veiligheid/ontwikkeling",c:"Algemeen"},
+                {q:"Wat is 'En passant' in schaken?",a:"Pion slaan in het voorbijgaan onder voorwaarden",c:"Algemeen"},
+                {q:"Wat is 'Pat' in schaken?",a:"Gelijkspel doordat speler niet kan zetten maar niet schaak staat",c:"Algemeen"},
+                {q:"Wat is 'Schaakmat'?",a:"Koning staat schaak en kan niet ontsnappen",c:"Algemeen"},
+                // Extra / Bonusvragen
+                {q:"Hoe lang is een marathon officieel?",a:"42,195 km",c:"Atletiek"},
+                {q:"Wat is het verschil tussen de Davis Cup en Billie Jean King Cup?",a:"Davis Cup is landentoernooi mannen; Billie Jean King Cup is vrouwen",c:"Tennis"},
+                {q:"Wat is de hoogste mogelijke score in een beurt bij darts?",a:"180 (3x60)",c:"Darts"},
+                {q:"Hoeveel meter is de standaard hordenrace voor mannen op de baan?",a:"110m horden",c:"Atletiek"},
+                {q:"Hoeveel meter is de standaard hordenrace voor vrouwen op de baan?",a:"100m horden",c:"Atletiek"},
+                {q:"Wat betekent 'OT' in Amerikaanse sportuitslagen?",a:"Overtime (verlenging)",c:"Algemeen"},
+                {q:"Wat betekent 'PK' in voetbalwedstrijdnotatie?",a:"Penalty kicks (strafschoppenserie)",c:"Voetbal"},
+                {q:"Hoeveel punten is een touchdown plus two-point conversion in totaal?",a:"8 punten",c:"American Football"},
+                {q:"Hoeveel rondes is 10.000 m op een 400 m baan?",a:"25 rondes",c:"Atletiek"},
+                {q:"Hoeveel rondes is 5.000 m op een 400 m baan?",a:"12,5 rondes",c:"Atletiek"},
+                {q:"Wat betekent 'PB' in atletenprofielen?",a:"Personal Best (persoonlijk record)",c:"Atletiek"},
+                {q:"Wat betekent 'SB' in atletenprofielen?",a:"Season Best (seizoensbeste)",c:"Atletiek"},
+                {q:"Wat betekent 'NR' in recordnotatie?",a:"National Record (nationaal record)",c:"Atletiek"},
+                {q:"Wat betekent 'WR' in recordnotatie?",a:"World Record (wereldrecord)",c:"Atletiek"},
+                {q:"Wie is de meest succesvolle olympier aller tijden (medailles)?",a:"Michael Phelps - 28",c:"Olympische Spelen"},
+                {q:"Wie is de enige atleet die olympisch goud won op zowel Zomer- als Winterspelen?",a:"Eddie Eagan: boksen (1920) en bobslee (1932)",c:"Olympische Spelen"},
+                {q:"Welke stad organiseerde de Zomerspelen drie keer in drie verschillende eeuwen?",a:"Parijs: 1900, 1924, 2024",c:"Olympische Spelen"},
+                {q:"Welke stad organiseerde de Zomerspelen drie keer?",a:"Londen: 1908, 1948, 2012",c:"Olympische Spelen"},
+                {q:"Welke sport stond een keer op het olympisch programma in 1900 en keert terug in 2028?",a:"Cricket",c:"Olympische Spelen"},
+                {q:"In welk jaar werd snowboarding voor het eerst olympisch?",a:"1998 (Nagano)",c:"Wintersport"},
+                {q:"Welke editie introduceerde de olympische marathon voor vrouwen?",a:"1984, Los Angeles",c:"Olympische Spelen"},
+                {q:"Welke land is traditioneel het succesvolst op de Winterspelen?",a:"Noorwegen",c:"Wintersport"},
+                {q:"Welke kleur ring staat bovenaan in het midden van de olympische ringen?",a:"Zwart",c:"Olympische Spelen"},
+                {q:"Welke sport heet in het Engels 'artistic swimming'?",a:"Kunstzwemmen (vroeger synchronized swimming)",c:"Zwemmen"},
+                {q:"In welke sport kan 'false start' leiden tot onmiddellijke diskwalificatie?",a:"Atletiek; reactie onder 0,10 s",c:"Atletiek"},
+                {q:"Wat betekent 'ippon' en in welke sport?",a:"Vol punt / directe overwinning; judo",c:"Algemeen"},
+                {q:"Welke twee coureurs delen het record van 7 F1-wereldtitels?",a:"Michael Schumacher en Lewis Hamilton",c:"Motorsport"},
+                {q:"Welke race hoort NIET bij de Triple Crown of Motorsport: Monaco GP, Indy 500, 24h Le Mans, Dakar Rally?",a:"Dakar Rally",c:"Motorsport"},
+                {q:"Noem een coureur die de Triple Crown heeft behaald.",a:"Graham Hill",c:"Motorsport"},
+                {q:"Welke MLB-club heeft historisch de meeste World Series titels?",a:"New York Yankees",c:"Algemeen"},
+                {q:"Wat is een 'perfect game' in bowling en hoeveel punten?",a:"300",c:"Algemeen"},
+                {q:"Hoe heet 3 strikes op rij bij bowlen?",a:"Turkey",c:"Algemeen"},
+                {q:"Noem de drie onderdelen van triathlon in juiste volgorde.",a:"Zwemmen, fietsen, hardlopen",c:"Algemeen"},
+                {q:"Wat is 'World Athletics'?",a:"Internationale atletiekbond (voorheen IAAF)",c:"Atletiek"},
+                // === ACTUALITEIT JANUARI 2026 ===
+                {q:"Wie won de Dakar Rally 2026 bij de auto's?",a:"Nasser Al-Attiyah",c:"Actualiteit",w:["Sebastien Loeb","Carlos Sainz","Nani Roma"]},
+                {q:"Wie won de Dakar Rally 2026 bij de trucks?",a:"Vaidotas Zala",c:"Actualiteit",w:["Martin Macik","Dmitry Sotnikov","Eduard Nikolaev"]},
+                {q:"Welke Argentijnse motorcoureur won de Dakar Rally 2026?",a:"Luciano Benavides",c:"Actualiteit",w:["Kevin Benavides","Toby Price","Sam Sunderland"]},
+                {q:"In welk land vond de Dakar Rally 2026 plaats?",a:"Saoedi-Arabie",c:"Actualiteit",w:["Peru","Argentinie","Chili"]},
+                {q:"Wie bereikte de finale van de Australian Open 2026 na een vijfsetter tegen Zverev?",a:"Carlos Alcaraz",c:"Actualiteit",w:["Jannik Sinner","Novak Djokovic","Daniil Medvedev"]},
+                {q:"Welke tennisser versloeg Ben Shelton in de kwartfinale Australian Open 2026?",a:"Jannik Sinner",c:"Actualiteit",w:["Carlos Alcaraz","Novak Djokovic","Alexander Zverev"]},
+                {q:"Welke tennisster versloeg Iga Swiatek op de Australian Open 2026?",a:"Elena Rybakina",c:"Actualiteit",w:["Aryna Sabalenka","Coco Gauff","Jessica Pegula"]},
+                {q:"Tegen wie speelde Djokovic in de halve finale Australian Open 2026?",a:"Jannik Sinner",c:"Actualiteit",w:["Carlos Alcaraz","Alexander Zverev","Daniil Medvedev"]},
+                {q:"Waar vindt het WK Veldrijden 2026 plaats?",a:"Hulst (Nederland)",c:"Actualiteit",w:["Lievin (Frankrijk)","Hoogerheide (Nederland)","Tabor (Tsjechie)"]},
+                {q:"Wie is de grote favoriet voor het WK Veldrijden 2026 in Hulst?",a:"Mathieu van der Poel",c:"Actualiteit",w:["Wout van Aert","Thibau Nys","Tom Pidcock"]},
+                {q:"Welke Belgische wielrenner ontbreekt op het WK Veldrijden 2026?",a:"Wout van Aert",c:"Actualiteit",w:["Thibau Nys","Eli Iserbyt","Michael Vanthourenhout"]},
+                {q:"Wie won de Wereldbeker veldrijden in Benidorm januari 2026 bij de vrouwen?",a:"Lucinda Brand",c:"Actualiteit",w:["Fem van Empel","Ceylin del Carmen Alvarado","Puck Pieterse"]},
+                {q:"Welke verdediger haalde Ajax binnen van Arsenal in januari 2026?",a:"Takehiro Tomiyasu",c:"Actualiteit",w:["William Saliba","Ben White","Gabriel"]},
+                {q:"Naar welke club vertrok keeper Remko Pasveer in januari 2026?",a:"Heracles Almelo",c:"Actualiteit",w:["FC Utrecht","FC Twente","NEC"]},
+                {q:"Met welke score eindigde Arsenal - Liverpool op 8 januari 2026?",a:"0-0",c:"Actualiteit",w:["1-1","2-1","0-1"]},
+                {q:"Welke club won met 3-2 bij Arsenal op 25 januari 2026?",a:"Manchester United",c:"Actualiteit",w:["Manchester City","Liverpool","Chelsea"]},
+                {q:"Waar vinden de Olympische Winterspelen 2026 plaats?",a:"Milaan en Cortina d'Ampezzo (Italie)",c:"Actualiteit",w:["Salt Lake City (USA)","Sapporo (Japan)","Stockholm (Zweden)"]},
+                {q:"In welke maand beginnen de Olympische Winterspelen 2026?",a:"Februari (6-22 februari)",c:"Actualiteit",w:["Januari","Maart","December 2025"]},
+                {q:"In hoeveel landen vindt het WK Voetbal 2026 plaats?",a:"Drie (USA, Canada, Mexico)",c:"Actualiteit",w:["Een","Twee","Vier"]},
+                {q:"Hoeveel landen doen mee aan het WK Voetbal 2026?",a:"48",c:"Actualiteit",w:["32","40","64"]},
+                {q:"Wie won de Manchester derby op 17 januari 2026?",a:"Manchester United (2-0)",c:"Actualiteit",w:["Manchester City","Gelijkspel","Afgelast"]},
+                {q:"Welke Nederlandse schaatsster behoort tot de favorieten op het WK Allround 2026?",a:"Joy Beune",c:"Actualiteit",w:["Irene Schouten","Jutta Leerdam","Femke Kok"]},
+                {q:"Welke Nederlandse schaatser rijdt het WK Allround 2026?",a:"Patrick Roest",c:"Actualiteit",w:["Kjeld Nuis","Thomas Krol","Kai Verbij"]},
+                {q:"Waar vindt het WK Allround Schaatsen 2026 plaats?",a:"Thialf, Heerenveen",c:"Actualiteit",w:["Inzell (Duitsland)","Calgary (Canada)","Salt Lake City (USA)"]},
+                {q:"Hoeveel directe Champions League tickets heeft de Eredivisie na januari 2026?",a:"Een (verloor het tweede ticket)",c:"Actualiteit",w:["Twee","Drie","Nul"]},
+                // === SET 2: 130 MOEILIJKE VRAGEN ===
+                // Olympisch moeilijk
+                {q:"Welke stad organiseerde de Zomerspelen van 1900 en met welke wereldtentoonstelling liep dit samen?",a:"Parijs; de Exposition Universelle (Wereldtentoonstelling) van 1900",c:"Olympische Spelen"},
+                {q:"Welke olympische sport had in 1900 een onderdeel met levende duiven als doelwit?",a:"Schietsport; Parijs 1900 had 'live pigeon shooting'",c:"Olympische Spelen"},
+                {q:"Welke sport stond van 1900 tot en met 1920 op het olympisch programma en draait om een touw?",a:"Touwtrekken (tug of war)",c:"Olympische Spelen"},
+                {q:"Welke olympische sport gebruikt een epee, floret en sabel als drie wapens?",a:"Schermen",c:"Olympische Spelen"},
+                {q:"Welke stad was de eerste die de Zomerspelen organiseerde in Zuid-Amerika?",a:"Rio de Janeiro, 2016",c:"Olympische Spelen"},
+                {q:"Welke editie van de Zomerspelen werd geannuleerd door WOII maar stond gepland in Londen?",a:"1944",c:"Olympische Spelen"},
+                {q:"Welke bobsleediscipline maakte olympisch debuut op de Winterspelen van 2022?",a:"Monobob (voor vrouwen)",c:"Olympische Spelen"},
+                {q:"Welke olympische sport heeft wedstrijden waarin mannen en vrouwen in dezelfde competitie uitkomen?",a:"Paardensport (dressuur, springen, eventing)",c:"Olympische Spelen"},
+                {q:"In welk jaar werd de olympische vlag voor het eerst officieel gehesen?",a:"1920, Antwerpen",c:"Olympische Spelen"},
+                {q:"Welke editie introduceerde als eerste een officieel Olympisch Dorp?",a:"1932, Los Angeles",c:"Olympische Spelen"},
+                {q:"Bij welke Spelen werd de marathonafstand van 42,195 km voor het eerst gelopen?",a:"1908, Londen",c:"Olympische Spelen"},
+                {q:"Welke olympische sport combineert vijf disciplines en werd bedacht om de 'ideale soldaat' te testen?",a:"Moderne vijfkamp (modern pentathlon)",c:"Olympische Spelen"},
+                {q:"Welke Spelen staan bekend als de 'Austerity Games'?",a:"Londen 1948; naoorlogse schaarste",c:"Olympische Spelen"},
+                {q:"Welke stad organiseerde de Zomerspelen in 1916?",a:"Geen: geannuleerd door WWI (gepland in Berlijn)",c:"Olympische Spelen"},
+                {q:"Welke winterdiscipline debuteerde olympisch in 1998 met halfpipe?",a:"Snowboarden (Nagano)",c:"Olympische Spelen"},
+                {q:"Welke sport 'roque' was olympisch bij welke editie?",a:"St. Louis 1904",c:"Olympische Spelen"},
+                {q:"Bij welke Spelen werd het 1-2-3 medaillesysteem (goud-zilver-brons) standaard?",a:"1904, St. Louis",c:"Olympische Spelen"},
+                {q:"Wat was de eerste officiele olympische mascotte en bij welke Spelen?",a:"Waldi, Munchen 1972",c:"Olympische Spelen"},
+                {q:"Bij welke Spelen werd de fakkeltocht van Olympia naar de gaststad voor het eerst gehouden?",a:"1936, Berlijn",c:"Olympische Spelen"},
+                {q:"Welke stad was de eerste in Azie die de Winterspelen organiseerde?",a:"Sapporo, 1972",c:"Olympische Spelen"},
+                {q:"Welke editie was de eerste met televisiebeelden van de Spelen?",a:"Berlijn 1936",c:"Olympische Spelen"},
+                {q:"Welke editie wordt genoemd als begin van het moderne commerciele sponsormodel?",a:"Los Angeles 1984",c:"Olympische Spelen"},
+                {q:"Welke vijf sporten vormden de moderne vijfkamp (noem er 4)?",a:"Schermen, zwemmen, paardrijden, hardlopen, schieten",c:"Olympische Spelen"},
+                {q:"Welke beloning kregen winnaars op de Spelen van 1896?",a:"Zilveren medaille en olijfkrans (geen goud)",c:"Olympische Spelen"},
+                // Atletiek moeilijk
+                {q:"Welke sprong van Bob Beamon werd beroemd als 'de sprong naar de 21e eeuw'?",a:"Verspringen: 8,90 m (Mexico-Stad 1968)",c:"Atletiek"},
+                {q:"Welke vrouw brak officieel de 10-secondenbarriere op de 100 m?",a:"Geen: WR staat op 10,49 (Griffith-Joyner)",c:"Atletiek"},
+                {q:"Noem de vier werponderdelen in olympische atletiek.",a:"Kogelstoten, discuswerpen, speerwerpen, hamerslingeren",c:"Atletiek"},
+                {q:"Welke twee disciplines worden samen de 'vertical jumps' genoemd?",a:"Hoogspringen en polsstokhoogspringen",c:"Atletiek"},
+                {q:"In atletiek uitslagen: wat betekent Q en wat betekent q?",a:"Q = geplaatst op plaats; q = geplaatst op tijd",c:"Atletiek"},
+                {q:"Is windmeting relevant voor wereldrecords op de 800 m?",a:"Nee; windlimiet geldt bij sprints en sprongen",c:"Atletiek"},
+                {q:"Welke discipline heeft een vaste hindernis plus waterbak?",a:"3000 m steeplechase",c:"Atletiek"},
+                // Voetbal moeilijk
+                {q:"Welke club won de Europa Cup I vijf keer op rij vanaf 1956?",a:"Real Madrid (1956-1960)",c:"Voetbal"},
+                {q:"Welke WK-finale was de eerste beslist door strafschoppen?",a:"1994: Brazilie vs Italie (0-0)",c:"Voetbal"},
+                {q:"Kan er direct uit een inworp gescoord worden?",a:"Nee. In tegenstander's doel: doelschop. Eigen doel: corner",c:"Voetbal"},
+                {q:"Welke prijs krijgt de topscorer van de Eredivisie?",a:"De Willy van der Kuijlen-trofee",c:"Voetbal"},
+                {q:"Welke positie wordt bedoeld met 'nummer 6'?",a:"Defensieve middenvelder/controleur",c:"Voetbal"},
+                {q:"Wie heeft het record voor meeste doelpunten in een WK-eindtoernooi?",a:"Just Fontaine: 13 goals (WK 1958)",c:"Voetbal"},
+                {q:"Welke twee landen speelden de eerste WK-finale ooit?",a:"Uruguay - Argentinie, 1930",c:"Voetbal"},
+                // Wielrennen moeilijk
+                {q:"Welke leiderstrui hoort bij het algemeen klassement in de Giro?",a:"Maglia rosa (roze)",c:"Wielrennen"},
+                {q:"Welke trui hoort bij het puntenklassement in de Giro?",a:"Maglia ciclamino (paars/cyclamen)",c:"Wielrennen"},
+                {q:"Welke klassieker eindigt traditioneel op de Via Roma?",a:"Milaan-San Remo",c:"Wielrennen"},
+                {q:"Wat bedoelt men met de 'triple crown of cycling'?",a:"Giro, Tour en WK op de weg winnen in een jaar",c:"Wielrennen"},
+                {q:"Welke baanwielren-discipline start achter een derny?",a:"Keirin",c:"Wielrennen"},
+                {q:"Is de wereldkampioenstrui universeel voor alle disciplines?",a:"Nee; de titel geldt per discipline/categorie",c:"Wielrennen"},
+                {q:"Welke vijf kleuren zitten in de UCI regenboogbanden?",a:"Blauw, rood, zwart, geel, groen (wit ontbreekt)",c:"Wielrennen"},
+                // Motorsport moeilijk
+                {q:"Welke race hoort bij de Triple Crown of Motorsport naast Monaco GP en Le Mans?",a:"Indianapolis 500",c:"Motorsport"},
+                {q:"Wat is het verschil tussen pole position en fastest lap?",a:"Pole: snelste kwalificatie; fastest lap: snelste ronde in race",c:"Motorsport"},
+                {q:"In MotoGP: wat betekent 'premier class' historisch?",a:"De 500cc-klasse (nu MotoGP)",c:"Motorsport"},
+                {q:"Wat is in rally de rol van de co-driver?",a:"Leest pace notes en navigeert",c:"Motorsport"},
+                {q:"Kan een F1-coureur punten scoren zonder de finish te halen?",a:"Ja, als hij geclassificeerd wordt",c:"Motorsport"},
+                // Tennis moeilijk
+                {q:"Wat betekent de term 'Calendar Grand Slam'?",a:"Alle vier Grand Slams winnen in een kalenderjaar",c:"Tennis"},
+                {q:"Welke twee Grand Slams worden op hardcourt gespeeld?",a:"Australian Open en US Open",c:"Tennis"},
+                {q:"Wat is het maximale aantal games in een set die je met 7-6 wint?",a:"13 games",c:"Tennis"},
+                {q:"Welke term betekent dat je een game wint zonder punt te verliezen?",a:"Love game",c:"Tennis"},
+                {q:"Wat is een 'golden set'?",a:"Set winnen zonder punt te verliezen (6-0)",c:"Tennis"},
+                // US Sports moeilijk
+                {q:"In baseball: wat betekent een walk-off?",a:"Thuisploeg scoort winnende run in laatste slagbeurt",c:"American Football"},
+                {q:"Welke MLB-club heeft historisch de meeste World Series titels en hoeveel?",a:"New York Yankees, 27",c:"Algemeen"},
+                {q:"Wat is in American football het verschil tussen field goal en touchdown qua punten?",a:"Field goal 3; touchdown 6",c:"American Football"},
+                {q:"In ijshockey: hoe heet de kampioenstrofee?",a:"Stanley Cup",c:"IJshockey"},
+                {q:"Hoe heet de NHL-trofee voor topscorer van het reguliere seizoen?",a:"Art Ross Trophy",c:"IJshockey"},
+                {q:"Kan een MLB-wedstrijd eindigen in gelijkspel in de reguliere competitie?",a:"Nee; er worden extra innings gespeeld",c:"Algemeen"},
+                {q:"Welke sprinttest uit de NFL Combine is 'de standaard' voor snelheid?",a:"De 40-yard dash",c:"American Football"},
+                // Overige sporten moeilijk
+                {q:"Wat is het belangrijkste regelverschil tussen vrije slag en schoolslag?",a:"Schoolslag heeft vaste arm/beenbeweging",c:"Zwemmen"},
+                {q:"Welke vechtsport gebruikt ippon als directe winnende score?",a:"Judo",c:"Algemeen"},
+                {q:"In snooker: wat is de maximale break?",a:"147",c:"Snooker"},
+                {q:"Welke sport introduceerde de 'clap skate' in de jaren 90?",a:"Langebaanschaatsen",c:"Wintersport"},
+                {q:"Welke judoscore werd afgeschaft maar bestond vroeger wel?",a:"Yuko",c:"Algemeen"},
+                {q:"In cricket: wat is het verschil tussen ODI en Test qua duur?",a:"ODI: 1 dag (50 overs); Test: tot 5 dagen",c:"Algemeen"},
+                {q:"Welke sport gebruikt 'grand slam' buiten tennis?",a:"Rugby Six Nations: alle wedstrijden winnen",c:"Rugby"},
+                {q:"In handbal: hoeveel stappen mag je zonder dribbelen?",a:"3 stappen",c:"Algemeen"},
+                {q:"In volleybal: tot hoeveel punten gaat een set normaal?",a:"25 punten (tiebreak 15), met 2 verschil",c:"Algemeen"},
+                {q:"Welke ratingmethode wordt gebruikt voor schaakranglijsten?",a:"Elo-rating",c:"Algemeen"},
+                // Deep dive Olympisch
+                {q:"Wie sprak de eerste olympische eed uit?",a:"Victor Boin (schermen), Antwerpen 1920",c:"Olympische Spelen"},
+                {q:"Noem twee sporten waarin vrouwen al bij 1900 meededen.",a:"Tennis en golf (ook croquet)",c:"Olympische Spelen"},
+                {q:"Trucvraag: welke stad organiseerde als eerste de Zomerspelen in Afrika?",a:"Geen: nog nooit in Afrika georganiseerd",c:"Olympische Spelen"},
+                {q:"Welk continent heeft nog nooit de Winterspelen georganiseerd?",a:"Afrika",c:"Olympische Spelen"},
+                {q:"Kan een land zonder kust een olympische zeilmedaille winnen?",a:"Ja",c:"Olympische Spelen"},
+                {q:"Welke stad was de eerste in Azie met Zomerspelen?",a:"Tokio, 1964",c:"Olympische Spelen"},
+                {q:"Noem drie edities van de Zomerspelen die geannuleerd werden.",a:"1916, 1940, 1944",c:"Olympische Spelen"},
+                {q:"Noem drie steden die de Winterspelen twee keer organiseerden.",a:"Innsbruck (1964/1976), St. Moritz (1928/1948), Lake Placid (1932/1980)",c:"Olympische Spelen"},
+                {q:"Was honkbal olympisch in Tokio 2020 en Parijs 2024?",a:"Tokio: ja. Parijs: nee",c:"Olympische Spelen"},
+                {q:"Staan de olympische ringen officieel voor 'de vijf continenten'?",a:"Nee; ze staan voor vereniging van de wereld",c:"Olympische Spelen"},
+                {q:"Welke discipline gebruikt 'hammer' als term maar heeft niets met hamerslingeren te maken?",a:"Curling (laatste steen = hammer)",c:"Wintersport"},
+                {q:"Welke stad had de 'Games of the XXXI Olympiad'?",a:"Rio de Janeiro (2016)",c:"Olympische Spelen"},
+                {q:"Kun je olympisch goud winnen zonder in de finale te spelen?",a:"Ja: in teamsporten kun je teamgoud krijgen",c:"Olympische Spelen"},
+
+                // === TOEKOMSTIGE EVENEMENTEN ===
+                // Tour de France
+                {q:"Waar start de Tour de France 2026?",a:"Barcelona (Spanje)",c:"Toekomstige Evenementen",w:["Parijs","Monaco","Brussel"]},
+                {q:"In welk jaar start de Tour de France in Barcelona?",a:"2026",c:"Toekomstige Evenementen",w:["2025","2027","2028"]},
+                {q:"Waar start de Tour de France 2027?",a:"Edinburgh (Schotland)",c:"Toekomstige Evenementen",w:["Londen","Dublin","Manchester"]},
+                {q:"Door welke landen gaat de Tour de France 2027 in de eerste dagen?",a:"Schotland en Engeland (Verenigd Koninkrijk)",c:"Toekomstige Evenementen",w:["Frankrijk en België","Spanje en Frankrijk","Ierland en Wales"]},
+                {q:"In welke Engelse stad finisht de tweede etappe van de Tour 2027?",a:"Liverpool",c:"Toekomstige Evenementen",w:["Manchester","Birmingham","Londen"]},
+                {q:"Welke stad is favoriet voor de Tour de France start in 2028?",a:"Reims (Frankrijk)",c:"Toekomstige Evenementen",w:["Praag","Luxemburg","Brussel"]},
+
+                // Giro d'Italia
+                {q:"Waar start de Giro d'Italia 2026?",a:"Albanië",c:"Toekomstige Evenementen",w:["Italië","Slovenië","Kroatië"]},
+                {q:"In welk land start de Giro d'Italia 2026?",a:"Bulgarije",c:"Toekomstige Evenementen",w:["Albanië","Griekenland","Roemenië"]},
+                {q:"Welke stad is de startplaats van de Giro d'Italia 2026?",a:"Nessebar",c:"Toekomstige Evenementen",w:["Sofia","Plovdiv","Varna"]},
+                {q:"Waar finisht de Giro d'Italia 2026?",a:"Rome",c:"Toekomstige Evenementen",w:["Milaan","Verona","Turijn"]},
+                {q:"Is de Giro 2026 start in Bulgarije de eerste buitenlandse start?",a:"Nee, het is de 16e buitenlandse start",c:"Toekomstige Evenementen",w:["Ja","Nee, de 5e","Nee, de 10e"]},
+
+                // Vuelta a España
+                {q:"Waar start de Vuelta a España 2026?",a:"Monaco",c:"Toekomstige Evenementen",w:["Madrid","Barcelona","Lissabon"]},
+                {q:"Waar finisht de Vuelta a España 2026?",a:"Granada",c:"Toekomstige Evenementen",w:["Madrid","Sevilla","Barcelona"]},
+                {q:"Hoe begint de Vuelta 2026 in Monaco?",a:"Met een individuele tijdrit",c:"Toekomstige Evenementen",w:["Met een ploegentijdrit","Met een vlakke etappe","Met een bergetappe"]},
+                {q:"Hoeveel hoogtemeters telt de Vuelta 2026 in totaal?",a:"Ruim 58.000 meter",c:"Toekomstige Evenementen",w:["Ruim 45.000 meter","Ruim 50.000 meter","Ruim 40.000 meter"]},
+
+                // Olympische Spelen - Zomer
+                {q:"Waar zijn de Olympische Zomerspelen 2028?",a:"Los Angeles (VS)",c:"Toekomstige Evenementen",w:["Parijs","Tokio","Brisbane"]},
+                {q:"In welk jaar zijn de Olympische Spelen in Los Angeles?",a:"2028",c:"Toekomstige Evenementen",w:["2026","2030","2032"]},
+                {q:"Hoe vaak heeft Los Angeles de Olympische Zomerspelen georganiseerd na 2028?",a:"Drie keer (1932, 1984, 2028)",c:"Toekomstige Evenementen",w:["Twee keer","Vier keer","Één keer"]},
+                {q:"Waar zijn de Olympische Zomerspelen 2032?",a:"Brisbane (Australië)",c:"Toekomstige Evenementen",w:["Los Angeles","Parijs","Tokyo"]},
+                {q:"Wanneer zijn de Olympische Zomerspelen 2028 in Los Angeles?",a:"14-30 juli 2028",c:"Toekomstige Evenementen",w:["1-17 augustus 2028","21 juli - 6 augustus 2028","7-23 juli 2028"]},
+
+                // Olympische Spelen - Winter
+                {q:"Waar zijn de Olympische Winterspelen 2026?",a:"Milaan en Cortina d'Ampezzo (Italië)",c:"Toekomstige Evenementen",w:["Pyeongchang","Salt Lake City","Franse Alpen"]},
+                {q:"Wanneer zijn de Winterspelen van 2026?",a:"6-22 februari 2026",c:"Toekomstige Evenementen",w:["1-17 februari 2026","12-28 februari 2026","20 januari - 5 februari 2026"]},
+                {q:"Waar zijn de Olympische Winterspelen 2030?",a:"Franse Alpen (Frankrijk)",c:"Toekomstige Evenementen",w:["Milaan","Salt Lake City","Oslo"]},
+                {q:"Waar zijn de Olympische Winterspelen 2034?",a:"Salt Lake City (VS)",c:"Toekomstige Evenementen",w:["Franse Alpen","Sapporo","Stockholm"]},
+                {q:"In welk stadion is de openingsceremonie van de Winterspelen 2026?",a:"San Siro (Milaan)",c:"Toekomstige Evenementen",w:["Olympisch Stadion Rome","Arena di Verona","Allianz Stadium Turijn"]},
+                {q:"Waar is de sluitingsceremonie van de Winterspelen 2026?",a:"Arena di Verona",c:"Toekomstige Evenementen",w:["San Siro","Olympisch Stadion Rome","Stadio Olimpico Cortina"]},
+
+                // WK Voetbal
+                {q:"Welke landen organiseren het WK voetbal 2026?",a:"VS, Mexico en Canada",c:"Toekomstige Evenementen",w:["VS en Mexico","Spanje en Portugal","Marokko en Spanje"]},
+                {q:"Hoeveel teams doen mee aan het WK 2026?",a:"48 teams",c:"Toekomstige Evenementen",w:["32 teams","40 teams","36 teams"]},
+                {q:"Waar is de finale van het WK 2026?",a:"MetLife Stadium (New York)",c:"Toekomstige Evenementen",w:["Azteca Stadium","Rose Bowl","AT&T Stadium"]},
+                {q:"Hoeveel wedstrijden worden er gespeeld op het WK 2026?",a:"104 wedstrijden",c:"Toekomstige Evenementen",w:["64 wedstrijden","80 wedstrijden","96 wedstrijden"]},
+                {q:"Welke landen organiseren het WK voetbal 2030?",a:"Spanje, Portugal en Marokko",c:"Toekomstige Evenementen",w:["VS, Mexico en Canada","Argentinië en Uruguay","Saudi-Arabië"]},
+                {q:"Welke speciale wedstrijden zijn er bij het WK 2030?",a:"Jubileumwedstrijden in Uruguay, Argentinië en Paraguay",c:"Toekomstige Evenementen",w:["Extra finale om 3e plaats","Voorrondes in Afrika","All-Star wedstrijd"]},
+                {q:"In welk stadion wordt de eerste wedstrijd van het WK 2030 gespeeld?",a:"Estadio Centenario (Montevideo)",c:"Toekomstige Evenementen",w:["Camp Nou","Santiago Bernabéu","Stade Mohammed V"]},
+                {q:"Welk land organiseert het WK voetbal 2034?",a:"Saudi-Arabië",c:"Toekomstige Evenementen",w:["Australië","Indonesië","Qatar"]},
+
+                // EK Voetbal
+                {q:"Welke landen organiseren het EK voetbal 2028?",a:"Engeland, Schotland, Wales, Noord-Ierland en Ierland",c:"Toekomstige Evenementen",w:["Duitsland","Italië en Turkije","Spanje en Portugal"]},
+                {q:"Wanneer is het EK voetbal 2028?",a:"9 juni - 9 juli 2028",c:"Toekomstige Evenementen",w:["14 juni - 14 juli 2028","1-30 juni 2028","15 juni - 15 juli 2028"]},
+                {q:"Waar is de finale van het EK 2028?",a:"Wembley Stadium (Londen)",c:"Toekomstige Evenementen",w:["Hampden Park","Aviva Stadium","Principality Stadium"]},
+                {q:"Waar is de openingswedstrijd van het EK 2028?",a:"National Stadium of Wales (Cardiff)",c:"Toekomstige Evenementen",w:["Wembley","Hampden Park","Aviva Stadium"]},
+                {q:"Welke landen organiseren het EK voetbal 2032?",a:"Italië en Turkije",c:"Toekomstige Evenementen",w:["Engeland en Ierland","Spanje en Portugal","Duitsland en Polen"]},
+                {q:"Is het EK 2032 de eerste keer dat Turkije een groot toernooi organiseert?",a:"Ja",c:"Toekomstige Evenementen",w:["Nee, EK 2008","Nee, WK 2002","Nee, EK 2016"]},
+
+                // === SET 3 - PROMPT 1: 80 MOEILIJKE VRAGEN ===
+                // Olympisch (Algemeen)
+                {q:"Welke olympische sport kent het begrip 'apparatus finals' (toestelfinales) als apart wedstrijdonderdeel?",a:"Turnen (artistieke gymnastiek)",c:"Olympische Spelen"},
+                {q:"Wat is het verschil tussen een NOC en een IF binnen de olympische context?",a:"NOC = Nationaal Olympisch Comité; IF = Internationale Federatie van een sport",c:"Olympische Spelen"},
+                {q:"Wat heet een 'universality place' in olympische kwalificatie?",a:"Een plek om landen/atleten zonder normale kwalificatie toch te laten deelnemen",c:"Olympische Spelen"},
+                {q:"Welke term beschrijft dat in sommige vechtsporten twee bronzen medailles worden uitgereikt in één gewichtsklasse?",a:"Dubbel brons door repêchage-format",c:"Olympische Spelen"},
+                {q:"In welke sport is een 'touch' elektronisch geregistreerd en kan 'priority' beslissen bij gelijke stand?",a:"Schermen",c:"Olympische Spelen"},
+                {q:"Welke olympische sport gebruikt een 'shot clock' per aanval, maar speelt in het water?",a:"Waterpolo",c:"Olympische Spelen"},
+                {q:"Welke olympische discipline bestaat uit vijf verschillende onderdelen met één overkoepelend puntenklassement?",a:"Moderne vijfkamp",c:"Olympische Spelen"},
+                {q:"Noem één olympische sport waar 'repêchage' (tweede kans) vaak voorkomt na een verlies in vroege rondes.",a:"Judo, worstelen of roeien",c:"Olympische Spelen"},
+                {q:"Welke olympische term beschrijft deelname 'neutraal' (zonder nationale vlag) door sancties of NOC-schorsing?",a:"Neutral athletes / Independent Olympic Participants",c:"Olympische Spelen"},
+
+                // Atletiek (Regels, Termen, Tactieken)
+                {q:"Wat is in de sprint de definitie van een 'false start' onder de 'zero tolerance'-benadering?",a:"Eén valse start door een atleet = directe diskwalificatie",c:"Atletiek"},
+                {q:"Welke twee kernregels maken snelwandelen anders dan hardlopen?",a:"Altijd contact met de grond + voorste been gestrekt bij landing",c:"Atletiek"},
+                {q:"Hoe heet het moment in 800/1500m waarop lopers van baan mogen wisselen en naar binnen snijden?",a:"De breakline (het 'break'-moment)",c:"Atletiek"},
+                {q:"Wat is een veelvoorkomende DQ-reden in de 4×100m estafette, los van valse start?",a:"Wissel buiten de wisselzone",c:"Atletiek"},
+                {q:"Waarom is wind cruciaal bij sprintrecords, en wat is de maximale toegestane meewind voor een record?",a:"Windhulp maakt tijden sneller; limiet is +2.0 m/s",c:"Atletiek"},
+                {q:"Wat is het tactische voordeel van een hoogte overslaan in hoogspringen/polsstok?",a:"Je spaart energie en kunt later met minder sprongen een hogere hoogte halen",c:"Atletiek"},
+                {q:"Waarom bestaan er aparte indoorrecords naast outdoorrecords?",a:"Indoor heeft andere baanlengte/bochten en omstandigheden",c:"Atletiek"},
+                {q:"Welke regel in kogelstoten maakt een poging ongeldig bij het verlaten van de ring?",a:"Je mag pas weg als de kogel geland is en moet via de achterkant uitstappen",c:"Atletiek"},
+                {q:"Wat betekent 'negative split' in langeafstand en waarom is dat lastig?",a:"Tweede helft sneller dan de eerste; vraagt discipline en timing",c:"Atletiek"},
+                {q:"Hoe heet het fenomeen waarbij favorieten het tempo laten 'sterven' om een sprint te forceren?",a:"Surging / tempowisselingen",c:"Atletiek"},
+
+                // Wielrennen (Tactieken, Formats, Jargon)
+                {q:"Wat is het functionele verschil tussen een 'GC-rijder' en een 'puncheur'?",a:"GC = klassement over meerdere dagen; puncheur = explosief op korte hellingen",c:"Wielrennen"},
+                {q:"Waarom zijn bonificatieseconden tactisch belangrijk in korte rittenkoersen?",a:"Ze kunnen het klassement beslissen zonder echte tijdsverschillen op de weg",c:"Wielrennen"},
+                {q:"Wat is het verschil tussen een 'lead-out' en een 'pilot fish' in sprinttreinen?",a:"Lead-out = laatste afzet voor sprint; pilot fish = begeleider door chaos",c:"Wielrennen"},
+                {q:"Wat is een 'satellietrenner' en waarom stuur je die vooruit?",a:"Een ploegmaat die vooruit zit om later te helpen (tempo, bidons, afstoppen)",c:"Wielrennen"},
+                {q:"Wat is het risico van 'te vroeg pieken' richting een grote ronde?",a:"Vorm is top vóór de koers en zakt tijdens de beslissende weken",c:"Wielrennen"},
+                {q:"In baanwielrennen: wat is een Madison in één zin?",a:"Koppelkoers met aflossing via handslings",c:"Wielrennen"},
+                {q:"Wat is het verschil tussen 'klassieker' en 'monument'?",a:"Monumenten zijn de vijf grootste eendagskoersen; klassiekers zijn breder",c:"Wielrennen"},
+                {q:"Waarom is positionering op kasseien vaak belangrijker dan puur vermogen?",a:"Smalle stroken + valpartijen → wie voorin zit vermijdt chaos",c:"Wielrennen"},
+                {q:"Wat betekent 'dieselen' in wielerjargon?",a:"Lang, constant hard tempo rijden (motorisch)",c:"Wielrennen"},
+                {q:"Wat is een 'counter' in de finale en wanneer werkt die het best?",a:"Tegenaanval na een demarrage wanneer het peloton twijfelt/markeert",c:"Wielrennen"},
+
+                // Voetbal (Regels, Tactieken, Analyse)
+                {q:"Wat is het verschil tussen een directe en indirecte vrije trap?",a:"Direct: je mag direct scoren; indirect: iemand anders moet raken; scheids houdt arm omhoog",c:"Voetbal"},
+                {q:"Noem één overtreding die altijd een indirecte vrije trap oplevert, ook in het strafschopgebied.",a:"Keeper pakt bal op na terugspeelbal met voet (of gevaarlijk spel zonder contact)",c:"Voetbal"},
+                {q:"Wat is 'restverdediging' (rest defence) in moderne tactiek?",a:"De achterblijvende organisatie om counters te stoppen tijdens eigen aanval",c:"Voetbal"},
+                {q:"Leg het verschil uit tussen 'pressing trigger' en 'pressing trap'.",a:"Trigger: signaal om te pressen; trap: val om tegenstander naar een zone te lokken",c:"Voetbal"},
+                {q:"Wat is een 'underlapping run' en waarom is die lastig te verdedigen?",a:"Loopactie naar binnen (halfspace) i.p.v. buitenom; komt in de blind spot",c:"Voetbal"},
+                {q:"Wat bedoelt men met 'compactness' in een verdedigend blok?",a:"Kleine afstanden tussen linies en spelers",c:"Voetbal"},
+                {q:"Waarom is xG niet hetzelfde als 'hoe groot een kans voelde'?",a:"xG is een modelwaarde, geen garantie en niet alle context zit erin",c:"Voetbal"},
+                {q:"Wat is de buitenspel-uitzondering bij een ingooi?",a:"Je kunt niet buitenspel staan uit een ingooi",c:"Voetbal"},
+                {q:"Hoe kun je in één wedstrijd rood krijgen zonder direct rood?",a:"Twee keer geel",c:"Voetbal"},
+                {q:"Wat is 'advantage' en wanneer kan de scheids alsnog een kaart geven?",a:"Scheids laat doorspelen bij voordeel; kaart kan bij volgende onderbreking",c:"Voetbal"},
+
+                // Tennis (Regels, Formats, Jargon)
+                {q:"Wat is het verschil tussen een 'let' en een 'fault' bij service?",a:"Let: net geraakt maar in → opnieuw; fault: fout → tweede service",c:"Tennis"},
+                {q:"Hoe heet het format waarbij een set tot 10 punten gaat i.p.v. een derde set?",a:"Match tiebreak / super tiebreak",c:"Tennis"},
+                {q:"Wat is het verschil tussen break point en set point?",a:"Break point: kans om servicegame te winnen; set point: kans om set te winnen",c:"Tennis"},
+                {q:"Wat is een 'bagel' en wat is een 'breadstick' in tennis?",a:"Bagel: 6-0; breadstick: 6-1",c:"Tennis"},
+                {q:"Welke ondergrond staat bekend om lage stuit en relatief snelle punten?",a:"Gras",c:"Tennis"},
+                {q:"Wat betekent 'inside-out forehand'?",a:"Forehand gespeeld naar crosshoek vanaf de backhand-kant",c:"Tennis"},
+                {q:"Wat is een 'walkover' in een toernooi?",a:"Doorgaan zonder te spelen omdat de tegenstander vóór aanvang terugtrekt",c:"Tennis"},
+                {q:"Wat is het verschil tussen unforced en forced errors?",a:"Unforced: eigen fout zonder grote druk; forced: door druk/kwaliteit tegenstander",c:"Tennis"},
+                {q:"Wat is 'I-formation' in dubbel?",a:"Netspeler start op de T en beweegt na de serve om return te verstoren",c:"Tennis"},
+                {q:"Wat beoordeelt Hawk-Eye in de kern?",a:"Of de bal in/uit was op basis van tracking",c:"Tennis"},
+
+                // Wintersport & Watersport
+                {q:"In roeien: wat is het verschil tussen scullen en boordroeien (sweep)?",a:"Scullen: twee riemen per roeier; boordroeien: één riem per roeier",c:"Roeien"},
+                {q:"In zwemmen: wat is de volgorde van de wisselslagen in de 4×100m wisselslag estafette?",a:"Rugslag → schoolslag → vlinderslag → vrije slag",c:"Zwemmen"},
+                {q:"In kunstschaatsen: wat is het verschil tussen een 'jump' en een 'spin' in scoring-termen?",a:"Beide hebben base value + GOE maar spins ook met levels (features)",c:"Wintersport"},
+                {q:"In alpineskiën: wat is het belangrijkste verschil tussen 'giant slalom' en 'super-G'?",a:"GS: twee runs, meer technische bochten; super-G: één run, hogere snelheid",c:"Wintersport"},
+                {q:"In curling: wat betekent 'hammer' en waarom is het strategisch?",a:"Hammer = laatste steen in een end; geeft scoringsvoordeel",c:"Wintersport"},
+                {q:"In schansspringen: wat is een telemark-landing?",a:"Landing met één voet voor, knieën gebogen (klassieke stijl)",c:"Wintersport"},
+                {q:"In volleybal: welke speler mag een ander kleur shirt dragen en heeft specifieke beperkingen?",a:"De libero",c:"Algemeen"},
+                {q:"In badminton: hoe heet het scoringssysteem dat tot 21 gaat en best-of-3 games gebruikt?",a:"Rally point scoring (21 punten, best of 3)",c:"Algemeen"},
+                {q:"In handbal: wanneer krijg je een 7-meterworp?",a:"Bij het ontnemen van een duidelijke scoringskans",c:"Algemeen"},
+                {q:"In ijshockey: wat betekent 'power play'?",a:"Numeriek voordeel door een penalty bij de tegenstander",c:"IJshockey"},
+
+                // Motorsport
+                {q:"Wat betekent 'parc fermé' en waarom is het belangrijk?",a:"Beperkte aanpassingen aan de auto tussen kwalificatie en race",c:"Motorsport"},
+                {q:"Wat is het verschil tussen undercut en overcut?",a:"Undercut: eerder pitten; overcut: langer doorrijden",c:"Motorsport"},
+                {q:"In endurance racing: wat is een 'stint' en waarom zijn er limieten?",a:"Rijperiode per coureur; limieten voor veiligheid en vermoeidheid",c:"Motorsport"},
+                {q:"Wat is het grote risico bij een herstart na safety car?",a:"Koude banden/remmen + agressieve inhaalpogingen",c:"Motorsport"},
+                {q:"In rally: wat betekent 'recce'?",a:"Voorverkenning om pace notes te maken",c:"Motorsport"},
+                {q:"Wanneer kies je 'intermediates' boven 'slicks'?",a:"Bij licht nat/vochtig wanneer full wets te langzaam zijn",c:"Motorsport"},
+                {q:"Wat zijn 'track limits' en wat is de consequentie bij herhaald overschrijden?",a:"Buiten de witte lijnen met voordeel; waarschuwingen gevolgd door penalty",c:"Motorsport"},
+                {q:"Wat betekent 'Balance of Performance (BoP)'?",a:"Prestatie-equalisatie tussen auto's; vooral in GT/endurance",c:"Motorsport"},
+                {q:"Wat is een formation lap?",a:"Opwarmronde(s) voor de start",c:"Motorsport"},
+
+                // Amerikaanse sporten & Overige
+                {q:"In basketbal: wat is het verschil tussen goaltending en basket interference?",a:"Goaltending: bal op neerwaartse baan blokkeren; interference: ring/net aanraken",c:"Basketbal"},
+                {q:"In American football: wat is een two-minute drill?",a:"Snelle aanval in de laatste ~2 minuten met strak klokmanagement",c:"American Football"},
+                {q:"In baseball: wat is een walk-off?",a:"Winnende score van thuisteam in laatste inning → wedstrijd eindigt direct",c:"Algemeen"},
+                {q:"In ijshockey: wat is icing en waarom bestaat die regel?",a:"Puck van eigen helft over doellijn zonder aanraking; voorkomt wegschieten",c:"IJshockey"},
+                {q:"In cricket: wat betekent 'duck'?",a:"Uit met 0 runs",c:"Algemeen"},
+                {q:"In rugby union: wat is het verschil tussen try en conversion?",a:"Try: bal drukken; conversion: schot na try voor extra punten",c:"Rugby"},
+                {q:"In golf: wat is het verschil tussen match play en stroke play?",a:"Match play: holes winnen; stroke play: totaal slagen",c:"Golf"},
+                {q:"In darts: wat is een 9-darter in 501?",a:"Een leg uitgooien in 9 pijlen",c:"Darts"},
+                {q:"In snooker: hoe ontstaat een 147 maximum break?",a:"15× rood+zwart + alle kleuren in volgorde",c:"Snooker"},
+                {q:"In handbal: wat is 'passief spel' en wat probeert de regel te voorkomen?",a:"Te lang aanvallen zonder doelpoging; voorkomt tijdrekken",c:"Algemeen"},
+
+                // === SET 3 - PROMPT 2: 50 EXTREEM MOEILIJKE OLYMPISCHE VRAGEN ===
+                // Zomerspelen - Obscure Geschiedenis
+                {q:"Welke olympische sport was ooit op het programma en lijkt op een krachtmeting tussen teams die aan een touw trekken?",a:"Touwtrekken (Tug of War)",c:"Olympische Spelen"},
+                {q:"Welke sport stond in 1900 olympisch en gebruikt een 'cesta' (mand) om de bal met hoge snelheid te werpen?",a:"Baskische pelota (Jai alai)",c:"Olympische Spelen"},
+                {q:"Welke sport stond in 1900 olympisch en lijkt op kroket met wickets?",a:"Croquet",c:"Olympische Spelen"},
+                {q:"Welke obscure zwemdiscipline bestond ooit olympisch waarbij je 'zo ver mogelijk glijdt' onder water?",a:"Plunge for distance",c:"Olympische Spelen"},
+                {q:"Welke schietdiscipline met een bewegend doel ('deer') stond in de vroege 20e eeuw op het programma?",a:"Running deer (schietsport)",c:"Olympische Spelen"},
+                {q:"Welke twee edities van de Zomerspelen staan symbool voor Koude Oorlog-boycots?",a:"1980 (Moskou) en 1984 (Los Angeles)",c:"Olympische Spelen"},
+                {q:"Welke editie is beroemd door de 'Black Power salute' op het podium van de 200m?",a:"1968, Mexico-Stad",c:"Olympische Spelen"},
+                {q:"Welke 'niet-sport' categorie kon vroeger olympische medailles opleveren?",a:"Kunstwedstrijden (art competitions)",c:"Olympische Spelen"},
+                {q:"Wat is de belangrijkste reden dat olympische kunstwedstrijden zijn verdwenen?",a:"Amateurisme/professionalisering en praktische organisatie/jurering",c:"Olympische Spelen"},
+                {q:"Welke sport gebruikt 'best losers' (op tijd) om door te gaan naar volgende rondes?",a:"Atletiek (baanonderdelen)",c:"Olympische Spelen"},
+                {q:"Welke olympische sport is berucht om mentale blokkades ('target panic')?",a:"Boogschieten",c:"Olympische Spelen"},
+                {q:"Welke zomereditie staat bekend om extreem hoge hoogte en wordt vaak genoemd bij records?",a:"Mexico-Stad 1968",c:"Olympische Spelen"},
+
+                // Winterspelen - Formats, Disciplines
+                {q:"Welke discipline combineert schansspringen en langlaufen in één overall klassement?",a:"Nordic combined",c:"Wintersport"},
+                {q:"Welke discipline combineert skiën en schieten, en gebruikt strafrondes of tijdstraffen?",a:"Biatlon",c:"Wintersport"},
+                {q:"Welke sport rijdt met het hoofd eerst op een slede, en welke met de voeten eerst?",a:"Skeleton (hoofd eerst) en rodelen/luge (voeten eerst)",c:"Wintersport"},
+                {q:"Wat is het kernverschil tussen moguls en aerials in freestyle skiën?",a:"Moguls: buckels + sprongen + snelheid; aerials: grote sprongen/rotaties",c:"Wintersport"},
+                {q:"Welke sport gebruikt 'stones', het 'house' en de 'hammer'?",a:"Curling",c:"Wintersport"},
+                {q:"Wat is een 'blank end' in curling?",a:"Een end zonder score",c:"Wintersport"},
+                {q:"In alpineskiën: wat is het verschil tussen slalom en reuzenslalom?",a:"Slalom: kort, veel bochten; GS: wijder, sneller ritme",c:"Wintersport"},
+                {q:"Wat is het verschil tussen downhill en super-G?",a:"Downhill: langste/snelste; super-G: korter met meer technische secties",c:"Wintersport"},
+                {q:"Wat betekent 'hill size (HS)' bij schansspringen?",a:"Maat voor schansgrootte en referentiepunt voor veiligheid/scoring",c:"Wintersport"},
+                {q:"Wat is het tactische verschil tussen mass start en intervalstart in langlaufen?",a:"Mass start = positionering/drafting; interval = puur tegen de klok",c:"Wintersport"},
+                {q:"Wat is skiathlon in langlaufen?",a:"Eerst klassieke stijl, dan wissel naar skating (vrije stijl)",c:"Wintersport"},
+                {q:"Welke wintersport heeft zowel halfpipe als slopestyle-disciplines?",a:"Snowboarden (en freestyle skiën)",c:"Wintersport"},
+                {q:"Wat is het verschil tussen big air en slopestyle?",a:"Big air: één grote sprong; slopestyle: reeks obstakels/jumps",c:"Wintersport"},
+                {q:"In shorttrack: waarom zijn penalties zo onvoorspelbaar?",a:"Contact/voordeel is vaak interpretatie; een penalty kan alles omgooien",c:"Wintersport"},
+                {q:"Welke schaatsdiscipline is een race met peloton en punten i.p.v. alleen tijd?",a:"Mass start (schaatsen)",c:"Wintersport"},
+                {q:"Welke schaatsdiscipline draait om een team en paceline met tijd als uitkomst?",a:"Team pursuit (ploegenachtervolging)",c:"Wintersport"},
+                {q:"In bobslee: waarom is de start (push) bijna net zo bepalend als het sturen?",a:"Marges zijn klein; een snelle start geeft snelheid die lastig in te halen is",c:"Wintersport"},
+                {q:"Wat is het 'team event' in kunstschaatsen grofweg?",a:"Landenteams scoren op meerdere disciplines samen tot één totaalscore",c:"Wintersport"},
+                {q:"Waarom is hoogte (altitude) soms een discussiepunt bij Winterspelen-locaties?",a:"Minder zuurstof beïnvloedt uithoudingsonderdelen en pacing",c:"Wintersport"},
+                {q:"Welke sport speelt met een puck in drie periodes?",a:"IJshockey",c:"IJshockey"},
+                {q:"Wat betekent 'mixed relay' en waarom komt dit vaker op de Spelen?",a:"Gemengde teams mannen+vrouwen; IOC stimuleert genderbalans",c:"Olympische Spelen"},
+                {q:"Wat is het verschil tussen parallel giant slalom en snowboard cross?",a:"Parallel: 1-op-1 op twee banen; cross: meerdere tegelijk op één parcours",c:"Wintersport"},
+                {q:"Wat is het concept van Nordic combined startverschil in één zin?",a:"Sprongscore wordt omgezet in tijdsverschil bij de start van langlauf",c:"Wintersport"},
+                {q:"Welke factor maakt mass start biatlon extra tactisch?",a:"Je kunt meeliften/positioneren en schietseries onder directe druk rijden",c:"Wintersport"},
+
+                // === SET 4: 20 PER ONDERDEEL v2 - 220 VRAGEN ===
+                // VOETBAL (20)
+                {q:"Wat betekent DOGSO en wat is de gebruikelijke consequentie?",a:"Denying an Obvious Goal-Scoring Opportunity; vaak rood",c:"Voetbal"},
+                {q:"Wanneer is een terugspeelbal naar de keeper strafbaar?",a:"Als een veldspeler de bal opzettelijk met de voet naar de keeper speelt en de keeper hem met de handen aanraakt",c:"Voetbal"},
+                {q:"Wat is het verschil tussen SFP en VC in scheidsrechtersterminologie?",a:"SFP (Serious Foul Play) = zware overtreding in balactie; VC (Violent Conduct) = geweld los van balactie",c:"Voetbal"},
+                {q:"Wat is 'double jeopardy' bij een penaltysituatie?",a:"Bij penalty-overtreding met poging bal te spelen wordt DOGSO vaak met geel bestraft i.p.v. rood",c:"Voetbal"},
+                {q:"Wat is de uitzondering op buitenspel bij een doeltrap en corner?",a:"Je kunt niet buitenspel staan uit een doeltrap of hoekschop",c:"Voetbal"},
+                {q:"Wat is het verschil tussen een 'false nine' en een klassieke spits?",a:"False nine zakt naar het middenveld; klassieke spits blijft hoog als aanspeelpunt",c:"Voetbal"},
+                {q:"Wat is een 'inverted fullback'?",a:"Een back die in balbezit naar binnen schuift in plaats van de flank hoog te houden",c:"Voetbal"},
+                {q:"Wat is een 'gegenpress' in één zin?",a:"Direct na balverlies agressief druk zetten om de bal snel terug te veroveren",c:"Voetbal"},
+                {q:"Wat is het doel van de 6-secondenregel voor keepers?",a:"Beperken hoe lang een keeper de bal in de handen mag houden om tijdrekken te voorkomen",c:"Voetbal"},
+                {q:"Wat betekent 'playing distance' bij buitenspelbeoordeling?",a:"Of een verdediger de bal realistisch kon spelen; weegt mee bij bepalen of aanvaller tegenstander beïnvloedt",c:"Voetbal"},
+                {q:"Hoe heet de regel waarbij de bal 'in het spel' is bij een vrije trap?",a:"De bal is in het spel zodra hij is getrapt en duidelijk beweegt",c:"Voetbal"},
+                {q:"Welke WK-editie was de eerste en welk land won?",a:"1930 was de eerste FIFA World Cup; Uruguay won",c:"Voetbal"},
+                {q:"Wat is het verschil tussen man-to-man pressing en zonale pressing?",a:"Man-to-man: spelers volgen directe tegenstanders; zonal: druk op zones/passing lanes",c:"Voetbal"},
+                {q:"Wat is een 'underlap' versus een 'overlap'?",a:"Underlap: loopactie naar binnen in halfspace; overlap: buitenom langs de flank",c:"Voetbal"},
+                {q:"Wat betekent 'tempo control' in een wedstrijdcontext?",a:"Bewust versnellen/vertragen van het speltempo om de wedstrijd te sturen",c:"Voetbal"},
+
+                // GOLF (20)
+                {q:"Noem de vier 'majors' in het herengolf.",a:"The Masters, PGA Championship, U.S. Open, The Open Championship",c:"Golf"},
+                {q:"Wat is een albatross in golf?",a:"Drie slagen onder par op één hole",c:"Golf"},
+                {q:"Wat betekent 'stroke-and-distance' in golf?",a:"Je krijgt een strafslag én speelt opnieuw vanaf de plek van je vorige slag",c:"Golf"},
+                {q:"Wat is het verschil tussen out of bounds en een penalty area?",a:"Out of bounds: meestal stroke-and-distance; penalty area: 1 strafslag met drop-opties",c:"Golf"},
+                {q:"Wat is Stableford-scoring?",a:"Je krijgt punten per hole op basis van slagen t.o.v. par; meer punten is beter",c:"Golf"},
+                {q:"Wat is een scramble-format in golf?",a:"Team kiest steeds de beste balpositie; iedereen speelt vanaf die plek verder",c:"Golf"},
+                {q:"Wat betekent 'up and down' in golf?",a:"Vanaf rond de green chip/pitch + putt om de hole uit te spelen",c:"Golf"},
+                {q:"Wat is een 'gimme' in golf?",a:"Een toegegeven korte putt; gebruikelijk in match play, niet in officiële stroke play",c:"Golf"},
+                {q:"Wat is het verschil tussen een fade en een slice (rechtshandig)?",a:"Fade: gecontroleerde lichte curve naar rechts; slice: ongewenst grote curve naar rechts",c:"Golf"},
+                {q:"Wat is 'the stimp' (Stimp meter)?",a:"Een maat voor greensnelheid: hoe ver een bal rolt vanaf een standaard rolapparaat",c:"Golf"},
+                {q:"Wat is het doel van handicaps in golf?",a:"Spelers met verschillend niveau vergelijkbaar laten scoren door slagen toe te kennen",c:"Golf"},
+                {q:"Wat betekent 'par' op een hole?",a:"Het aantal slagen dat een goede speler gemiddeld nodig heeft voor die hole",c:"Golf"},
+                {q:"Wat is een 'mulligan' in golf?",a:"Informele extra slag zonder straf; niet onderdeel van officiële regels",c:"Golf"},
+                {q:"Wat is 'ready golf'?",a:"Tempo-idee: wie klaar is, speelt om het spel te versnellen",c:"Golf"},
+                {q:"Wat is een 'drop zone' in golf?",a:"Een aangewezen plek waar je moet/mag droppen na bepaalde regelsituaties",c:"Golf"},
+                {q:"Wat is het verschil tussen een bunker en een penalty area?",a:"Bunker heeft beperkingen (club gronden); penalty area geeft drop-opties met strafslag",c:"Golf"},
+                {q:"Wat betekent 'provisional ball' in golf?",a:"Een voorlopige bal spelen als je denkt dat de bal verloren is of out of bounds",c:"Golf"},
+                {q:"Wat is 'preferred lies' (winterregels)?",a:"Je mag de bal oppakken/plaatsen op de fairway bij slechte baancondities",c:"Golf"},
+                {q:"Wat is een 'Texas wedge'?",a:"Met de putter van buiten de green spelen",c:"Golf"},
+
+                // TENNIS (20)
+                {q:"Wat is 'no-ad scoring' in tennis?",a:"Bij deuce wordt één beslissend punt gespeeld; geen voordeelspel",c:"Tennis"},
+                {q:"Wat is een super tiebreak?",a:"Een tiebreak (vaak tot 10) die een beslissende set vervangt",c:"Tennis"},
+                {q:"Wat is het verschil tussen inside-out en inside-in forehand?",a:"Inside-out: forehand naar crosshoek vanaf backhandkant; inside-in: naar de lijn",c:"Tennis"},
+                {q:"Wanneer heet een wedstrijd een 'straight-sets win'?",a:"Winst zonder een set te verliezen",c:"Tennis"},
+                {q:"Wat is een 'double fault'?",a:"Twee opeenvolgende servicefouten; punt voor tegenstander",c:"Tennis"},
+                {q:"Wat is 'serve-and-volley'?",a:"Na de service direct naar het net komen om met volley af te maken",c:"Tennis"},
+                {q:"Wat is het doel van 'kick serve'?",a:"Serve met veel topspin die hoog wegstuitert om return te bemoeilijken",c:"Tennis"},
+                {q:"Wat is een 'drop shot' in tennis?",a:"Zachte bal die kort achter het net valt om tegenstander naar voren te lokken",c:"Tennis"},
+                {q:"Wat betekent 'break back'?",a:"Direct na verliezen eigen servicegame de service van tegenstander terugbreken",c:"Tennis"},
+                {q:"Wat is 'holding serve'?",a:"Je eigen servicegame winnen",c:"Tennis"},
+                {q:"Wat betekent 'poaching' in dubbel?",a:"Netspeler steekt over en pakt de bal af op de andere helft",c:"Tennis"},
+                {q:"Wat is het verschil tussen singles alley en doubles alley?",a:"De zijstrook telt alleen mee in dubbel; in enkelspel is die buiten",c:"Tennis"},
+                {q:"Wat is een 'Golden Slam'?",a:"Alle vier majors én olympisch goud in hetzelfde kalenderjaar",c:"Tennis"},
+
+                // ATLETIEK (20)
+                {q:"Waarom zijn starts op 200m/400m 'staggered'?",a:"Buitenbanen lopen langere bocht; stagger compenseert dat",c:"Atletiek"},
+                {q:"Wat is het verschil tussen een heat, halve finale en finale?",a:"Heats selecteren door; halve finales bepalen finalisten; finale beslist medailles",c:"Atletiek"},
+                {q:"Wat is het verschil tussen discuswerpen en kogelslingeren (hammer)?",a:"Discus is een schijf; hammer is een kogel aan een draad/handvat",c:"Atletiek"},
+                {q:"Waarom is de bocht op 400m technisch belangrijk?",a:"Hoge snelheid + centripetale kracht; lijnvoering bepaalt tempoverlies",c:"Atletiek"},
+                {q:"Wat is het verschil tussen steeplechase en horden?",a:"Steeple heeft vaste barrières + waterbak; horden zijn licht/omvallend",c:"Atletiek"},
+                {q:"Wat is een 'pacemaker' (haas) in weg- of baanraces?",a:"Een haas die afgesproken tempo loopt om snelle tijden mogelijk te maken",c:"Atletiek"},
+                {q:"Wat is het verschil tussen kwalificatie en finale bij werpnummers?",a:"In kwalificatie moet je limiet halen; finale heeft 3 + 3 pogingen (top 8 extra)",c:"Atletiek"},
+                {q:"Waarom worden in sprint finales de middenbanen als gunstig gezien?",a:"Minder scherpe bocht en beter overzicht",c:"Atletiek"},
+                {q:"Wat is het principe van 'take-off board' bij verspringen?",a:"Je moet vóór de plank afzetten; over de plank is overschrijding en ongeldig",c:"Atletiek"},
+                {q:"Wat is 'Fosbury flop'?",a:"Moderne hoogspringtechniek waarbij je achterwaarts over de lat gaat",c:"Atletiek"},
+                {q:"Wat is het verschil tussen 10.000m baan en marathon qua pacing?",a:"10.000m is rondjes met splits; marathon vraagt energiebeheer over 42,195 km",c:"Atletiek"},
+
+                // ZWEMMEN (20)
+                {q:"Wat is de volgorde van de wisselslag in de individuele wisselslag (IM)?",a:"Vlinder → rugslag → schoolslag → vrije slag",c:"Zwemmen"},
+                {q:"Waarom start rugslag anders dan de andere slagen?",a:"Vanaf het water, met vasthouden aan de startbeugels",c:"Zwemmen"},
+                {q:"Wat is de 15-meterregel bij start/keerpunten?",a:"In rug/vlinder/vrij moet je vóór 15 m weer aan de oppervlakte zijn",c:"Zwemmen"},
+                {q:"Wat is het verschil tussen kortebaan (25m) en langebaan (50m)?",a:"Meer keerpunten op 25m; meer afzetmomenten en onderwaterfase",c:"Zwemmen"},
+                {q:"Wat is 'drafting' in openwaterzwemmen?",a:"In iemands slipstream zwemmen om energie te besparen",c:"Zwemmen"},
+                {q:"Wat is een relay takeover fout?",a:"Te vroeg starten vóórdat de vorige zwemmer aantikt → DQ",c:"Zwemmen"},
+                {q:"Wat is een veelvoorkomende DQ-reden bij schoolslag?",a:"Onjuiste beenbeweging of niet gelijktijdig aantikken met twee handen",c:"Zwemmen"},
+                {q:"Wat is het verschil tussen 'split times' en 'reaction time'?",a:"Splits zijn tussentijden; reaction time is tijd tussen startsein en afzet",c:"Zwemmen"},
+                {q:"Wat is 'underwater phase' en waarom is die belangrijk?",a:"Onderwaterdolfijn na start/keer; vaak snelste deel van de baan",c:"Zwemmen"},
+                {q:"Wat betekent 'distance per stroke' (DPS)?",a:"Hoeveel meter je per slagcyclus aflegt; maat voor efficiëntie",c:"Zwemmen"},
+                {q:"Waarom trainen zwemmers op 'stroke count' per baan?",a:"Om techniek/efficiëntie te meten en tempo te sturen",c:"Zwemmen"},
+                {q:"Wat is het verschil tussen openwater en zwembadzwemmen qua tactiek?",a:"Openwater: navigatie, drafting, positionering; zwembad: banen, keerpunten, pure tijd",c:"Zwemmen"},
+                {q:"Wat is het verschil tussen 'flip turn' en 'open turn'?",a:"Flip turn: koprolkeer (vrij/rug); open turn: handaantikken en draaien (school/vlinder)",c:"Zwemmen"},
+                {q:"Wanneer moet je met twee handen aantikken bij zwemmen?",a:"Bij schoolslag en vlinderslag (keerpunten en finish)",c:"Zwemmen"},
+                {q:"Waarom zijn startblokken met 'back wedge' relevant?",a:"Ze geven extra grip en kracht voor explosie bij de start",c:"Zwemmen"},
+                {q:"Wat is 'streamline' in zwemmen?",a:"Gestroomlijnde positie met armen gestrekt om weerstand te minimaliseren",c:"Zwemmen"},
+                {q:"Wat is een 'DQ' die specifiek bij rugslag vaak voorkomt?",a:"Te ver doordraaien waardoor je op de buik finisht",c:"Zwemmen"},
+                {q:"Wat is een 'pull buoy' en waarom gebruiken zwemmers die?",a:"Drijfhulp tussen de benen om arm/romptechniek te trainen",c:"Zwemmen"},
+
+                // ROEIEN (20)
+                {q:"Wat is de olympische standaardafstand in roeien?",a:"2000 meter",c:"Roeien"},
+                {q:"Wat doet een stuurman (cox) vooral?",a:"Stuurt, coacht, bewaakt ritme/tactiek",c:"Roeien"},
+                {q:"Wat is 'the catch' in roeien?",a:"Moment waarop het blad het water pakt om de haal te beginnen",c:"Roeien"},
+                {q:"Wat is 'the finish/release' in roeien?",a:"Einde van de haal: blad komt uit het water",c:"Roeien"},
+                {q:"Wat is het verschil tussen stroke rate en split?",a:"Rate = halen/min; split = tijd per 500m",c:"Roeien"},
+                {q:"Wat is 'feathering' in roeien?",a:"Blad draaien zodat het tijdens recover vlak ligt (minder luchtweerstand)",c:"Roeien"},
+                {q:"Wat is een 'crab' in roeien?",a:"Blad blijft haken/wordt door water gepakt → snelheid en balans gaan verloren",c:"Roeien"},
+                {q:"Waarom is de startfase in roeien vaak een hogere rate?",a:"Snel op snelheid komen, daarna settle naar efficiënter tempo",c:"Roeien"},
+                {q:"Wat is een 'power 10' in roeien?",a:"Tien extra harde halen om een move te maken",c:"Roeien"},
+                {q:"Wat betekent bow seat vs stroke seat?",a:"Bow: voorin (stabiliteit); stroke: achterin (ritme aangeven)",c:"Roeien"},
+                {q:"Wat is het verschil tussen een 'shell' en een 'skiff'?",a:"Shell = roeiboot (algemeen); skiff = eenpersoons scull",c:"Roeien"},
+                {q:"Wat is 'checking' in de boot?",a:"Boot afremmen door onrustige bewegingen",c:"Roeien"},
+                {q:"Waarom is timing belangrijker dan brute kracht in een teamboot?",a:"Slechte timing maakt kracht minder effectief",c:"Roeien"},
+                {q:"Wat is 'set' (bootbalans) in roeien?",a:"Stabiliteit/level houden van de boot",c:"Roeien"},
+                {q:"Wat is het effect van tegenwind op roei-strategie?",a:"Meer nadruk op techniek/ritme; snelheid zakt en fouten worden duurder",c:"Roeien"},
+                {q:"Hoe wordt progressie in roeien regatta's vaak georganiseerd?",a:"Heats → herkansingen/halve finales → finales (A/B/C)",c:"Roeien"},
+                {q:"Wat is het verschil tussen 'rigging' en 'stroke technique'?",a:"Rigging is afstelling; techniek is hoe je de haal uitvoert",c:"Roeien"},
+                {q:"Wat betekent 'blade work' in roeien?",a:"Hoe je het blad plaatst, door het water trekt en eruit haalt",c:"Roeien"},
+
+                // ZEILEN (20)
+                {q:"Wie heeft voorrang: starboard tack of port tack?",a:"Starboard tack (wind van stuurboord) heeft voorrang",c:"Zeilen"},
+                {q:"Wat is een layline in zeilen?",a:"Lijn vanwaar je precies de boei kunt halen zonder extra slagen",c:"Zeilen"},
+                {q:"Wat is het verschil tussen tacking en gybing?",a:"Tacking = overstag (door de wind); gybing = gijpen (met de wind mee)",c:"Zeilen"},
+                {q:"Wat betekent 'dirty air' in zeilen?",a:"Verstoorde wind achter een boot waardoor je snelheid verliest",c:"Zeilen"},
+                {q:"Wat is VMG en waarom is het belangrijk?",a:"Velocity Made Good: effectieve snelheid richting boei",c:"Zeilen"},
+                {q:"Wat is het low-point system in zeilen?",a:"1 punt voor winst, 2 voor tweede, etc.; laagste totaalscore wint",c:"Zeilen"},
+                {q:"Wat is het effect van DNF in low-point scoring?",a:"Je krijgt veel punten waardoor je totaalscore flink stijgt",c:"Zeilen"},
+                {q:"Waarom is de start in zeilen vaak beslissend?",a:"Timing + positie + vrije wind; slechte start betekent vuile wind",c:"Zeilen"},
+                {q:"Wat is 'luffing' in zeilen?",a:"Naar de wind draaien om snelheid/ruimte te beïnvloeden",c:"Zeilen"},
+                {q:"Wat is het verschil tussen windward en leeward?",a:"Windward = aan de windkant; leeward = lijzijde",c:"Zeilen"},
+                {q:"Wat is een 'wind shift' en waarom is die tactisch?",a:"Draaiing van windrichting; bepaalt welke kant gunstiger is",c:"Zeilen"},
+                {q:"Wat is 'pin end' vs 'committee boat end' bij de startlijn?",a:"De uiteinden van de startlijn; één kant kan favored zijn",c:"Zeilen"},
+                {q:"Wat betekent 'favored end' in zeilen?",a:"Het startlijn-einde dat dichter bij de eerste boei ligt",c:"Zeilen"},
+                {q:"Wat is 'covering' in match racing?",a:"De tegenstander positioneel afdekken bij wind shifts",c:"Zeilen"},
+                {q:"Wat is het doel van een 'protest' in wedstrijdzeilen?",a:"Een regelincident laten beoordelen door jury",c:"Zeilen"},
+                {q:"Wat is 'right of way' in zeilen in één zin?",a:"Regels bepalen wie moet wijken om botsingen te voorkomen",c:"Zeilen"},
+                {q:"Waarom is 'boat handling' cruciaal bij manoeuvres?",a:"Elke manoeuvre kost snelheid; nette uitvoering minimaliseert verlies",c:"Zeilen"},
+                {q:"Wat betekent 'lee-bow tack'?",a:"Tack zo dat je net lijwaarts voor de tegenstander uitkomt",c:"Zeilen"},
+                {q:"Wat is het verschil tussen fleet racing en match racing?",a:"Fleet: met veel boten tegelijk; match: head-to-head duels",c:"Zeilen"},
+
+                // AUTOSPORT (20)
+                {q:"Wat is 'dirty air' in autosport?",a:"Turbulente lucht achter een auto die downforce vermindert",c:"Motorsport"},
+                {q:"Wat is het doel van track limits handhaving?",a:"Voordeel door buiten de baan rijden beperken",c:"Motorsport"},
+                {q:"Wat is een drive-through penalty?",a:"Door de pitstraat rijden met snelheidslimiet zonder stoppen",c:"Motorsport"},
+                {q:"Wat is een stop-and-go penalty?",a:"Stoppen in pitbox voor vaste tijd, daarna doorrijden; zwaarder dan drive-through",c:"Motorsport"},
+                {q:"Wat betekent een gele vlag (basis)?",a:"Gevaar: snelheid minderen en niet inhalen",c:"Motorsport"},
+                {q:"Wat betekent een blauwe vlag?",a:"Snellere auto nadert (meestal om te laten passeren)",c:"Motorsport"},
+                {q:"Wat is het verschil tussen standing start en rolling start?",a:"Standing: vanuit stilstand op grid; rolling: achter pace car op snelheid",c:"Motorsport"},
+                {q:"Wat is 'pit lane speed limit' bedoeld om te voorkomen?",a:"Ongevallen en gevaar in de pitstraat",c:"Motorsport"},
+                {q:"Wat is 'fuel saving' in autosport?",a:"Bewust minder verbruiken om strategie/stop te halen",c:"Motorsport"},
+                {q:"Wat is 'lift and coast'?",a:"Vroeg van het gas en uitrollen vóór rempunt om brandstof/remmen te sparen",c:"Motorsport"},
+                {q:"Wat is 'double-stinting' banden?",a:"Twee stints op dezelfde bandenset rijden",c:"Motorsport"},
+                {q:"Wat is het verschil tussen kwalificatie op één ronde vs aggregate?",a:"Eén ronde: snelste lap telt; aggregate: meerdere rondes opgeteld",c:"Motorsport"},
+                {q:"Wat is een 'parc fermé breach'?",a:"Regels schenden door verboden wijzigingen; kan gridstraffen/DSQ geven",c:"Motorsport"},
+
+                // BASKETBAL (20)
+                {q:"Wat is een backcourt violation?",a:"Na controle in aanvalsvak mag je de bal niet terugbrengen naar achtervak",c:"Basketbal"},
+                {q:"Wat is de 24-secondenregel (shot clock)?",a:"Je moet binnen 24 seconden een schotpoging doen die de ring raakt",c:"Basketbal"},
+                {q:"Wat is het verschil tussen personal en technical foul?",a:"Personal: contactfout; technical: onsportief gedrag/procedure",c:"Basketbal"},
+                {q:"Wat is een 'and-one' in basketbal?",a:"Score terwijl je gefouled wordt, met een extra vrije worp",c:"Basketbal"},
+                {q:"Wat is 'help defense'?",a:"Wegzakken om drives te stoppen en rotaties maken",c:"Basketbal"},
+                {q:"Wat is 'switching' op screens?",a:"Verdedigers wisselen match-ups wanneer er een screen wordt gezet",c:"Basketbal"},
+                {q:"Wat is traveling in basketbal?",a:"Onrechtmatige stappen/pivotverplaatsing zonder dribble",c:"Basketbal"},
+                {q:"Wat is 'three-second violation'?",a:"Te lang in de paint staan",c:"Basketbal"},
+                {q:"Wat is het verschil tussen offensive foul en defensive foul?",a:"Offensive: aanvaller maakt fout; defensive: verdediger maakt contactfout",c:"Basketbal"},
+                {q:"Wat is een charge in basketbal?",a:"Verdediger staat legaal stil; aanvaller maakt contact en krijgt aanvallende fout",c:"Basketbal"},
+                {q:"Wat betekent 'spacing' in moderne basketbalaanval?",a:"Afstanden zo kiezen dat driving lanes en open schoten ontstaan",c:"Basketbal"},
+                {q:"Wat is een 'pick-and-pop'?",a:"Screener rolt niet naar binnen maar stapt uit voor een jump shot",c:"Basketbal"},
+                {q:"Wat is een 'fast break'?",a:"Snelle aanval direct na balverovering/rebound",c:"Basketbal"},
+                {q:"Wat is 'boxing out'?",a:"Positie nemen om een rebound te kunnen pakken",c:"Basketbal"},
+                {q:"Wat is een 'double team'?",a:"Met twee verdedigers druk zetten op één aanvaller",c:"Basketbal"},
+                {q:"Wat is het verschil tussen assist en hockey assist?",a:"Assist: laatste pass voor score; hockey assist: pass vóór de assist",c:"Basketbal"},
+
+                // HONKBAL (20)
+                {q:"Wat is het doel van de infield fly rule?",a:"Voorkomen dat een infielder expres een pop-up laat vallen voor double play",c:"Honkbal"},
+                {q:"Wat is een balk (pitcher) in honkbal?",a:"Illegale pitching-beweging; runners krijgen een base",c:"Honkbal"},
+                {q:"Wat is het verschil tussen earned en unearned run?",a:"Earned: zonder error verdiend; unearned: ontstaat door errors",c:"Honkbal"},
+                {q:"Wat is een sacrifice fly?",a:"Fly out waarbij een runner na tag-up kan scoren",c:"Honkbal"},
+                {q:"Wat is het verschil tussen strikeout looking en swinging?",a:"Looking: derde strike laten passeren; swinging: zwaaien en missen",c:"Honkbal"},
+                {q:"Wat is 'tag up' in honkbal?",a:"Na een fly ball catch moet de runner eerst de base aanraken voordat hij verder mag",c:"Honkbal"},
+                {q:"Wat is het concept van designated hitter (DH)?",a:"Een slagman die bat in plaats van de pitcher",c:"Honkbal"},
+                {q:"Wat is een double play in honkbal (voorbeeld)?",a:"Twee outs in één actie, bijv. grounder: 2B → 1B",c:"Honkbal"},
+                {q:"Wat is 'caught stealing'?",a:"Runner wordt uit gemaakt bij poging tot stelen",c:"Honkbal"},
+                {q:"Wat is het verschil tussen fair en foul?",a:"Afhankelijk van waar de bal landt t.o.v. de foul lines; lijnen tellen als fair",c:"Honkbal"},
+                {q:"Wat is een 'sac bunt'?",a:"Bunt om een runner vooruit te zetten; slagman offert zich op",c:"Honkbal"},
+                {q:"Wat is 'hit by pitch' (HBP)?",a:"Batter wordt geraakt door pitch en krijgt vrije loop naar 1st base",c:"Honkbal"},
+                {q:"Wat is een 'walk' (base on balls)?",a:"Vier ballen → slagman krijgt 1st base",c:"Honkbal"},
+                {q:"Wat is een 'save' (pitching stat)?",a:"Reliever sluit close game af en behoudt de voorsprong",c:"Honkbal"},
+                {q:"Wat is een 'hold' (reliever stat)?",a:"Reliever behoudt voorsprong in save-situatie en geeft af aan andere pitcher",c:"Honkbal"},
+                {q:"Wat is een 'error' in scoring-termen?",a:"Verdedigingsfout die een out had moeten opleveren",c:"Honkbal"},
+                {q:"Wat is een 'fielder's choice'?",a:"Verdediging kiest voor andere runner/out dan de slagman",c:"Honkbal"},
+                {q:"Wat is het verschil tussen single, double en triple?",a:"1, 2 of 3 honken veilig bereikt door de slagman",c:"Honkbal"},
+                {q:"Wat is 'extra innings' in honkbal?",a:"Verlenging bij gelijke stand na 9 innings",c:"Honkbal"},
+
+                // AMERIKAANSE SPORTEN NFL/NHL (20)
+                {q:"Hoeveel downs heeft een NFL-aanval om 10 yards te halen?",a:"Vier downs",c:"American Football"},
+                {q:"Wat is een two-point conversion?",a:"Na een touchdown één spel voor 2 punten i.p.v. kick voor 1",c:"American Football"},
+                {q:"Wat is intentional grounding?",a:"QB gooit onvangbaar weg onder druk zonder receiver in de buurt → penalty",c:"American Football"},
+                {q:"Wat is een safety in American football?",a:"Aanval wordt getackeld in eigen end zone → 2 punten voor defense + balbezit",c:"American Football"},
+                {q:"Wat is een fair catch en wat levert het op?",a:"Returner vangt punt en signaleert; geen tackle, bal op die plek",c:"American Football"},
+                {q:"Wat is 'icing the kicker'?",a:"Timeout nemen vlak vóór een beslissende kick om ritme te verstoren",c:"American Football"},
+                {q:"Wat is het verschil tussen interception en fumble?",a:"Interception: pass onderschept; fumble: balverlies na bezit/contact",c:"American Football"},
+                {q:"Wat is een 'touchback'?",a:"Bal komt in end zone en wordt dood; bal voor aanval op vaste yardlijn",c:"American Football"},
+                {q:"Wat is de 'red zone' in American football?",a:"Gebied binnen de 20-yardlijn van de tegenstander",c:"American Football"},
+                {q:"Wat is het verschil tussen play action en RPO?",a:"Play action: run-fake voor pass; RPO: QB kiest na snap tussen run of snelle pass",c:"American Football"},
+                {q:"Wat is 'pass interference'?",a:"Illegaal hinderen van receiver/defender bij een pass voordat de bal aankomt",c:"American Football"},
+                {q:"In NHL: wat is icing en waarom bestaat het?",a:"Puck over twee lijnen tot achter doellijn; voorkomt wegrossen onder druk",c:"IJshockey"},
+                {q:"Wat is een power play in NHL?",a:"Numeriek voordeel doordat tegenstander in penalty box zit",c:"IJshockey"},
+                {q:"Wat is het verschil tussen minor en major penalty?",a:"Minor: korter (2 min); major: zwaarder (5 min)",c:"IJshockey"},
+                {q:"Wat is een hattrick in NHL?",a:"Eén speler scoort drie goals in één wedstrijd",c:"IJshockey"},
+                {q:"Wat is overtime in de NFL (basisidee)?",a:"Verlenging bij gelijkspel; regels verschillen per fase/competitie",c:"American Football"},
+                {q:"Wat betekent 'best-of-7 series' (NBA/NHL)?",a:"Eerste team met 4 overwinningen wint de serie",c:"Basketbal"},
+                {q:"Wat is een 'wild card' in US sports?",a:"Playoff-plek voor teams die geen divisie winnen maar via record kwalificeren",c:"American Football"},
+                {q:"Wat is het verschil tussen regular season en playoffs?",a:"Regular season bepaalt ranking; playoffs bepalen kampioen",c:"American Football"},
+                {q:"Wat is een 'salary cap' en waarom bestaat die?",a:"Maximale teamsalarisruimte voor competitief evenwicht",c:"American Football"},
+
+                // === NIEUWE VRAGEN VAN EXTERNE BRONNEN ===
+                // Bron: quiz-vragen.net (moeilijke sportvragen)
+                {q:"Welke Italiaanse voetbalclub wordt vergeleken met een oude dame?",a:"Juventus",c:"Voetbal"},
+                {q:"In welke stad brandde het Olympische vuur voor het eerst?",a:"Amsterdam",c:"Olympische Spelen"},
+                {q:"Van welk atletiek onderdeel heeft Mike Powell sinds 1991 het record op zijn naam staan?",a:"Verspringen",c:"Atletiek"},
+                {q:"Uit welk onderdeel bestaat een originele triatlon naast zwemmen en fietsen nog meer?",a:"Hardlopen",c:"Atletiek"},
+                {q:"Welke Nederlandse gemeente heeft als enige geen voetbalvereniging?",a:"Vlieland",c:"Voetbal"},
+                {q:"In welk jaar werd het Feyenoord stadion geopend?",a:"1937",c:"Voetbal"},
+                {q:"Hoe wordt het scorebord bij kaatsen genoemd?",a:"Telegraaf",c:"Algemeen"},
+                {q:"Sinds welk jaar is ijshockey een Olympische sport?",a:"1920",c:"Olympische Spelen"},
+                {q:"Hoeveel kilo weegt een discus voor vrouwen bij het discuswerpen?",a:"1 kilo",c:"Atletiek"},
+                {q:"Hoe worden bij het bowlen 3 strikes achter elkaar genoemd?",a:"Turkey",c:"Algemeen"},
+                {q:"Bij welke sport hoort het lied 'Take me out to the Ball Game'?",a:"Honkbal",c:"Honkbal"},
+                {q:"Welke sport is onder te verdelen in cross country, downhill, dirt jumping, enduro en freeride?",a:"Mountainbiken",c:"Wielrennen"},
+                {q:"Welke sport betekent in het Japans 'zachte weg'?",a:"Judo",c:"Algemeen"},
+                {q:"Om de hoeveel jaar wordt het wereldkampioenschap cricket gehouden?",a:"Om de 4 jaar",c:"Algemeen"},
+                {q:"Bij welke sport kan men de titel Mr. Olympia behalen?",a:"Bodybuilding",c:"Algemeen"},
+                {q:"Hoe worden de aangepaste skistokken genoemd die worden gebruikt bij nordic walking?",a:"Poles",c:"Algemeen"},
+                {q:"Bij welke sport heb je te maken met een loodgordel, een buddylijn en een manometer?",a:"Duiksport",c:"Algemeen"},
+                {q:"Hoe heet de uitgezette route voor langlaufers?",a:"Een loipe",c:"Wintersport"},
+                {q:"Welke sport is ontstaan toen duikers naar een manier zochten om winterconditie te behouden?",a:"Onderwaterhockey",c:"Algemeen"},
+                {q:"Hoe wordt het bij snowboarden genoemd wanneer je met je rechtervoet voorop het board staat?",a:"Goofy",c:"Wintersport"},
+                {q:"Welke extreme vorm van surfen begint pas bij golven van 8 meter hoog?",a:"Big Wave Surfing",c:"Algemeen"},
+                {q:"Van welke 2 sporten is duatlon een combinatie?",a:"Wielrennen en hardlopen",c:"Wielrennen"},
+
+                // Bron: ahaslides.com
+                {q:"Hoeveel spelers zitten er in een honkbalteam?",a:"9 spelers",c:"Honkbal"},
+                {q:"Welke sport wordt beschouwd als de 'koning van de sport'?",a:"Voetbal",c:"Voetbal"},
+                {q:"Wat zijn de twee nationale sporten van Canada?",a:"Lacrosse en ijshockey",c:"Algemeen"},
+                {q:"Welk team won de eerste NBA-wedstrijd in 1946?",a:"De New York Knicks",c:"Basketbal"},
+                {q:"In welke sport zou je een touchdown hebben?",a:"American football",c:"American Football"},
+                {q:"In welk jaar won Amir Khan zijn Olympische boksmedaille?",a:"2004",c:"Boksen"},
+                {q:"Wat is de echte naam van Muhammad Ali?",a:"Cassius Clay",c:"Boksen"},
+                {q:"Voor welk team speelde Michael Jordan het grootste deel van zijn carrière?",a:"Chicago Bulls",c:"Basketbal"},
+                {q:"Welke sport staat bekend als waterballet?",a:"Synchroonzwemmen",c:"Zwemmen"},
+                {q:"Welke sport maakt gebruik van een racket, een net en een shuttle?",a:"Badminton",c:"Algemeen"},
+
+                // Bron: kwis.app (moeilijke sportvragen)
+                {q:"Van welke twee voetbalclubs is het Italiaanse 'Stadio Olimpico' het thuisstadion?",a:"SS Lazio en AS Roma",c:"Voetbal"},
+                {q:"Wat is de exacte wereldrecordtijd van Usain Bolt op de 100 meter?",a:"9,58 seconden",c:"Atletiek"},
+                {q:"Wie is met 14 doelpunten de EK-topscorer aller tijden?",a:"Cristiano Ronaldo",c:"Voetbal"},
+                {q:"Welke quarterback wordt in American Football beschouwd als de 'GOAT'?",a:"Tom Brady",c:"American Football"},
+                {q:"Wat is de bekende bijnaam van Zinédine Zidane?",a:"Zizou",c:"Voetbal"},
+                {q:"Bij welke voetbalclub sloot Johan Cruijff zijn spelerscarrière af?",a:"Feyenoord Rotterdam",c:"Voetbal"},
+                {q:"In welke sport voer je een 'YOLO flip' en 'Tomahawk' uit?",a:"Snowboarden",c:"Wintersport"},
+                {q:"Wat is de derde hoogste hand in poker?",a:"Four of a kind",c:"Algemeen"},
+                {q:"Welke Duitse voetballer stond bekend als 'Der Bomber der Nation'?",a:"Gerd Müller",c:"Voetbal"},
+                {q:"In welk land werd het WK voetbal 2010 gehouden?",a:"Zuid-Afrika",c:"Voetbal"},
+                {q:"Hoe heet de Thaise bokssport in het Thais?",a:"Muay Thai",c:"Boksen"},
+                {q:"Voor welke club speelde David Beckham het langst?",a:"Manchester United",c:"Voetbal"},
+                {q:"In welke competitie speelt Jacksonville Jaguars?",a:"National Football League (NFL)",c:"American Football"},
+                {q:"Wie was de Zweedse tennisser geboren in 1956, wereldberoemd eind jaren '70?",a:"Björn Borg",c:"Tennis"},
+                {q:"Hoe heet de 1993 film over een Jamaicaans bobsleeteam?",a:"Cool Runnings",c:"Wintersport"},
+                {q:"Welke Braziliaanse F1-piloot stierf in 1994 tijdens de Grand Prix van San Marino?",a:"Ayrton Senna",c:"Motorsport"},
+
+                // Bron: raadsels.nu (sportquiz)
+                {q:"Wat is de hoogste score bij darts?",a:"180",c:"Darts"},
+                {q:"Bij welke sport maak je een volte?",a:"Paardensport",c:"Algemeen"},
+                {q:"Welke slag komt normaal gesproken niet voor in de zwemsport?",a:"Nekslag",c:"Zwemmen"},
+                {q:"Hoe noem je het als je bij bowlen alle kegels in één keer omgooit?",a:"Een strike",c:"Algemeen"},
+                {q:"Welke zwemster won 1 zilveren en 3 gouden medailles op de Olympische Spelen in 2000?",a:"Inge de Bruijn",c:"Zwemmen"},
+                {q:"Onder welke sport vallen dammen, bridge en scrabble?",a:"Denksport",c:"Algemeen"},
+                {q:"Waarom wordt badminton in een zaal gespeeld?",a:"Vanwege eventuele wind",c:"Algemeen"},
+
+                // === ACTUALITEIT FEBRUARI 2026 ===
+                // Olympische Winterspelen 2026 - Milaan/Cortina
+                {q:"Welke Nederlandse schaatsster won goud op de 1000 meter bij de Winterspelen 2026?",a:"Jutta Leerdam",c:"Actualiteit",w:["Irene Schouten","Femke Kok","Antoinette de Jong"]},
+                {q:"Wie is de verloofde van Jutta Leerdam die emotioneel werd bij haar gouden race?",a:"Jake Paul",c:"Actualiteit",w:["Logan Paul","KSI","Tommy Fury"]},
+                {q:"Welke Amerikaanse schaatser wordt gezien als topfavoriet op de 1000 meter mannen in 2026?",a:"Jordan Stolz",c:"Actualiteit",w:["Joey Mantia","Shani Davis","Erin Jackson"]},
+                {q:"Welke drie Nederlandse schaatsers rijden de 1000 meter mannen op de Winterspelen 2026?",a:"Jenning de Boo, Joep Wennemars en Kjeld Nuis",c:"Actualiteit",w:["Kai Verbij, Thomas Krol en Patrick Roest","Hein Otterspeer, Dai Dai Ntab en Kjeld Nuis","Thomas Krol, Joep Wennemars en Patrick Roest"]},
+                {q:"Waarom miste Nederland de finale gemengde aflossing shorttrack op de Winterspelen 2026?",a:"Door een valpartij van Xandra Velzeboer",c:"Actualiteit",w:["Door diskwalificatie","Door een blessure","Door een valse start"]},
+                {q:"Welk land won goud op de gemengde aflossing shorttrack bij de Winterspelen 2026?",a:"Italië",c:"Actualiteit",w:["Nederland","Zuid-Korea","China"]},
+                {q:"Welk land won verrassend brons op de gemengde aflossing shorttrack bij de Winterspelen 2026?",a:"België",c:"Actualiteit",w:["Nederland","Groot-Brittannië","Frankrijk"]},
+                {q:"Hoe heet het Belgische shorttrackteam dat brons won op de Winterspelen 2026?",a:"Belgian Ice Bears",c:"Actualiteit",w:["Belgian Blades","Ice Lions Belgium","Team Belgium Ice"]},
+                {q:"Wat was bijzonder aan de bronzen medaille van België op de Winterspelen 2026?",a:"Het was de eerste Belgische Winterspelen-medaille ooit",c:"Actualiteit",w:["Het was onverwacht door een val van de favoriet","België won met een wereldrecord","Alle teamleden waren debutanten"]},
+
+                // Tennis - ABN AMRO Open 2026
+                {q:"Welke Nederlandse tennisser versloeg Giovanni Mpetshi Perricard op de ABN AMRO Open 2026?",a:"Tallon Griekspoor",c:"Actualiteit",w:["Botic van de Zandschulp","Tim van Rijthoven","Jesper de Jong"]},
+                {q:"Wie is de eerste geplaatste speler op de ABN AMRO Open 2026?",a:"Alex De Minaur",c:"Actualiteit",w:["Daniil Medvedev","Carlos Alcaraz","Stefanos Tsitsipas"]},
+                {q:"Welke Nederlandse kwalificant verloor in de eerste ronde van de ABN AMRO Open 2026?",a:"Mees Röttgering",c:"Actualiteit",w:["Tallon Griekspoor","Botic van de Zandschulp","Jesper de Jong"]},
+                {q:"Welke tennislegende (44 jaar) staat op de anti-doping clearance lijst, wat duidt op een mogelijke comeback?",a:"Serena Williams",c:"Actualiteit",w:["Venus Williams","Maria Sharapova","Caroline Wozniacki"]},
+
+                // Voetbal - Actualiteit
+                {q:"Hoeveel wedstrijden op rij kon Manchester United niet winnen in februari 2026?",a:"Vijf wedstrijden",c:"Actualiteit",w:["Drie wedstrijden","Vier wedstrijden","Zes wedstrijden"]},
+                {q:"Wie is de nieuwe directeur van Ajax die trainingscoach Willem Weijs op non-actief stelde?",a:"Jordi Cruijff",c:"Actualiteit",w:["Marc Overmars","Edwin van der Sar","Dennis Bergkamp"]},
+                {q:"Welke trainer neemt de taken over bij Jong Ajax na het vertrek van Willem Weijs?",a:"Óscar García",c:"Actualiteit",w:["Francesco Farioli","John Heitinga","Ronald de Boer"]},
+                {q:"Welke Belgische club bereikte een 'absoluut dieptepunt' met het ontslag van coach Besnik Hasi?",a:"Anderlecht",c:"Actualiteit",w:["Club Brugge","Genk","Standard Luik"]},
+                {q:"Welke speler miste een cruciale penalty voor Napoli in de Coppa Italia tegen Como?",a:"Romelu Lukaku",c:"Actualiteit",w:["Victor Osimhen","Khvicha Kvaratskhelia","Giovanni Simeone"]},
+                {q:"Welke Manchester City-speler mist de rest van het seizoen én het WK door een voetoperatie?",a:"Jack Grealish",c:"Actualiteit",w:["Kevin De Bruyne","Phil Foden","Erling Haaland"]},
+
+                // Wielrennen - Actualiteit
+                {q:"Welke wielrenner traint al na 5 dagen op een hometrainer ondanks een gebroken pols en sleutelbeen?",a:"Mads Pedersen",c:"Actualiteit",w:["Wout van Aert","Mathieu van der Poel","Tadej Pogacar"]},
+                {q:"Welke Belgische wielrenner heeft naast zijn eerder bekende blessures ook een elleboogfractuur opgelopen?",a:"Cian Uijtdebroeks",c:"Actualiteit",w:["Remco Evenepoel","Jasper Philipsen","Wout van Aert"]},
+                {q:"Welke trainer van Jonas Vingegaard vertrok bij Visma-Lease a Bike?",a:"Tim Heemskerk",c:"Actualiteit",w:["Mathieu Heijboer","Merijn Zeeman","Grischa Niermann"]},
+                {q:"In welk land crashten meerdere wielrenners waaronder Mads Pedersen begin 2026?",a:"Spanje (Valencia)",c:"Actualiteit",w:["Frankrijk","Italië","België"]}
+            ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
+        }
+    </script>
+</body>
+</html>
