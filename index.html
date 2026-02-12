@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v13');
+            const stored = localStorage.getItem('sportquiz_questions_v14');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v13', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v14', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1418,26 +1418,26 @@
                 // === DOCUMENT 1: circa 536 vragen ===
                 // Algemeen / Basis
                 {q:"Tot welke nationale bond behoren de voetbalploegen van Liechtenstein?",a:"De Zwitserse voetbalbond",c:"Algemeen"},
-                {q:"Hoeveel banen heeft een olympisch zwembad en hoe lang is het?",a:"Acht banen en vijftig meter",c:"Zwemmen"},
+                {q:"Wat is het verschil tussen een 'long course' (LCM) en 'short course' (SCM) zwembad qua afmetingen en recordtijden?",a:"LCM=50m, SCM=25m; SCM-tijden zijn sneller door extra keerpunten",c:"Zwemmen"},
                 {q:"Wie won zes opeenvolgende Wimbledon-titels in de jaren tachtig?",a:"Martina Navratilova",c:"Tennis"},
                 {q:"Welke Portugese voetballer was topscorer op de wereldbeker in 1966?",a:"Eusebio",c:"Voetbal"},
                 {q:"Welk Aziatisch land bereikte als eerste de halve finale op een WK voetbal in 2002?",a:"Zuid-Korea",c:"Voetbal"},
                 {q:"Wat was het eerste land dat twee maal de wereldbeker voetbal won?",a:"Italie",c:"Voetbal"},
-                {q:"Hoe noemt men acrobatisch touwtjespringen nog?",a:"Rope Skipping",c:"Algemeen"},
-                {q:"Waarin moeten je voeten zitten bij het paardrijden?",a:"Stijgbeugels",c:"Algemeen"},
-                {q:"Is kogelstoten een atletieksport?",a:"Ja",c:"Atletiek"},
+                {q:"Wat is Double Dutch bij rope skipping en hoeveel touwen worden gebruikt?",a:"Twee touwen draaien in tegengestelde richting terwijl springer trucs uitvoert",c:"Algemeen"},
+                {q:"Wat is het verschil tussen dressuur, springen en eventing in de paardensport?",a:"Dressuur=figuren rijden, springen=hindernissen, eventing=driedaagse combinatie",c:"Algemeen"},
+                {q:"Wat is het gewicht van de kogel bij kogelstoten voor mannen en vrouwen?",a:"Mannen 7,26 kg, vrouwen 4 kg",c:"Atletiek"},
                 {q:"Hoeveel spelers staan er in totaal op een basketbalveld?",a:"Tien (5 tegen 5)",c:"Basketbal"},
                 {q:"Hoe wordt de Belgische nationale voetbalploeg genoemd?",a:"De Rode Duivels",c:"Voetbal"},
                 {q:"In welk land werd in 1998 het WK voetbal georganiseerd?",a:"Frankrijk",c:"Voetbal"},
-                {q:"Met hoeveel pijltjes mag men in een beurt bij darts naar het bord gooien?",a:"Drie",c:"Darts"},
+                {q:"Wat is de optimale strategie voor een 170 checkout (hoogst mogelijke) bij darts?",a:"Triple 20, triple 20, bullseye (60+60+50)",c:"Darts"},
                 {q:"Welke sport beoefent J.-M. Saive?",a:"Tafeltennis",c:"Algemeen"},
-                {q:"Wie bedoelt men met 'de zwarte' bij sportwedstrijden?",a:"De scheidsrechter",c:"Algemeen"},
+                {q:"Welke scheidsrechter was de eerste die een rode kaart toonde op een WK finale (2006)?",a:"Horacio Elizondo (aan Zidane)",c:"Algemeen"},
                 {q:"Bij welke balsport is de bal niet rond?",a:"Rugby",c:"Rugby"},
                 {q:"Waar vonden de Olympische Zomerspelen in 2004 plaats?",a:"Athene",c:"Olympische Spelen"},
-                {q:"Wat is de naam van het vierkante binnenveld bij honkbal?",a:"De diamant",c:"Algemeen"},
+                {q:"Wat is de afstand tussen de honken (bases) bij professioneel honkbal in meters?",a:"27,43 meter (90 feet)",c:"Algemeen"},
                 {q:"Hoe noemt men de sport die men met een trimaran beoefent?",a:"Zeilen",c:"Zeilen"},
                 {q:"In welk land werd het werelduurrecord van Eddy Merckx gevestigd?",a:"Mexico (Mexico-Stad)",c:"Wielrennen"},
-                {q:"Is touwklimmen ooit een onderdeel van de Olympische Spelen geweest?",a:"Ja",c:"Olympische Spelen"},
+                {q:"Van welke Olympische Spelen tot en met welke Spelen stond touwklimmen op het programma?",a:"Athene 1896 tot en met Los Angeles 1932",c:"Olympische Spelen"},
                 {q:"Hoe heet het beroemde paardenras in de Spaanse rijschool in Wenen?",a:"Lippizaner",c:"Algemeen"},
                 {q:"Voor welke wielrenner met bijnaam 'de laatste Flandrien' werd een standbeeld opgericht?",a:"Briek Schotte",c:"Wielrennen"},
                 {q:"Wie won Parijs-Roubaix in 2005?",a:"Tom Boonen",c:"Wielrennen"},
@@ -1450,7 +1450,7 @@
                 {q:"In welke sport kan men posities innemen zoals fine leg, silly point, cover point?",a:"Cricket",c:"Algemeen"},
                 {q:"Welk land werd op 30 juni 1996 Europees kampioen voetbal?",a:"Duitsland",c:"Voetbal"},
                 {q:"Wie won in 1982 de WK-finale voetbal in Spanje?",a:"Italie",c:"Voetbal"},
-                {q:"Welk Australisch werptuig komt terug als het gegooid is?",a:"De boemerang",c:"Algemeen"},
+                {q:"Welke werpafstand moet een boemerang minimaal afleggen voor een officieel record?",a:"20 meter uit en terug binnen 2 meter van de werper",c:"Algemeen"},
                 {q:"Hoe noemt men de extra rit voorafgaande aan de eerste rit?",a:"Proloog",c:"Wielrennen"},
                 // Olympische Spelen
                 {q:"In welke stad vonden de eerste moderne Olympische Spelen plaats (1896)?",a:"Athene",c:"Olympische Spelen"},
@@ -1458,9 +1458,9 @@
                 {q:"Wat is het olympisch motto (klassiek) in het Latijn?",a:"Citius, Altius, Fortius",c:"Olympische Spelen"},
                 {q:"Hoe heet het olympisch motto inclusief de toevoeging sinds 2021?",a:"Citius, Altius, Fortius - Communiter",c:"Olympische Spelen"},
                 {q:"Wat zijn de vijf kleuren van de olympische ringen?",a:"Blauw, geel, zwart, groen, rood",c:"Olympische Spelen"},
-                {q:"Hoeveel ringen bevat het olympische symbool?",a:"Vijf",c:"Olympische Spelen"},
-                {q:"Wat is de standaardlengte van een olympisch zwembad?",a:"50 meter",c:"Zwemmen"},
-                {q:"Hoeveel lanes heeft een olympisch zwembad standaard?",a:"8",c:"Zwemmen"},
+                {q:"Welke continenten worden door welke kleuren vertegenwoordigd in de olympische ringen?",a:"Geen vaste toewijzing; elke nationale vlag bevat minimaal één ringkleur",c:"Olympische Spelen"},
+                {q:"Wat is de minimale watertemperatuur voor olympisch zwemmen volgens FINA-regels?",a:"25-28 graden Celsius",c:"Zwemmen"},
+                {q:"Waarom zijn de buitenste banen (1 en 8) bij olympisch zwemmen het minst gewild?",a:"Meer turbulentie door golfslag tegen de muur",c:"Zwemmen"},
                 {q:"Welke vlam wordt ontstoken in Olympia en reist naar de gaststad?",a:"De olympische vlam",c:"Olympische Spelen"},
                 {q:"Welke sport staat sinds 1896 op elke Zomerspelen-editie op het programma?",a:"Atletiek",c:"Olympische Spelen"},
                 {q:"Welke sport is voor Nederland historisch het succesvolst op de Winterspelen?",a:"Langebaanschaatsen",c:"Wintersport"},
@@ -1579,9 +1579,9 @@
                 {q:"Wat zijn 'Intermediates'?",a:"Banden voor licht natte baan",c:"Motorsport"},
                 {q:"Wat zijn 'Wets'?",a:"Volle regenbanden met diep profiel",c:"Motorsport"},
                 // Tennis
-                {q:"Wat betekent 'Love' in tennis?",a:"Nul punten",c:"Tennis"},
-                {q:"Wat betekent 'Deuce' in tennis?",a:"Gelijkstand op 40-40",c:"Tennis"},
-                {q:"Wat betekent 'Advantage' in tennis?",a:"Voordeel na deuce",c:"Tennis"},
+                {q:"Waar komt de term 'Love' (nul punten) in tennis oorspronkelijk vandaan?",a:"Waarschijnlijk van het Franse 'l'oeuf' (ei, vorm van nul)",c:"Tennis"},
+                {q:"Hoeveel games moet je minimaal winnen om een set te winnen bij tennis?",a:"6 games met minimaal 2 verschil, of via tiebreak bij 6-6",c:"Tennis"},
+                {q:"Wat is het verschil tussen een 'Championship tiebreak' en een gewone tiebreak?",a:"Championship: tot 10 punten, gewone: tot 7 punten",c:"Tennis"},
                 {q:"Wat is een 'Tiebreak'?",a:"Beslissend spel tot 7 punten met 2 verschil",c:"Tennis"},
                 {q:"Wat is een 'Grand Slam' in tennis?",a:"Australian Open, Roland Garros, Wimbledon, US Open",c:"Tennis"},
                 {q:"Wat is een 'Golden Slam'?",a:"Alle 4 Grand Slams + olympisch goud in 1 jaar",c:"Tennis"},
@@ -2364,6 +2364,38 @@
                 {q:"Onder welke sport vallen dammen, bridge en scrabble?",a:"Denksport",c:"Algemeen"},
                 {q:"Waarom wordt badminton in een zaal gespeeld?",a:"Vanwege eventuele wind",c:"Algemeen"},
 
+                // === EXTREEM MOEILIJKE ALGEMEEN VRAGEN ===
+                {q:"Welke sport is de enige die ooit op de maan is beoefend?",a:"Golf (Alan Shepard, Apollo 14, 1971)",c:"Algemeen"},
+                {q:"Welk land heeft het vaakst deelgenomen aan de Olympische Zomerspelen zonder ooit goud te winnen?",a:"Filipijnen (21 deelnames tot 2020)",c:"Algemeen"},
+                {q:"Wat is de langste professionele honkbalwedstrijd ooit gespeeld qua innings?",a:"33 innings (Pawtucket vs Rochester, 1981)",c:"Algemeen"},
+                {q:"Hoeveel knoppen, schakelaars en hendels heeft een modern F1-stuur ongeveer?",a:"Ongeveer 25-35 bedieningen",c:"Algemeen"},
+                {q:"Welke sport gebruikt termen als 'stale fish' en 'mule kick'?",a:"Snowboarden",c:"Algemeen"},
+                {q:"Van welk materiaal is een NFL-football gemaakt, ondanks de bijnaam 'pigskin'?",a:"Koeienleer (cowhide)",c:"Algemeen"},
+                {q:"Wat is het snelste doelpunt ooit gescoord in professioneel voetbal?",a:"2,1 seconden (Nawaf Al-Abed, 2009)",c:"Algemeen"},
+                {q:"Welke Schotse bal-en-stok sport lijkt op het Ierse hurling?",a:"Shinty",c:"Algemeen"},
+                {q:"Wat is de naam van de sport met olifanten die lijkt op polo?",a:"Elephant Polo",c:"Algemeen"},
+                {q:"Welke Zuidoost-Aziatische sport wordt ook wel 'kick volleyball' genoemd?",a:"Sepak Takraw",c:"Algemeen"},
+                {q:"In welke Centraal-Aziatische sport worden geen doelpalen gebruikt en wordt met een dode geit gespeeld?",a:"Buzkashi",c:"Algemeen"},
+                {q:"Wie was de eerste vrouwelijke atleet op de cover van Wheaties-cornflakes?",a:"Babe Didrikson (1935)",c:"Algemeen"},
+                {q:"Wie was de eerste zwarte vrouw die olympisch goud won?",a:"Alice Coachman (hoogspringen, 1948)",c:"Algemeen"},
+                {q:"Wie is de meest gedecoreerde vrouwelijke Winter Olympiër aller tijden?",a:"Marit Bjørgen (15 medailles, langlaufen)",c:"Algemeen"},
+                {q:"Hoeveel spelers staan er per team op het veld bij team handbal?",a:"7 (inclusief keeper)",c:"Algemeen"},
+                {q:"Welke twee onderdelen bevat de biathlon?",a:"Langlaufen en schieten",c:"Algemeen"},
+                {q:"Wat zijn de twee verplichte onderdelen bij olympisch gewichtheffen?",a:"Snatch (trekken) en Clean & Jerk (stoten)",c:"Algemeen"},
+                {q:"In welk jaar mochten vrouwen voor het eerst deelnemen aan de moderne Olympische Spelen?",a:"1900 (Parijs) - in tennis, zeilen, croquet, paardensport en golf",c:"Algemeen"},
+                {q:"Welke sport op Isle of Man lijkt op hurling en stierf bijna uit door voetbal?",a:"Cammag",c:"Algemeen"},
+                {q:"Wat is de Triple Crown in Amerikaanse paardenrennen (de drie races)?",a:"Kentucky Derby, Preakness Stakes, Belmont Stakes",c:"Algemeen"},
+                {q:"Welke atleet won olympisch goud op zowel de 200m als 400m op dezelfde Spelen?",a:"Michael Johnson (Atlanta 1996)",c:"Algemeen"},
+                {q:"Welke bokser bleef 11 jaar en 252 dagen ongeslagen wereldkampioen zwaargewicht?",a:"Joe Louis (1937-1949)",c:"Algemeen"},
+                {q:"Hoeveel uur duurde de langste tenniswedstrijd ooit (Isner vs Mahut, Wimbledon 2010)?",a:"11 uur en 5 minuten (over 3 dagen)",c:"Algemeen"},
+                {q:"Welke golfer won de Masters, US Open en British Open in hetzelfde jaar (1953)?",a:"Ben Hogan",c:"Algemeen"},
+                {q:"Wat is de naam van de prijs voor de beste keeper in het WK voetbal?",a:"Lev Yashin Award (Golden Glove)",c:"Algemeen"},
+                {q:"Welke wielrenner won vijf opeenvolgende Tours de France (1991-1995)?",a:"Miguel Indurain",c:"Algemeen"},
+                {q:"Hoeveel continentale confederaties zijn er in het wereldvoetbal (FIFA)?",a:"6 (UEFA, CONMEBOL, CAF, AFC, CONCACAF, OFC)",c:"Algemeen"},
+                {q:"Welke stad heeft zowel de Zomer- als Winterspelen georganiseerd?",a:"Beijing (2008 zomer, 2022 winter)",c:"Algemeen"},
+                {q:"Wat is een 'albatross' in golf en hoe zeldzaam is het?",a:"Drie slagen onder par op een hole; extreem zeldzaam",c:"Algemeen"},
+                {q:"Welke Nederlandse sporter won de meeste olympische medailles ooit?",a:"Ireen Wüst (13 medailles)",c:"Algemeen"},
+
                 // === ACTUALITEIT FEBRUARI 2026 ===
                 // Olympische Winterspelen 2026 - Milaan/Cortina
                 {q:"Welke Nederlandse schaatsster won goud op de 1000 meter bij de Winterspelen 2026?",a:"Jutta Leerdam",c:"Actualiteit",w:["Irene Schouten","Femke Kok","Antoinette de Jong"]},
@@ -2395,6 +2427,29 @@
                 {q:"Welke Belgische wielrenner heeft naast zijn eerder bekende blessures ook een elleboogfractuur opgelopen?",a:"Cian Uijtdebroeks",c:"Actualiteit",w:["Remco Evenepoel","Jasper Philipsen","Wout van Aert"]},
                 {q:"Welke trainer van Jonas Vingegaard vertrok bij Visma-Lease a Bike?",a:"Tim Heemskerk",c:"Actualiteit",w:["Mathieu Heijboer","Merijn Zeeman","Grischa Niermann"]},
                 {q:"In welk land crashten meerdere wielrenners waaronder Mads Pedersen begin 2026?",a:"Spanje (Valencia)",c:"Actualiteit",w:["Frankrijk","Italië","België"]},
+
+                // Winterspelen 2026 - Extra
+                {q:"Welke Amerikaanse schaatser won goud op de 1000m mannen met een olympisch record op de Winterspelen 2026?",a:"Jordan Stolz",c:"Actualiteit",w:["Joey Mantia","Nils van der Poel","Kjeld Nuis"]},
+                {q:"Wie won zilver achter Jutta Leerdam op de 500 meter schaatsen Winterspelen 2026?",a:"Femke Kok",c:"Actualiteit",w:["Brittany Bowe","Vanessa Herzog","Angelina Golikova"]},
+                {q:"Welke Zwitserse skiër won drie gouden medailles op de Winterspelen 2026?",a:"Franjo von Allmen",c:"Actualiteit",w:["Marco Odermatt","Beat Feuz","Luca Aerni"]},
+                {q:"Welke Amerikaanse snowboardster gaat voor haar derde opeenvolgende olympische goud op de halfpipe?",a:"Chloe Kim",c:"Actualiteit",w:["Jamie Anderson","Lindsey Jacobellis","Maddie Mastro"]},
+                {q:"Welke Amerikaanse skiester crashte tijdens de afdaling en werd per helikopter afgevoerd?",a:"Lindsey Vonn",c:"Actualiteit",w:["Mikaela Shiffrin","Breezy Johnson","Nina O'Brien"]},
+                {q:"Welke Italiaanse shorttrackster won haar 12e olympische medaille op de gemengde aflossing?",a:"Arianna Fontana",c:"Actualiteit",w:["Martina Valcepina","Elena Viviani","Lucia Peretti"]},
+                {q:"Welke Noorse langlaufer won zijn 7e olympische gouden medaille op de Winterspelen 2026?",a:"Johannes Høsflot Klæbo",c:"Actualiteit",w:["Simen Hegstad Krüger","Hans Christer Holund","Pål Golberg"]},
+                {q:"Welk Nederlands koppel maakte historie als eerste Nederlandse deelnemers aan olympisch kunstrijden?",a:"Ze debuteerden op de Winterspelen 2026 in Milaan",c:"Actualiteit",w:["Ze wonnen brons","Ze werden gediskwalificeerd","Ze trokken zich terug"]},
+
+                // Six Nations 2026
+                {q:"Welk land won de openingswedstrijd van het Six Nations 2026 tegen Ierland?",a:"Frankrijk",c:"Actualiteit",w:["Engeland","Wales","Schotland"]},
+                {q:"Met welke uitslag versloeg Italië Schotland in de eerste ronde van het Six Nations 2026?",a:"18-15",c:"Actualiteit",w:["21-18","15-12","24-21"]},
+                {q:"Welke Engelse speler scoorde een hattrick tegen Wales in het Six Nations 2026?",a:"Henry Arundell",c:"Actualiteit",w:["Marcus Smith","Maro Itoje","Tom Curry"]},
+                {q:"Met welke uitslag versloeg Engeland Wales in de eerste ronde van het Six Nations 2026?",a:"48-7",c:"Actualiteit",w:["35-14","42-10","31-21"]},
+                {q:"Welke trofee werd voor het eerst uitgereikt tussen Frankrijk en Ierland in 2026?",a:"Solidarity Trophy",c:"Actualiteit",w:["Celtic Trophy","Atlantic Cup","Tricolour Trophy"]},
+
+                // Champions League 2026
+                {q:"Welke twee clubs spelen tegen elkaar in de Champions League knockout play-offs 2026 in een rematch?",a:"Benfica vs Real Madrid",c:"Actualiteit",w:["PSG vs Monaco","Juventus vs Inter","Bayern vs Dortmund"]},
+                {q:"Tegen welke club speelt Newcastle United in de Champions League knockout play-offs 2026?",a:"Qarabağ (Azerbeidzjan)",c:"Actualiteit",w:["Galatasaray","Olympiacos","Bodø/Glimt"]},
+                {q:"Welk team eindigde bovenaan de Champions League league phase met een perfect 8-0-0 record?",a:"Arsenal",c:"Actualiteit",w:["Liverpool","Bayern München","Manchester City"]},
+                {q:"Welke verdedigende Champions League kampioen speelt tegen Monaco in de knockout play-offs?",a:"Paris Saint-Germain",c:"Actualiteit",w:["Real Madrid","Manchester City","Inter"]},
 
                 // === PIRMIN BLAAK - SPECIALE CATEGORIE ===
                 {q:"Wat is de exacte datum van Pirmin Blaaks debuut in het Nederlands herenteam?",a:"24 januari 2011",c:"Presentator",w:["15 maart 2010","8 juni 2012","20 september 2011"]},
