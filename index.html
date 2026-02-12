@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v11');
+            const stored = localStorage.getItem('sportquiz_questions_v12');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v11', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v12', JSON.stringify(questions));
             updateStats();
         }
 
@@ -2116,7 +2116,6 @@
 
                 // GOLF (20)
                 {q:"Noem de vier 'majors' in het herengolf.",a:"The Masters, PGA Championship, U.S. Open, The Open Championship",c:"Golf"},
-                {q:"Wat is een albatross in golf?",a:"Drie slagen onder par op één hole",c:"Golf"},
                 {q:"Wat betekent 'stroke-and-distance' in golf?",a:"Je krijgt een strafslag én speelt opnieuw vanaf de plek van je vorige slag",c:"Golf"},
                 {q:"Wat is het verschil tussen out of bounds en een penalty area?",a:"Out of bounds: meestal stroke-and-distance; penalty area: 1 strafslag met drop-opties",c:"Golf"},
                 {q:"Wat is Stableford-scoring?",a:"Je krijgt punten per hole op basis van slagen t.o.v. par; meer punten is beter",c:"Golf"},
@@ -2140,7 +2139,6 @@
                 {q:"Wat is een super tiebreak?",a:"Een tiebreak (vaak tot 10) die een beslissende set vervangt",c:"Tennis"},
                 {q:"Wat is het verschil tussen inside-out en inside-in forehand?",a:"Inside-out: forehand naar crosshoek vanaf backhandkant; inside-in: naar de lijn",c:"Tennis"},
                 {q:"Wanneer heet een wedstrijd een 'straight-sets win'?",a:"Winst zonder een set te verliezen",c:"Tennis"},
-                {q:"Wat is een 'double fault'?",a:"Twee opeenvolgende servicefouten; punt voor tegenstander",c:"Tennis"},
                 {q:"Wat is 'serve-and-volley'?",a:"Na de service direct naar het net komen om met volley af te maken",c:"Tennis"},
                 {q:"Wat is het doel van 'kick serve'?",a:"Serve met veel topspin die hoog wegstuitert om return te bemoeilijken",c:"Tennis"},
                 {q:"Wat is een 'drop shot' in tennis?",a:"Zachte bal die kort achter het net valt om tegenstander naar voren te lokken",c:"Tennis"},
@@ -2148,7 +2146,6 @@
                 {q:"Wat is 'holding serve'?",a:"Je eigen servicegame winnen",c:"Tennis"},
                 {q:"Wat betekent 'poaching' in dubbel?",a:"Netspeler steekt over en pakt de bal af op de andere helft",c:"Tennis"},
                 {q:"Wat is het verschil tussen singles alley en doubles alley?",a:"De zijstrook telt alleen mee in dubbel; in enkelspel is die buiten",c:"Tennis"},
-                {q:"Wat is een 'Golden Slam'?",a:"Alle vier majors én olympisch goud in hetzelfde kalenderjaar",c:"Tennis"},
 
                 // ATLETIEK (20)
                 {q:"Waarom zijn starts op 200m/400m 'staggered'?",a:"Buitenbanen lopen langere bocht; stagger compenseert dat",c:"Atletiek"},
@@ -2280,7 +2277,6 @@
 
                 // AMERIKAANSE SPORTEN NFL/NHL (20)
                 {q:"Hoeveel downs heeft een NFL-aanval om 10 yards te halen?",a:"Vier downs",c:"American Football"},
-                {q:"Wat is een two-point conversion?",a:"Na een touchdown één spel voor 2 punten i.p.v. kick voor 1",c:"American Football"},
                 {q:"Wat is intentional grounding?",a:"QB gooit onvangbaar weg onder druk zonder receiver in de buurt → penalty",c:"American Football"},
                 {q:"Wat is een safety in American football?",a:"Aanval wordt getackeld in eigen end zone → 2 punten voor defense + balbezit",c:"American Football"},
                 {q:"Wat is een fair catch en wat levert het op?",a:"Returner vangt punt en signaleert; geen tackle, bal op die plek",c:"American Football"},
