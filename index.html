@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v17');
+            const stored = localStorage.getItem('sportquiz_questions_v18');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v17', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v18', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1529,7 +1529,6 @@
                 {q:"Wat is 'Icing'?",a:"Puck van eigen helft over doellijn zonder aanraking; spelstillegging",c:"IJshockey"},
                 {q:"Wat is 'Offside' in ijshockey?",a:"Aanvaller gaat de zone in voor de puck",c:"IJshockey"},
                 {q:"Wat is een 'Face-off'?",a:"Inworp waarbij puck wordt gedropt tussen twee spelers",c:"IJshockey"},
-                {q:"Wat is een 'Hat trick' in ijshockey?",a:"Drie goals door een speler",c:"IJshockey"},
                 {q:"Wat is een 'Empty-net goal'?",a:"Doelpunt in leeg doel wanneer keeper eruit is",c:"IJshockey"},
                 {q:"Wat is een 'Shorthanded goal'?",a:"Doelpunt gemaakt met man-minder",c:"IJshockey"},
                 {q:"Wat is een 'Slapshot'?",a:"Harde slagschot-techniek",c:"IJshockey"},
@@ -1597,11 +1596,6 @@
                 {q:"Wat is 'Foiling'?",a:"Varen op draagvleugels boven water",c:"Zeilen"},
                 // Turnen
                 {q:"Wat is de 'Sprong' in turnen?",a:"Toestel: aanloop en sprong over tafel",c:"Turnen"},
-                {q:"Wat is 'Brug ongelijk'?",a:"Toestel voor vrouwen: two bars",c:"Turnen"},
-                {q:"Wat is de 'Balk'?",a:"Smalle balk waarop oefeningen worden gedaan",c:"Turnen"},
-                {q:"Wat is de 'Vloer' in turnen?",a:"Toestel: vloeroefening",c:"Turnen"},
-                {q:"Wat zijn de 'Ringen'?",a:"Toestel voor mannen: kracht en swings",c:"Turnen"},
-                {q:"Wat is de 'Rekstok'?",a:"Toestel voor mannen: high bar",c:"Turnen"},
                 {q:"Wat is 'D-score'?",a:"Difficulty score: moeilijkheid",c:"Turnen"},
                 {q:"Wat is 'E-score'?",a:"Execution score: uitvoering",c:"Turnen"},
                 {q:"Wat is een 'Stick landing'?",a:"Stabiele landing zonder stap",c:"Turnen"},
@@ -1613,16 +1607,8 @@
                 {q:"Wat is 'Clean & jerk'?",a:"In twee delen: clean naar schouders, jerk boven hoofd",c:"Algemeen"},
                 {q:"Wat is 'Total' in gewichtheffen?",a:"Som van beste snatch en beste clean & jerk",c:"Algemeen"},
                 // Handbal
-                {q:"Wat is een 'Zevenmeter' in handbal?",a:"Penaltyworp van 7 meter",c:"Algemeen"},
-                {q:"Wat is 'Passief spel' in handbal?",a:"Scheids waarschuwt en dwingt aanval tot afronden",c:"Algemeen"},
-                {q:"Wat is een '2-minuten straf' in handbal?",a:"Tijdstraf; team speelt met een minder",c:"Algemeen"},
                 // Volleybal
-                {q:"Wat is een 'Libero' in volleybal?",a:"Verdedigingsspecialist, andere kleding, beperkte aanvallen",c:"Algemeen"},
-                {q:"Wat is een 'Block' in volleybal?",a:"Netverdediging met handen boven net",c:"Algemeen"},
-                {q:"Welke score haal je om een set te winnen in volleybal?",a:"25 punten, minimaal 2 punten verschil",c:"Algemeen"},
                 // Badminton
-                {q:"Wat is de 'Shuttle' in badminton?",a:"De 'bal' (pluim) waarmee je speelt",c:"Algemeen"},
-                {q:"Wat is een 'Smash' in badminton?",a:"Harde neerwaartse slag",c:"Algemeen"},
                 // Honkbal
                 {q:"Hoeveel strikes is een strike-out?",a:"3",c:"Algemeen"},
                 {q:"Hoeveel balls is een walk in honkbal?",a:"4",c:"Algemeen"},
@@ -1634,22 +1620,11 @@
                 {q:"Wat is 'Rokade' in schaken?",a:"Koningszet met toren om veiligheid/ontwikkeling",c:"Algemeen"},
                 {q:"Wat is 'En passant' in schaken?",a:"Pion slaan in het voorbijgaan onder voorwaarden",c:"Algemeen"},
                 {q:"Wat is 'Pat' in schaken?",a:"Gelijkspel doordat speler niet kan zetten maar niet schaak staat",c:"Algemeen"},
-                {q:"Wat is 'Schaakmat'?",a:"Koning staat schaak en kan niet ontsnappen",c:"Algemeen"},
                 // Extra / Bonusvragen
-                {q:"Hoe lang is een marathon officieel?",a:"42,195 km",c:"Atletiek"},
                 {q:"Wat is het verschil tussen de Davis Cup en Billie Jean King Cup?",a:"Davis Cup is landentoernooi mannen; Billie Jean King Cup is vrouwen",c:"Tennis"},
-                {q:"Wat is de hoogste mogelijke score in een beurt bij darts?",a:"180 (3x60)",c:"Darts"},
                 {q:"Hoeveel meter is de standaard hordenrace voor mannen op de baan?",a:"110m horden",c:"Atletiek"},
                 {q:"Hoeveel meter is de standaard hordenrace voor vrouwen op de baan?",a:"100m horden",c:"Atletiek"},
-                {q:"Wat betekent 'OT' in Amerikaanse sportuitslagen?",a:"Overtime (verlenging)",c:"Algemeen"},
-                {q:"Wat betekent 'PK' in voetbalwedstrijdnotatie?",a:"Penalty kicks (strafschoppenserie)",c:"Voetbal"},
                 {q:"Hoeveel punten is een touchdown plus two-point conversion in totaal?",a:"8 punten",c:"American Football"},
-                {q:"Hoeveel rondes is 10.000 m op een 400 m baan?",a:"25 rondes",c:"Atletiek"},
-                {q:"Hoeveel rondes is 5.000 m op een 400 m baan?",a:"12,5 rondes",c:"Atletiek"},
-                {q:"Wat betekent 'PB' in atletenprofielen?",a:"Personal Best (persoonlijk record)",c:"Atletiek"},
-                {q:"Wat betekent 'SB' in atletenprofielen?",a:"Season Best (seizoensbeste)",c:"Atletiek"},
-                {q:"Wat betekent 'NR' in recordnotatie?",a:"National Record (nationaal record)",c:"Atletiek"},
-                {q:"Wat betekent 'WR' in recordnotatie?",a:"World Record (wereldrecord)",c:"Atletiek"},
                 {q:"Wie is de meest succesvolle olympier aller tijden (medailles)?",a:"Michael Phelps - 28",c:"Olympische Spelen"},
                 {q:"Wie is de enige atleet die olympisch goud won op zowel Zomer- als Winterspelen?",a:"Eddie Eagan: boksen (1920) en bobslee (1932)",c:"Olympische Spelen"},
                 {q:"Welke stad organiseerde de Zomerspelen drie keer in drie verschillende eeuwen?",a:"Parijs: 1900, 1924, 2024",c:"Olympische Spelen"},
@@ -1658,51 +1633,22 @@
                 {q:"In welk jaar werd snowboarding voor het eerst olympisch?",a:"1998 (Nagano)",c:"Wintersport"},
                 {q:"Welke editie introduceerde de olympische marathon voor vrouwen?",a:"1984, Los Angeles",c:"Olympische Spelen"},
                 {q:"Welke land is traditioneel het succesvolst op de Winterspelen?",a:"Noorwegen",c:"Wintersport"},
-                {q:"Welke kleur ring staat bovenaan in het midden van de olympische ringen?",a:"Zwart",c:"Olympische Spelen"},
                 {q:"Welke sport heet in het Engels 'artistic swimming'?",a:"Kunstzwemmen (vroeger synchronized swimming)",c:"Zwemmen"},
                 {q:"In welke sport kan 'false start' leiden tot onmiddellijke diskwalificatie?",a:"Atletiek; reactie onder 0,10 s",c:"Atletiek"},
                 {q:"Wat betekent 'ippon' en in welke sport?",a:"Vol punt / directe overwinning; judo",c:"Algemeen"},
                 {q:"Welke twee coureurs delen het record van 7 F1-wereldtitels?",a:"Michael Schumacher en Lewis Hamilton (Verstappen heeft 4)",c:"Motorsport"},
                 {q:"Welke race hoort NIET bij de Triple Crown of Motorsport: Monaco GP, Indy 500, 24h Le Mans, Dakar Rally?",a:"Dakar Rally",c:"Motorsport"},
                 {q:"Noem een coureur die de Triple Crown heeft behaald.",a:"Graham Hill",c:"Motorsport"},
-                {q:"Welke MLB-club heeft historisch de meeste World Series titels?",a:"New York Yankees",c:"Algemeen"},
-                {q:"Wat is een 'perfect game' in bowling en hoeveel punten?",a:"300",c:"Algemeen"},
-                {q:"Hoe heet 3 strikes op rij bij bowlen?",a:"Turkey",c:"Algemeen"},
-                {q:"Noem de drie onderdelen van triathlon in juiste volgorde.",a:"Zwemmen, fietsen, hardlopen",c:"Algemeen"},
-                {q:"Wat is 'World Athletics'?",a:"Internationale atletiekbond (voorheen IAAF)",c:"Atletiek"},
                 // === ACTUALITEIT JANUARI 2026 ===
                 {q:"Wie won de Dakar Rally 2026 bij de auto's?",a:"Nasser Al-Attiyah",c:"Actualiteit",w:["Sebastien Loeb","Carlos Sainz","Nani Roma"]},
                 {q:"Wie won de Dakar Rally 2026 bij de trucks?",a:"Vaidotas Zala",c:"Actualiteit",w:["Martin Macik","Dmitry Sotnikov","Eduard Nikolaev"]},
                 {q:"Welke Argentijnse motorcoureur won de Dakar Rally 2026?",a:"Luciano Benavides",c:"Actualiteit",w:["Kevin Benavides","Toby Price","Sam Sunderland"]},
                 {q:"In welk land vond de Dakar Rally 2026 plaats?",a:"Saoedi-Arabie",c:"Actualiteit",w:["Peru","Argentinie","Chili"]},
                 {q:"Wie bereikte de finale van de Australian Open 2026 na een vijfsetter tegen Zverev?",a:"Carlos Alcaraz",c:"Actualiteit",w:["Jannik Sinner","Novak Djokovic","Daniil Medvedev"]},
-                {q:"Welke tennisser versloeg Ben Shelton in de kwartfinale Australian Open 2026?",a:"Jannik Sinner",c:"Actualiteit",w:["Carlos Alcaraz","Novak Djokovic","Alexander Zverev"]},
-                {q:"Welke tennisster versloeg Iga Swiatek op de Australian Open 2026?",a:"Elena Rybakina",c:"Actualiteit",w:["Aryna Sabalenka","Coco Gauff","Jessica Pegula"]},
                 {q:"Tegen wie speelde Djokovic in de halve finale Australian Open 2026?",a:"Jannik Sinner",c:"Actualiteit",w:["Carlos Alcaraz","Alexander Zverev","Daniil Medvedev"]},
-                {q:"Waar vindt het WK Veldrijden 2026 plaats?",a:"Hulst (Nederland)",c:"Actualiteit",w:["Lievin (Frankrijk)","Hoogerheide (Nederland)","Tabor (Tsjechie)"]},
-                {q:"Wie is de grote favoriet voor het WK Veldrijden 2026 in Hulst?",a:"Mathieu van der Poel",c:"Actualiteit",w:["Wout van Aert","Thibau Nys","Tom Pidcock"]},
-                {q:"Welke Belgische wielrenner ontbreekt op het WK Veldrijden 2026?",a:"Wout van Aert",c:"Actualiteit",w:["Thibau Nys","Eli Iserbyt","Michael Vanthourenhout"]},
-                {q:"Wie won de Wereldbeker veldrijden in Benidorm januari 2026 bij de vrouwen?",a:"Lucinda Brand",c:"Actualiteit",w:["Fem van Empel","Ceylin del Carmen Alvarado","Puck Pieterse"]},
-                {q:"Welke verdediger haalde Ajax binnen van Arsenal in januari 2026?",a:"Takehiro Tomiyasu",c:"Actualiteit",w:["William Saliba","Ben White","Gabriel"]},
-                {q:"Naar welke club vertrok keeper Remko Pasveer in januari 2026?",a:"Heracles Almelo",c:"Actualiteit",w:["FC Utrecht","FC Twente","NEC"]},
-                {q:"Met welke score eindigde Arsenal - Liverpool op 8 januari 2026?",a:"0-0",c:"Actualiteit",w:["1-1","2-1","0-1"]},
                 {q:"Welke club won met 3-2 bij Arsenal op 25 januari 2026?",a:"Manchester United",c:"Actualiteit",w:["Manchester City","Liverpool","Chelsea"]},
-                {q:"Waar vinden de Olympische Winterspelen 2026 plaats?",a:"Milaan en Cortina d'Ampezzo (Italie)",c:"Actualiteit",w:["Salt Lake City (USA)","Sapporo (Japan)","Stockholm (Zweden)"]},
-                {q:"In welke maand beginnen de Olympische Winterspelen 2026?",a:"Februari (6-22 februari)",c:"Actualiteit",w:["Januari","Maart","December 2025"]},
-                {q:"In hoeveel landen vindt het WK Voetbal 2026 plaats?",a:"Drie (USA, Canada, Mexico)",c:"Actualiteit",w:["Een","Twee","Vier"]},
-                {q:"Hoeveel landen doen mee aan het WK Voetbal 2026?",a:"48",c:"Actualiteit",w:["32","40","64"]},
-                {q:"Wie won de Manchester derby op 17 januari 2026?",a:"Manchester United (2-0)",c:"Actualiteit",w:["Manchester City","Gelijkspel","Afgelast"]},
-                {q:"Welke Nederlandse schaatsster behoort tot de favorieten op het WK Allround 2026?",a:"Joy Beune",c:"Actualiteit",w:["Irene Schouten","Jutta Leerdam","Femke Kok"]},
-                {q:"Welke Nederlandse schaatser rijdt het WK Allround 2026?",a:"Patrick Roest",c:"Actualiteit",w:["Kjeld Nuis","Thomas Krol","Kai Verbij"]},
-                {q:"Waar vindt het WK Allround Schaatsen 2026 plaats?",a:"Thialf, Heerenveen",c:"Actualiteit",w:["Inzell (Duitsland)","Calgary (Canada)","Salt Lake City (USA)"]},
-                {q:"Hoeveel directe Champions League tickets heeft de Eredivisie na januari 2026?",a:"Een (verloor het tweede ticket)",c:"Actualiteit",w:["Twee","Drie","Nul"]},
-                {q:"Wie won het WK Darts 2026 (PDC World Championship)?",a:"Luke Littler",c:"Actualiteit",w:["Michael van Gerwen","Michael Smith","Luke Humphries"]},
-                {q:"Wie versloeg Luke Littler in de finale van het WK Darts 2026?",a:"Gian van Veen",c:"Actualiteit",w:["Michael van Gerwen","Raymond van Barneveld","Peter Wright"]},
-                {q:"Hoe oud was Luke Littler toen hij voor de tweede keer wereldkampioen darts werd?",a:"18 jaar",c:"Actualiteit",w:["17 jaar","19 jaar","20 jaar"]},
-                {q:"Welke Nederlander verloor in de finale van het WK Darts 2025 van Luke Littler?",a:"Michael van Gerwen",c:"Actualiteit",w:["Raymond van Barneveld","Dirk van Duijvenbode","Danny Noppert"]},
                 // === SET 2: 130 MOEILIJKE VRAGEN ===
                 // Olympisch moeilijk
-                {q:"Welke stad organiseerde de Zomerspelen van 1900 en met welke wereldtentoonstelling liep dit samen?",a:"Parijs; de Exposition Universelle (Wereldtentoonstelling) van 1900",c:"Olympische Spelen"},
                 {q:"Welke olympische sport had in 1900 een onderdeel met levende duiven als doelwit?",a:"Schietsport; Parijs 1900 had 'live pigeon shooting'",c:"Olympische Spelen"},
                 {q:"Welke sport stond van 1900 tot en met 1920 op het olympisch programma en draait om een touw?",a:"Touwtrekken (tug of war)",c:"Olympische Spelen"},
                 {q:"Welke olympische sport gebruikt een epee, floret en sabel als drie wapens?",a:"Schermen",c:"Olympische Spelen"},
@@ -1763,7 +1709,6 @@
                 {q:"Wat is een 'golden set'?",a:"Set winnen zonder punt te verliezen (6-0)",c:"Tennis"},
                 // US Sports moeilijk
                 {q:"In baseball: wat betekent een walk-off?",a:"Thuisploeg scoort winnende run in laatste slagbeurt",c:"American Football"},
-                {q:"Welke MLB-club heeft historisch de meeste World Series titels en hoeveel?",a:"New York Yankees, 27",c:"Algemeen"},
                 {q:"Wat is in American football het verschil tussen field goal en touchdown qua punten?",a:"Field goal 3; touchdown 6",c:"American Football"},
                 {q:"In ijshockey: hoe heet de kampioenstrofee?",a:"Stanley Cup",c:"IJshockey"},
                 {q:"Hoe heet de NHL-trofee voor topscorer van het reguliere seizoen?",a:"Art Ross Trophy",c:"IJshockey"},
