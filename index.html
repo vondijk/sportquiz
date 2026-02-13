@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v16');
+            const stored = localStorage.getItem('sportquiz_questions_v17');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v16', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v17', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1460,41 +1460,16 @@
                 {q:"Noem de vijf wielermonumenten.",a:"Milaan-San Remo, Ronde van Vlaanderen, Parijs-Roubaix, Luik-Bastenaken-Luik, Ronde van Lombardije",c:"Wielrennen"},
                 {q:"Wat is een 'Domestique'?",a:"Helper/ploegmaat die werkt voor de kopman",c:"Wielrennen"},
                 {q:"Wat is een 'Lead-out'?",a:"Sprinttrein die sprinter in perfecte positie afzet",c:"Wielrennen"},
-                {q:"Wat is een 'Bidon'?",a:"Drinkfles",c:"Wielrennen"},
                 {q:"Wat is 'Lactaatdrempel'?",a:"Intensiteit waarbij lactaatproductie snel toeneemt",c:"Wielrennen"},
-                {q:"Wat is 'Cadans'?",a:"Omwentelingen per minuut (rpm) tijdens trappen",c:"Wielrennen"},
-                {q:"Wat is een 'Kassei'?",a:"Keien; klassieke ondergrond zoals in Parijs-Roubaix",c:"Wielrennen"},
-                {q:"Wat is een 'Kopgroep'?",a:"Vroege ontsnapping; probeert peloton voor te blijven",c:"Wielrennen"},
                 {q:"Wat is het verschil tussen een proloog en een individuele tijdrit?",a:"Proloog is kort en voor etappe 1; ITT kan elke lengte",c:"Wielrennen"},
-                {q:"Wat is een 'bonificatie'?",a:"Tijdaftrek voor hoge daguitslagen/tussensprints",c:"Wielrennen"},
-                {q:"Wat betekent 'lanterne rouge' in de Tour?",a:"Laatste in het eindklassement",c:"Wielrennen"},
                 {q:"Wat is een 'baroudeur'?",a:"Renner die vaak aanvalt/ontsnapt",c:"Wielrennen"},
-                {q:"Wat is een 'puncheur'?",a:"Renner die excelleert op korte steile hellingen",c:"Wielrennen"},
                 {q:"Wie wordt 'De Kannibaal' genoemd?",a:"Eddy Merckx",c:"Wielrennen"},
-                {q:"Welke koers staat bekend als 'De Hel van het Noorden'?",a:"Parijs-Roubaix",c:"Wielrennen"},
                 // Voetbal
-                {q:"Wat is een hattrick?",a:"Drie goals door dezelfde speler in een wedstrijd",c:"Voetbal"},
-                {q:"Hoe heet de prijs voor de WK-topscorer?",a:"Gouden Schoen",c:"Voetbal"},
-                {q:"In welk jaar won Nederland het EK?",a:"1988",c:"Voetbal"},
-                {q:"Wat betekent 'VAR'?",a:"Video Assistant Referee",c:"Voetbal"},
                 {q:"Wat betekent 'DOGSO'?",a:"Denial of an Obvious Goal-Scoring Opportunity",c:"Voetbal"},
-                {q:"Wat betekent 'Advantage'?",a:"Scheids laat doorspelen als dat voordelig is voor benadeelde ploeg",c:"Voetbal"},
-                {q:"Wat is een 'Panenka'?",a:"Stift-strafschop door het midden",c:"Voetbal"},
-                {q:"Wat is een 'Sweeper-keeper'?",a:"Keeper die ver uit goal speelt als extra verdediger",c:"Voetbal"},
-                {q:"Wat is een 'False nine'?",a:"Spits die terugzakt in middenveld, ruimte creeert",c:"Voetbal"},
-                {q:"Wat is 'Gegenpress'?",a:"Direct druk zetten na balverlies om bal terug te winnen",c:"Voetbal"},
-                {q:"Hoeveel minuten duurt een reguliere wedstrijd (excl. extra tijd)?",a:"90 minuten",c:"Voetbal"},
-                {q:"Wat betekent 'stoppage time'?",a:"Extra tijd toegevoegd voor blessures/wissels/tijdrekken",c:"Voetbal"},
                 {q:"Wat betekent 'xG'?",a:"Expected Goals: kanswaarde van schot op basis van data",c:"Voetbal"},
-                {q:"Wat is een 'clean sheet'?",a:"Wedstrijd zonder tegendoelpunt",c:"Voetbal"},
-                {q:"Wie won het WK 2014?",a:"Duitsland",c:"Voetbal"},
                 // Wintersport
-                {q:"Wat is een 'Klapschaats'?",a:"Schaats met scharnier waardoor langer contact met ijs",c:"Wintersport"},
-                {q:"Wat is 'Mass start'?",a:"Schaatswedstrijd met pelotonstart",c:"Wintersport"},
-                {q:"Wat is 'Allround'?",a:"Meerkamp over meerdere afstanden",c:"Wintersport"},
                 {q:"Wat is 'Super-G'?",a:"Alpineski: snelheid, tussen downhill en reuzenslalom",c:"Wintersport"},
                 {q:"Wat is 'Ski cross'?",a:"Meerdere skieers tegelijk op parcours met sprongen/bochten",c:"Wintersport"},
-                {q:"Wat is 'Halfpipe'?",a:"Snowboard/ski: trucs in halve pijp",c:"Wintersport"},
                 {q:"Wat is het kernverschil tussen slalom en reuzenslalom?",a:"Slalom: kortere bochten/poorten dichter; reuzenslalom: verder uit elkaar",c:"Wintersport"},
                 {q:"Wat is 'telemark landing' in schansspringen?",a:"Landingsstijl met een ski voor de ander, knieen gebogen",c:"Wintersport"},
                 {q:"Wat is het verschil tussen skeleton en rodelen in houding?",a:"Skeleton: op buik hoofd eerst; rodelen: op rug voeten eerst",c:"Wintersport"},
@@ -1506,22 +1481,15 @@
                 {q:"Wat is parc ferme?",a:"Regime waarin auto-instellingen na kwalificatie nauwelijks aangepast mogen worden",c:"Motorsport"},
                 {q:"Wat is het verschil tussen safety car en virtual safety car?",a:"Safety car: veld achter safety car; VSC: iedereen vertraagt tot delta",c:"Motorsport"},
                 {q:"Wat betekent 'apex' in bochtentechniek?",a:"Binnenste punt van de bocht waar je het dichtst langs stuurt",c:"Motorsport"},
-                {q:"Wat is slipstreaming?",a:"Rijden in de luwte om minder weerstand te hebben",c:"Motorsport"},
                 {q:"Wat betekent 'Red flag'?",a:"Race stilgelegd",c:"Motorsport"},
                 {q:"Wat zijn 'Slicks'?",a:"Droogweerbanden zonder profiel",c:"Motorsport"},
                 {q:"Wat zijn 'Intermediates'?",a:"Banden voor licht natte baan",c:"Motorsport"},
                 {q:"Wat zijn 'Wets'?",a:"Volle regenbanden met diep profiel",c:"Motorsport"},
                 // Tennis
                 {q:"Waar komt de term 'Love' (nul punten) in tennis oorspronkelijk vandaan?",a:"Waarschijnlijk van het Franse 'l'oeuf' (ei, vorm van nul)",c:"Tennis"},
-                {q:"Hoeveel games moet je minimaal winnen om een set te winnen bij tennis?",a:"6 games met minimaal 2 verschil, of via tiebreak bij 6-6",c:"Tennis"},
                 {q:"Wat is het verschil tussen een 'Championship tiebreak' en een gewone tiebreak?",a:"Championship: tot 10 punten, gewone: tot 7 punten",c:"Tennis"},
                 {q:"Wat is een 'Tiebreak'?",a:"Beslissend spel tot 7 punten met 2 verschil",c:"Tennis"},
                 {q:"Wat is een 'Grand Slam' in tennis?",a:"Australian Open, Roland Garros, Wimbledon, US Open",c:"Tennis"},
-                {q:"Wat is een 'Golden Slam'?",a:"Alle 4 Grand Slams + olympisch goud in 1 jaar",c:"Tennis"},
-                {q:"Wat is een 'Break point'?",a:"Kans om servicegame van tegenstander te breken",c:"Tennis"},
-                {q:"Wat is een 'Ace'?",a:"Service waartegen geen racketcontact komt",c:"Tennis"},
-                {q:"Wat is een 'Double fault'?",a:"Twee opeenvolgende foutieve services",c:"Tennis"},
-                {q:"Wat is een 'Let'?",a:"Service raakt netband maar valt goed; service overnieuw",c:"Tennis"},
                 {q:"Wat betekent 'bagel' in tennis?",a:"Een set winnen met 6-0",c:"Tennis"},
                 // Zwemmen
                 {q:"Wat is het verschil tussen wisselslag en vrije slag?",a:"Wisselslag: combinatie van slagen in vaste volgorde; vrije slag: meestal crawl",c:"Zwemmen"},
@@ -1530,19 +1498,13 @@
                 {q:"Wat betekent 'SCM' en 'LCM' in recordlijsten?",a:"Short Course (25m) en Long Course (50m)",c:"Zwemmen"},
                 // Basketbal
                 {q:"Wat is een 'triple-double'?",a:"Dubbele cijfers in drie statistieken",c:"Basketbal"},
-                {q:"Hoeveel punten is een driepunter waard?",a:"3",c:"Basketbal"},
                 {q:"Wat is een 'and-one'?",a:"Score ondanks fout + extra vrije worp",c:"Basketbal"},
                 {q:"Wat is 'goaltending'?",a:"Bal blokkeren terwijl die op neergaande baan richting ring is",c:"Basketbal"},
                 {q:"Wat is een 'shot clock' en hoe lang is die in de NBA?",a:"Aanvalstijd; 24 seconden",c:"Basketbal"},
                 {q:"Hoeveel spelers staan er per team tegelijk op het veld?",a:"5",c:"Basketbal"},
                 {q:"Wie heeft het record voor meeste career triple-doubles in de NBA?",a:"Russell Westbrook (200+ triple-doubles)",c:"Basketbal"},
                 // Darts
-                {q:"Wat is de maximale score met een dartpijl?",a:"60 (triple 20)",c:"Darts"},
-                {q:"Hoeveel punten is bullseye (rode bull)?",a:"50",c:"Darts"},
-                {q:"Hoeveel punten is outer bull (groene ring)?",a:"25",c:"Darts"},
-                {q:"Wat is de hoogste mogelijke checkout?",a:"170 (T20, T20, bull)",c:"Darts"},
                 {q:"Wat is de som van alle getallen op een standaard dartbord (1 t/m 20)?",a:"210",c:"Darts"},
-                {q:"Hoeveel darts zitten er in een volledige leg als je 501 uitgooit met 9-darter?",a:"9 darts",c:"Darts"},
                 // Rugby
                 {q:"Hoeveel punten is een try in rugby union?",a:"5",c:"Rugby"},
                 {q:"Hoeveel punten is een conversie?",a:"2",c:"Rugby"},
@@ -1561,12 +1523,8 @@
                 {q:"Wat is de 'Green' in golf?",a:"Gemaaid gebied rond de hole",c:"Golf"},
                 {q:"Wat is de 'Fairway' in golf?",a:"Kort gemaaid deel tussen tee en green",c:"Golf"},
                 {q:"Wat is de 'Rough' in golf?",a:"Lang gras naast fairway",c:"Golf"},
-                {q:"Wat is een 'Bunker' in golf?",a:"Zandhindernis",c:"Golf"},
-                {q:"Wat is een 'Hole-in-one'?",a:"In een slag in de hole",c:"Golf"},
                 {q:"Noem de 4 majors in golf.",a:"Masters, PGA Championship, US Open, The Open Championship",c:"Golf"},
                 // IJshockey
-                {q:"Wat is de 'Puck' in ijshockey?",a:"De schijf waarmee gespeeld wordt",c:"IJshockey"},
-                {q:"Wat is 'Powerplay' in ijshockey?",a:"Situatie met man-meer door tijdstraf tegenstander",c:"IJshockey"},
                 {q:"Wat is 'Penalty kill'?",a:"Verdedigen met man-minder",c:"IJshockey"},
                 {q:"Wat is 'Icing'?",a:"Puck van eigen helft over doellijn zonder aanraking; spelstillegging",c:"IJshockey"},
                 {q:"Wat is 'Offside' in ijshockey?",a:"Aanvaller gaat de zone in voor de puck",c:"IJshockey"},
@@ -1661,7 +1619,6 @@
                 // Volleybal
                 {q:"Wat is een 'Libero' in volleybal?",a:"Verdedigingsspecialist, andere kleding, beperkte aanvallen",c:"Algemeen"},
                 {q:"Wat is een 'Block' in volleybal?",a:"Netverdediging met handen boven net",c:"Algemeen"},
-                {q:"Wat is een 'Ace' in volleybal?",a:"Servicepunt",c:"Algemeen"},
                 {q:"Welke score haal je om een set te winnen in volleybal?",a:"25 punten, minimaal 2 punten verschil",c:"Algemeen"},
                 // Badminton
                 {q:"Wat is de 'Shuttle' in badminton?",a:"De 'bal' (pluim) waarmee je speelt",c:"Algemeen"},
@@ -2217,7 +2174,6 @@
                 {q:"In NHL: wat is icing en waarom bestaat het?",a:"Puck over twee lijnen tot achter doellijn; voorkomt wegrossen onder druk",c:"IJshockey"},
                 {q:"Wat is een power play in NHL?",a:"Numeriek voordeel doordat tegenstander in penalty box zit",c:"IJshockey"},
                 {q:"Wat is het verschil tussen minor en major penalty?",a:"Minor: korter (2 min); major: zwaarder (5 min)",c:"IJshockey"},
-                {q:"Wat is een hattrick in NHL?",a:"Eén speler scoort drie goals in één wedstrijd",c:"IJshockey"},
                 {q:"Wat is overtime in de NFL (basisidee)?",a:"Verlenging bij gelijkspel; regels verschillen per fase/competitie",c:"American Football"},
                 {q:"Wat betekent 'best-of-7 series' (NBA/NHL)?",a:"Eerste team met 4 overwinningen wint de serie",c:"Basketbal"},
                 {q:"Wat is een 'wild card' in US sports?",a:"Playoff-plek voor teams die geen divisie winnen maar via record kwalificeren",c:"American Football"},
