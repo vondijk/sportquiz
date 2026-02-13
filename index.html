@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v20');
+            const stored = localStorage.getItem('sportquiz_questions_v21');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v20', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v21', JSON.stringify(questions));
             updateStats();
         }
 
@@ -2168,8 +2168,6 @@
                 {q:"Welke trofee werd voor het eerst uitgereikt tussen Frankrijk en Ierland in 2026?",a:"Solidarity Trophy",c:"Actualiteit",w:["Celtic Trophy","Atlantic Cup","Tricolour Trophy"]},
 
                 // Champions League 2026
-                {q:"Welke twee clubs spelen tegen elkaar in de Champions League knockout play-offs 2026 in een rematch?",a:"Benfica vs Real Madrid",c:"Actualiteit",w:["PSG vs Monaco","Juventus vs Inter","Bayern vs Dortmund"]},
-                {q:"Tegen welke club speelt Newcastle United in de Champions League knockout play-offs 2026?",a:"Qarabağ (Azerbeidzjan)",c:"Actualiteit",w:["Galatasaray","Olympiacos","Bodø/Glimt"]},
                 {q:"Welk team eindigde bovenaan de Champions League league phase met een perfect 8-0-0 record?",a:"Arsenal",c:"Actualiteit",w:["Liverpool","Bayern München","Manchester City"]},
                 {q:"Welke verdedigende Champions League kampioen speelt tegen Monaco in de knockout play-offs?",a:"Paris Saint-Germain",c:"Actualiteit",w:["Real Madrid","Manchester City","Inter"]},
 
