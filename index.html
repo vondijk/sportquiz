@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v14');
+            const stored = localStorage.getItem('sportquiz_questions_v15');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v14', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v15', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1426,14 +1426,11 @@
                 {q:"Wat is Double Dutch bij rope skipping en hoeveel touwen worden gebruikt?",a:"Twee touwen draaien in tegengestelde richting terwijl springer trucs uitvoert",c:"Algemeen"},
                 {q:"Wat is het verschil tussen dressuur, springen en eventing in de paardensport?",a:"Dressuur=figuren rijden, springen=hindernissen, eventing=driedaagse combinatie",c:"Algemeen"},
                 {q:"Wat is het gewicht van de kogel bij kogelstoten voor mannen en vrouwen?",a:"Mannen 7,26 kg, vrouwen 4 kg",c:"Atletiek"},
-                {q:"Hoeveel spelers staan er in totaal op een basketbalveld?",a:"Tien (5 tegen 5)",c:"Basketbal"},
-                {q:"Hoe wordt de Belgische nationale voetbalploeg genoemd?",a:"De Rode Duivels",c:"Voetbal"},
                 {q:"In welk land werd in 1998 het WK voetbal georganiseerd?",a:"Frankrijk",c:"Voetbal"},
                 {q:"Wat is de optimale strategie voor een 170 checkout (hoogst mogelijke) bij darts?",a:"Triple 20, triple 20, bullseye (60+60+50)",c:"Darts"},
                 {q:"Welke sport beoefent J.-M. Saive?",a:"Tafeltennis",c:"Algemeen"},
                 {q:"Welke scheidsrechter was de eerste die een rode kaart toonde op een WK finale (2006)?",a:"Horacio Elizondo (aan Zidane)",c:"Algemeen"},
                 {q:"Bij welke balsport is de bal niet rond?",a:"Rugby",c:"Rugby"},
-                {q:"Waar vonden de Olympische Zomerspelen in 2004 plaats?",a:"Athene",c:"Olympische Spelen"},
                 {q:"Wat is de afstand tussen de honken (bases) bij professioneel honkbal in meters?",a:"27,43 meter (90 feet)",c:"Algemeen"},
                 {q:"Hoe noemt men de sport die men met een trimaran beoefent?",a:"Zeilen",c:"Zeilen"},
                 {q:"In welk land werd het werelduurrecord van Eddy Merckx gevestigd?",a:"Mexico (Mexico-Stad)",c:"Wielrennen"},
@@ -1441,10 +1438,8 @@
                 {q:"Hoe heet het beroemde paardenras in de Spaanse rijschool in Wenen?",a:"Lippizaner",c:"Algemeen"},
                 {q:"Voor welke wielrenner met bijnaam 'de laatste Flandrien' werd een standbeeld opgericht?",a:"Briek Schotte",c:"Wielrennen"},
                 {q:"Wie won Parijs-Roubaix in 2005?",a:"Tom Boonen",c:"Wielrennen"},
-                {q:"Welke Belgische wielrenner won 5 keer Luik-Bastenaken-Luik?",a:"Eddy Merckx",c:"Wielrennen"},
                 {q:"Van welke sport ken je Lucien Bianchi?",a:"Autosport",c:"Motorsport"},
                 {q:"Hoeveel maal mag een schansspringer in een wedstrijd springen?",a:"3",c:"Wintersport"},
-                {q:"Hoe noemt men de oprichter van de moderne Olympische Spelen?",a:"Pierre de Coubertin",c:"Olympische Spelen"},
                 {q:"In welke wielerklassieker moeten de renners over de Kemmelberg?",a:"Gent-Wevelgem",c:"Wielrennen"},
                 {q:"Hoeveel keer werd Stefan Everts wereldkampioen motorcross?",a:"Tien",c:"Motorsport"},
                 {q:"In welke sport kan men posities innemen zoals fine leg, silly point, cover point?",a:"Cricket",c:"Algemeen"},
@@ -1453,20 +1448,13 @@
                 {q:"Welke werpafstand moet een boemerang minimaal afleggen voor een officieel record?",a:"20 meter uit en terug binnen 2 meter van de werper",c:"Algemeen"},
                 {q:"Hoe noemt men de extra rit voorafgaande aan de eerste rit?",a:"Proloog",c:"Wielrennen"},
                 // Olympische Spelen
-                {q:"In welke stad vonden de eerste moderne Olympische Spelen plaats (1896)?",a:"Athene",c:"Olympische Spelen"},
-                {q:"Waar waren de eerste Winterspelen (1924)?",a:"Chamonix (Frankrijk)",c:"Olympische Spelen"},
                 {q:"Wat is het olympisch motto (klassiek) in het Latijn?",a:"Citius, Altius, Fortius",c:"Olympische Spelen"},
-                {q:"Hoe heet het olympisch motto inclusief de toevoeging sinds 2021?",a:"Citius, Altius, Fortius - Communiter",c:"Olympische Spelen"},
-                {q:"Wat zijn de vijf kleuren van de olympische ringen?",a:"Blauw, geel, zwart, groen, rood",c:"Olympische Spelen"},
                 {q:"Welke continenten worden door welke kleuren vertegenwoordigd in de olympische ringen?",a:"Geen vaste toewijzing; elke nationale vlag bevat minimaal één ringkleur",c:"Olympische Spelen"},
                 {q:"Wat is de minimale watertemperatuur voor olympisch zwemmen volgens FINA-regels?",a:"25-28 graden Celsius",c:"Zwemmen"},
                 {q:"Waarom zijn de buitenste banen (1 en 8) bij olympisch zwemmen het minst gewild?",a:"Meer turbulentie door golfslag tegen de muur",c:"Zwemmen"},
-                {q:"Welke vlam wordt ontstoken in Olympia en reist naar de gaststad?",a:"De olympische vlam",c:"Olympische Spelen"},
                 {q:"Welke sport staat sinds 1896 op elke Zomerspelen-editie op het programma?",a:"Atletiek",c:"Olympische Spelen"},
-                {q:"Welke sport is voor Nederland historisch het succesvolst op de Winterspelen?",a:"Langebaanschaatsen",c:"Wintersport"},
                 {q:"Wat is het verschil tussen een NOK en IOC?",a:"NOK is nationaal olympisch comite; IOC is het internationale olympische comite",c:"Olympische Spelen"},
                 {q:"Hoe heet de openingsceremonie-traditie waarbij landen binnenkomen?",a:"Parade of Nations",c:"Olympische Spelen"},
-                {q:"Welke kleur trui is in wielrennen de leiderstrui in de Tour de France?",a:"Geel",c:"Wielrennen"},
                 {q:"In welk jaar organiseerde Beijing de Olympische Zomerspelen?",a:"2008",c:"Olympische Spelen"},
                 {q:"In welk jaar organiseerde London de Olympische Zomerspelen?",a:"2012",c:"Olympische Spelen"},
                 {q:"In welk jaar organiseerde Rio de Janeiro de Olympische Zomerspelen?",a:"2016",c:"Olympische Spelen"},
@@ -1489,9 +1477,6 @@
                 {q:"Wat is Curling?",a:"Stenen schuiven over ijs en vegen voor snelheid/krul",c:"Wintersport"},
                 {q:"Wat is Shorttrack?",a:"Schaatsen op korte baan met inhaalduels",c:"Wintersport"},
                 // Atletiek
-                {q:"Wie heeft het wereldrecord 100 m mannen en wat is de tijd?",a:"Usain Bolt - 9,58",c:"Atletiek"},
-                {q:"Wie heeft het wereldrecord 200 m mannen?",a:"Usain Bolt - 19,19",c:"Atletiek"},
-                {q:"Wie heeft het wereldrecord 100 m vrouwen?",a:"Florence Griffith-Joyner - 10,49",c:"Atletiek"},
                 {q:"Wie heeft het wereldrecord 800 m vrouwen?",a:"Jarmila Kratochvilova - 1:53,28",c:"Atletiek"},
                 {q:"Wie heeft het wereldrecord Marathon mannen?",a:"Kelvin Kiptum - 2:00:35 (Chicago 2023, overleed feb 2024)",c:"Atletiek"},
                 {q:"Wat betekent 'Fosbury flop'?",a:"Hoogspringtechniek waarbij je met de rug over de lat gaat",c:"Atletiek"},
@@ -1508,7 +1493,6 @@
                 {q:"Hoeveel rondes heeft een standaard 400 m baan?",a:"1 ronde is 400 meter",c:"Atletiek"},
                 {q:"Wat is het verschil tussen 10.000 m en 10 km op de weg?",a:"10.000 m is baan; 10 km is wegwedstrijd",c:"Atletiek"},
                 {q:"Wat is een 'negative split' in duurloop?",a:"Tweede helft sneller lopen dan eerste helft",c:"Atletiek"},
-                {q:"Hoeveel onderdelen telt de tienkamp?",a:"10",c:"Atletiek"},
                 {q:"Hoeveel onderdelen telt de zevenkamp?",a:"7",c:"Atletiek"},
                 {q:"Wat betekent 'DNS' in uitslagen?",a:"Did Not Start",c:"Atletiek"},
                 {q:"Wat betekent 'DNF' in uitslagen?",a:"Did Not Finish",c:"Atletiek"},
@@ -1535,12 +1519,9 @@
                 {q:"Wie wordt 'De Kannibaal' genoemd?",a:"Eddy Merckx",c:"Wielrennen"},
                 {q:"Welke koers staat bekend als 'De Hel van het Noorden'?",a:"Parijs-Roubaix",c:"Wielrennen"},
                 // Voetbal
-                {q:"Hoeveel spelers staan er per team in het veld bij de aftrap (incl. keeper)?",a:"11",c:"Voetbal"},
-                {q:"Wat is buitenspel in een zin?",a:"Aanvaller staat bij passen dichter bij doellijn dan bal en voorlaatste verdediger",c:"Voetbal"},
                 {q:"Wat is een hattrick?",a:"Drie goals door dezelfde speler in een wedstrijd",c:"Voetbal"},
                 {q:"Hoe heet de prijs voor de WK-topscorer?",a:"Gouden Schoen",c:"Voetbal"},
                 {q:"In welk jaar won Nederland het EK?",a:"1988",c:"Voetbal"},
-                {q:"Welke club heeft historisch de meeste Champions League-titels?",a:"Real Madrid",c:"Voetbal"},
                 {q:"Wat betekent 'VAR'?",a:"Video Assistant Referee",c:"Voetbal"},
                 {q:"Wat betekent 'DOGSO'?",a:"Denial of an Obvious Goal-Scoring Opportunity",c:"Voetbal"},
                 {q:"Wat betekent 'Advantage'?",a:"Scheids laat doorspelen als dat voordelig is voor benadeelde ploeg",c:"Voetbal"},
@@ -1552,7 +1533,6 @@
                 {q:"Wat betekent 'stoppage time'?",a:"Extra tijd toegevoegd voor blessures/wissels/tijdrekken",c:"Voetbal"},
                 {q:"Wat betekent 'xG'?",a:"Expected Goals: kanswaarde van schot op basis van data",c:"Voetbal"},
                 {q:"Wat is een 'clean sheet'?",a:"Wedstrijd zonder tegendoelpunt",c:"Voetbal"},
-                {q:"Wie scoorde het beroemde volley-doelpunt in de EK-finale 1988?",a:"Marco van Basten",c:"Voetbal"},
                 {q:"Wie won het WK 2014?",a:"Duitsland",c:"Voetbal"},
                 // Wintersport
                 {q:"Wat is een 'Klapschaats'?",a:"Schaats met scharnier waardoor langer contact met ijs",c:"Wintersport"},
@@ -1565,7 +1545,6 @@
                 {q:"Wat is 'telemark landing' in schansspringen?",a:"Landingsstijl met een ski voor de ander, knieen gebogen",c:"Wintersport"},
                 {q:"Wat is het verschil tussen skeleton en rodelen in houding?",a:"Skeleton: op buik hoofd eerst; rodelen: op rug voeten eerst",c:"Wintersport"},
                 // Motorsport
-                {q:"Wie hebben het record voor meeste F1-wereldtitels en hoeveel?",a:"Lewis Hamilton en Michael Schumacher - 7 (Verstappen heeft er 4)",c:"Motorsport"},
                 {q:"Wat betekent 'pole position'?",a:"Startplek 1 na kwalificatie",c:"Motorsport"},
                 {q:"Wat is een 'undercut' in F1?",a:"Eerder pitten om met verse banden positie te winnen",c:"Motorsport"},
                 {q:"Wat is een 'overcut' in F1?",a:"Later pitten en langer doorrijden om voordeel te pakken",c:"Motorsport"},
@@ -1589,11 +1568,8 @@
                 {q:"Wat is een 'Ace'?",a:"Service waartegen geen racketcontact komt",c:"Tennis"},
                 {q:"Wat is een 'Double fault'?",a:"Twee opeenvolgende foutieve services",c:"Tennis"},
                 {q:"Wat is een 'Let'?",a:"Service raakt netband maar valt goed; service overnieuw",c:"Tennis"},
-                {q:"Wie heeft de meeste Grand Slam herensingles-titels (record)?",a:"Novak Djokovic - 24",c:"Tennis"},
-                {q:"Op welke ondergrond wordt Roland Garros gespeeld?",a:"Gravel (rood gravel/clay)",c:"Tennis"},
                 {q:"Wat betekent 'bagel' in tennis?",a:"Een set winnen met 6-0",c:"Tennis"},
                 // Zwemmen
-                {q:"Noem de vier officiele zwemslagen.",a:"Vrije slag, rugslag, schoolslag, vlinderslag",c:"Zwemmen"},
                 {q:"Wat is het verschil tussen wisselslag en vrije slag?",a:"Wisselslag: combinatie van slagen in vaste volgorde; vrije slag: meestal crawl",c:"Zwemmen"},
                 {q:"Wat is een 'flip turn'?",a:"Koprolkeer bij keerpunt",c:"Zwemmen"},
                 {q:"Welke slag vereist tweehandige aanraking bij keerpunt en finish?",a:"Schoolslag en vlinderslag",c:"Zwemmen"},
@@ -1848,7 +1824,6 @@
                 {q:"Is windmeting relevant voor wereldrecords op de 800 m?",a:"Nee; windlimiet geldt bij sprints en sprongen",c:"Atletiek"},
                 {q:"Welke discipline heeft een vaste hindernis plus waterbak?",a:"3000 m steeplechase",c:"Atletiek"},
                 // Voetbal moeilijk
-                {q:"Welke club won de Europa Cup I vijf keer op rij vanaf 1956?",a:"Real Madrid (1956-1960)",c:"Voetbal"},
                 {q:"Welke WK-finale was de eerste beslist door strafschoppen?",a:"1994: Brazilie vs Italie (0-0)",c:"Voetbal"},
                 {q:"Kan er direct uit een inworp gescoord worden?",a:"Nee. In tegenstander's doel: doelschop. Eigen doel: corner",c:"Voetbal"},
                 {q:"Welke prijs krijgt de topscorer van de Eredivisie?",a:"De Willy van der Kuijlen-trofee",c:"Voetbal"},
@@ -2008,7 +1983,6 @@
                 {q:"Wat is een 'underlapping run' en waarom is die lastig te verdedigen?",a:"Loopactie naar binnen (halfspace) i.p.v. buitenom; komt in de blind spot",c:"Voetbal"},
                 {q:"Wat bedoelt men met 'compactness' in een verdedigend blok?",a:"Kleine afstanden tussen linies en spelers",c:"Voetbal"},
                 {q:"Waarom is xG niet hetzelfde als 'hoe groot een kans voelde'?",a:"xG is een modelwaarde, geen garantie en niet alle context zit erin",c:"Voetbal"},
-                {q:"Wat is de buitenspel-uitzondering bij een ingooi?",a:"Je kunt niet buitenspel staan uit een ingooi",c:"Voetbal"},
                 {q:"Hoe kun je in één wedstrijd rood krijgen zonder direct rood?",a:"Twee keer geel",c:"Voetbal"},
                 {q:"Wat is 'advantage' en wanneer kan de scheids alsnog een kaart geven?",a:"Scheids laat doorspelen bij voordeel; kaart kan bij volgende onderbreking",c:"Voetbal"},
 
@@ -2106,7 +2080,6 @@
                 {q:"Wanneer is een terugspeelbal naar de keeper strafbaar?",a:"Als een veldspeler de bal opzettelijk met de voet naar de keeper speelt en de keeper hem met de handen aanraakt",c:"Voetbal"},
                 {q:"Wat is het verschil tussen SFP en VC in scheidsrechtersterminologie?",a:"SFP (Serious Foul Play) = zware overtreding in balactie; VC (Violent Conduct) = geweld los van balactie",c:"Voetbal"},
                 {q:"Wat is 'double jeopardy' bij een penaltysituatie?",a:"Bij penalty-overtreding met poging bal te spelen wordt DOGSO vaak met geel bestraft i.p.v. rood",c:"Voetbal"},
-                {q:"Wat is de uitzondering op buitenspel bij een doeltrap en corner?",a:"Je kunt niet buitenspel staan uit een doeltrap of hoekschop",c:"Voetbal"},
                 {q:"Wat is het verschil tussen een 'false nine' en een klassieke spits?",a:"False nine zakt naar het middenveld; klassieke spits blijft hoog als aanspeelpunt",c:"Voetbal"},
                 {q:"Wat is een 'inverted fullback'?",a:"Een back die in balbezit naar binnen schuift in plaats van de flank hoog te houden",c:"Voetbal"},
                 {q:"Wat is een 'gegenpress' in één zin?",a:"Direct na balverlies agressief druk zetten om de bal snel terug te veroveren",c:"Voetbal"},
@@ -2140,7 +2113,6 @@
 
                 // TENNIS (20)
                 {q:"Wat is 'no-ad scoring' in tennis?",a:"Bij deuce wordt één beslissend punt gespeeld; geen voordeelspel",c:"Tennis"},
-                {q:"Wat is een super tiebreak?",a:"Een tiebreak (vaak tot 10) die een beslissende set vervangt",c:"Tennis"},
                 {q:"Wat is het verschil tussen inside-out en inside-in forehand?",a:"Inside-out: forehand naar crosshoek vanaf backhandkant; inside-in: naar de lijn",c:"Tennis"},
                 {q:"Wanneer heet een wedstrijd een 'straight-sets win'?",a:"Winst zonder een set te verliezen",c:"Tennis"},
                 {q:"Wat is 'serve-and-volley'?",a:"Na de service direct naar het net komen om met volley af te maken",c:"Tennis"},
@@ -2228,8 +2200,6 @@
                 // AUTOSPORT (20)
                 {q:"Wat is 'dirty air' in autosport?",a:"Turbulente lucht achter een auto die downforce vermindert",c:"Motorsport"},
                 {q:"Wat is het doel van track limits handhaving?",a:"Voordeel door buiten de baan rijden beperken",c:"Motorsport"},
-                {q:"Wat is een drive-through penalty?",a:"Door de pitstraat rijden met snelheidslimiet zonder stoppen",c:"Motorsport"},
-                {q:"Wat is een stop-and-go penalty?",a:"Stoppen in pitbox voor vaste tijd, daarna doorrijden; zwaarder dan drive-through",c:"Motorsport"},
                 {q:"Wat betekent een gele vlag (basis)?",a:"Gevaar: snelheid minderen en niet inhalen",c:"Motorsport"},
                 {q:"Wat betekent een blauwe vlag?",a:"Snellere auto nadert (meestal om te laten passeren)",c:"Motorsport"},
                 {q:"Wat is het verschil tussen standing start en rolling start?",a:"Standing: vanuit stilstand op grid; rolling: achter pace car op snelheid",c:"Motorsport"},
@@ -2356,7 +2326,6 @@
                 {q:"Welke Braziliaanse F1-piloot stierf in 1994 tijdens de Grand Prix van San Marino?",a:"Ayrton Senna",c:"Motorsport"},
 
                 // Bron: raadsels.nu (sportquiz)
-                {q:"Wat is de hoogste score bij darts?",a:"180",c:"Darts"},
                 {q:"Bij welke sport maak je een volte?",a:"Paardensport",c:"Algemeen"},
                 {q:"Welke slag komt normaal gesproken niet voor in de zwemsport?",a:"Nekslag",c:"Zwemmen"},
                 {q:"Hoe noem je het als je bij bowlen alle kegels in één keer omgooit?",a:"Een strike",c:"Algemeen"},
