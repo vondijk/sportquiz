@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v15');
+            const stored = localStorage.getItem('sportquiz_questions_v16');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v15', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v16', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1417,20 +1417,14 @@
             return [
                 // === DOCUMENT 1: circa 536 vragen ===
                 // Algemeen / Basis
-                {q:"Tot welke nationale bond behoren de voetbalploegen van Liechtenstein?",a:"De Zwitserse voetbalbond",c:"Algemeen"},
                 {q:"Wat is het verschil tussen een 'long course' (LCM) en 'short course' (SCM) zwembad qua afmetingen en recordtijden?",a:"LCM=50m, SCM=25m; SCM-tijden zijn sneller door extra keerpunten",c:"Zwemmen"},
                 {q:"Wie won zes opeenvolgende Wimbledon-titels in de jaren tachtig?",a:"Martina Navratilova",c:"Tennis"},
-                {q:"Welke Portugese voetballer was topscorer op de wereldbeker in 1966?",a:"Eusebio",c:"Voetbal"},
-                {q:"Welk Aziatisch land bereikte als eerste de halve finale op een WK voetbal in 2002?",a:"Zuid-Korea",c:"Voetbal"},
                 {q:"Wat was het eerste land dat twee maal de wereldbeker voetbal won?",a:"Italie",c:"Voetbal"},
                 {q:"Wat is Double Dutch bij rope skipping en hoeveel touwen worden gebruikt?",a:"Twee touwen draaien in tegengestelde richting terwijl springer trucs uitvoert",c:"Algemeen"},
                 {q:"Wat is het verschil tussen dressuur, springen en eventing in de paardensport?",a:"Dressuur=figuren rijden, springen=hindernissen, eventing=driedaagse combinatie",c:"Algemeen"},
                 {q:"Wat is het gewicht van de kogel bij kogelstoten voor mannen en vrouwen?",a:"Mannen 7,26 kg, vrouwen 4 kg",c:"Atletiek"},
-                {q:"In welk land werd in 1998 het WK voetbal georganiseerd?",a:"Frankrijk",c:"Voetbal"},
-                {q:"Wat is de optimale strategie voor een 170 checkout (hoogst mogelijke) bij darts?",a:"Triple 20, triple 20, bullseye (60+60+50)",c:"Darts"},
                 {q:"Welke sport beoefent J.-M. Saive?",a:"Tafeltennis",c:"Algemeen"},
                 {q:"Welke scheidsrechter was de eerste die een rode kaart toonde op een WK finale (2006)?",a:"Horacio Elizondo (aan Zidane)",c:"Algemeen"},
-                {q:"Bij welke balsport is de bal niet rond?",a:"Rugby",c:"Rugby"},
                 {q:"Wat is de afstand tussen de honken (bases) bij professioneel honkbal in meters?",a:"27,43 meter (90 feet)",c:"Algemeen"},
                 {q:"Hoe noemt men de sport die men met een trimaran beoefent?",a:"Zeilen",c:"Zeilen"},
                 {q:"In welk land werd het werelduurrecord van Eddy Merckx gevestigd?",a:"Mexico (Mexico-Stad)",c:"Wielrennen"},
@@ -1452,57 +1446,17 @@
                 {q:"Welke continenten worden door welke kleuren vertegenwoordigd in de olympische ringen?",a:"Geen vaste toewijzing; elke nationale vlag bevat minimaal één ringkleur",c:"Olympische Spelen"},
                 {q:"Wat is de minimale watertemperatuur voor olympisch zwemmen volgens FINA-regels?",a:"25-28 graden Celsius",c:"Zwemmen"},
                 {q:"Waarom zijn de buitenste banen (1 en 8) bij olympisch zwemmen het minst gewild?",a:"Meer turbulentie door golfslag tegen de muur",c:"Zwemmen"},
-                {q:"Welke sport staat sinds 1896 op elke Zomerspelen-editie op het programma?",a:"Atletiek",c:"Olympische Spelen"},
                 {q:"Wat is het verschil tussen een NOK en IOC?",a:"NOK is nationaal olympisch comite; IOC is het internationale olympische comite",c:"Olympische Spelen"},
                 {q:"Hoe heet de openingsceremonie-traditie waarbij landen binnenkomen?",a:"Parade of Nations",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Beijing de Olympische Zomerspelen?",a:"2008",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde London de Olympische Zomerspelen?",a:"2012",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Rio de Janeiro de Olympische Zomerspelen?",a:"2016",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Tokyo de Olympische Zomerspelen?",a:"2020",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Paris de Olympische Zomerspelen?",a:"2024",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Salt Lake City de Olympische Winterspelen?",a:"2002",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Turin de Olympische Winterspelen?",a:"2006",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Vancouver de Olympische Winterspelen?",a:"2010",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Sochi de Olympische Winterspelen?",a:"2014",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde PyeongChang de Olympische Winterspelen?",a:"2018",c:"Olympische Spelen"},
-                {q:"In welk jaar organiseerde Beijing de Olympische Winterspelen?",a:"2022",c:"Olympische Spelen"},
                 {q:"Welke sport maakte zijn intrede op de Spelen van 2020 (Tokio-nieuwkomer)?",a:"Skateboarden",c:"Olympische Spelen"},
                 {q:"Welke klimsport werd nieuw op de Spelen van 2020?",a:"Sportklimmen",c:"Olympische Spelen"},
                 {q:"Welke watersport werd nieuw op de Spelen van 2020?",a:"Surfen",c:"Olympische Spelen"},
                 {q:"Welke vechtsport was nieuw op Tokio 2020 maar keert niet terug?",a:"Karate",c:"Olympische Spelen"},
-                {q:"Wat is Biatlon?",a:"Langlaufen en schieten",c:"Wintersport"},
-                {q:"Wat is Noordse combinatie?",a:"Schansspringen en langlaufen",c:"Wintersport"},
-                {q:"Wat is Skeleton?",a:"Sleeen met het hoofd eerst, individueel",c:"Wintersport"},
-                {q:"Wat is Bobslee?",a:"Team-slee met cockpit; snelheid + stuurwerk",c:"Wintersport"},
-                {q:"Wat is Curling?",a:"Stenen schuiven over ijs en vegen voor snelheid/krul",c:"Wintersport"},
-                {q:"Wat is Shorttrack?",a:"Schaatsen op korte baan met inhaalduels",c:"Wintersport"},
                 // Atletiek
                 {q:"Wie heeft het wereldrecord 800 m vrouwen?",a:"Jarmila Kratochvilova - 1:53,28",c:"Atletiek"},
                 {q:"Wie heeft het wereldrecord Marathon mannen?",a:"Kelvin Kiptum - 2:00:35 (Chicago 2023, overleed feb 2024)",c:"Atletiek"},
-                {q:"Wat betekent 'Fosbury flop'?",a:"Hoogspringtechniek waarbij je met de rug over de lat gaat",c:"Atletiek"},
-                {q:"Wat betekent 'Split times'?",a:"Tussentijden per ronde/segment",c:"Atletiek"},
-                {q:"Wat betekent 'DQ' in uitslagen?",a:"Disqualified: gediskwalificeerd",c:"Atletiek"},
-                {q:"Wat betekent 'False start'?",a:"Valse start; bij sprint kan dat diskwalificatie betekenen",c:"Atletiek"},
-                {q:"Wat is kogelstoten?",a:"Stoten van een metalen kogel; niet werpen bovenhands",c:"Atletiek"},
-                {q:"Wat is discuswerpen?",a:"Werp een discus na rotatie in de ring",c:"Atletiek"},
-                {q:"Wat is speerwerpen?",a:"Werp een speer; geldige worp vereist correcte landing met punt",c:"Atletiek"},
-                {q:"Wat is hamerslingeren?",a:"Slingeren en werpen van kogel aan draad met handvat",c:"Atletiek"},
-                {q:"Wat is verspringen?",a:"Spring zo ver mogelijk na aanloop; afzet achter de balk",c:"Atletiek"},
-                {q:"Wat is hink-stap-sprong?",a:"Triple jump: hop, step, jump",c:"Atletiek"},
-                {q:"Wat is polsstokhoogspringen?",a:"Over een lat springen met behulp van een polsstok",c:"Atletiek"},
-                {q:"Hoeveel rondes heeft een standaard 400 m baan?",a:"1 ronde is 400 meter",c:"Atletiek"},
                 {q:"Wat is het verschil tussen 10.000 m en 10 km op de weg?",a:"10.000 m is baan; 10 km is wegwedstrijd",c:"Atletiek"},
-                {q:"Wat is een 'negative split' in duurloop?",a:"Tweede helft sneller lopen dan eerste helft",c:"Atletiek"},
-                {q:"Hoeveel onderdelen telt de zevenkamp?",a:"7",c:"Atletiek"},
-                {q:"Wat betekent 'DNS' in uitslagen?",a:"Did Not Start",c:"Atletiek"},
-                {q:"Wat betekent 'DNF' in uitslagen?",a:"Did Not Finish",c:"Atletiek"},
                 // Wielrennen
-                {q:"Noem de drie Grand Tours.",a:"Tour de France, Giro d'Italia, Vuelta a Espana",c:"Wielrennen"},
-                {q:"Welke trui is voor de leider in het algemeen klassement in de Tour?",a:"De gele trui",c:"Wielrennen"},
-                {q:"Welke trui is voor de puntenleider in de Tour?",a:"De groene trui",c:"Wielrennen"},
-                {q:"Welke trui is voor de beste klimmer in de Tour?",a:"De bolletjestrui",c:"Wielrennen"},
-                {q:"Wat betekent DNF in wieleruitslagen?",a:"Did Not Finish",c:"Wielrennen"},
-                {q:"Wat zijn 'waaiers' (echelons)?",a:"Zijwind breekt het peloton in schuine formaties",c:"Wielrennen"},
                 {q:"Noem de vijf wielermonumenten.",a:"Milaan-San Remo, Ronde van Vlaanderen, Parijs-Roubaix, Luik-Bastenaken-Luik, Ronde van Lombardije",c:"Wielrennen"},
                 {q:"Wat is een 'Domestique'?",a:"Helper/ploegmaat die werkt voor de kopman",c:"Wielrennen"},
                 {q:"Wat is een 'Lead-out'?",a:"Sprinttrein die sprinter in perfecte positie afzet",c:"Wielrennen"},
