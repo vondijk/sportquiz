@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v18');
+            const stored = localStorage.getItem('sportquiz_questions_v19');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v18', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v19', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1653,7 +1653,6 @@
                 {q:"Welke sport stond van 1900 tot en met 1920 op het olympisch programma en draait om een touw?",a:"Touwtrekken (tug of war)",c:"Olympische Spelen"},
                 {q:"Welke olympische sport gebruikt een epee, floret en sabel als drie wapens?",a:"Schermen",c:"Olympische Spelen"},
                 {q:"Welke stad was de eerste die de Zomerspelen organiseerde in Zuid-Amerika?",a:"Rio de Janeiro, 2016",c:"Olympische Spelen"},
-                {q:"Welke editie van de Zomerspelen werd geannuleerd door WOII maar stond gepland in Londen?",a:"1944",c:"Olympische Spelen"},
                 {q:"Welke bobsleediscipline maakte olympisch debuut op de Winterspelen van 2022?",a:"Monobob (voor vrouwen)",c:"Olympische Spelen"},
                 {q:"Welke olympische sport heeft wedstrijden waarin mannen en vrouwen in dezelfde competitie uitkomen?",a:"Paardensport (dressuur, springen, eventing)",c:"Olympische Spelen"},
                 {q:"In welk jaar werd de olympische vlag voor het eerst officieel gehesen?",a:"1920, Antwerpen",c:"Olympische Spelen"},
@@ -1674,17 +1673,10 @@
                 {q:"Welke beloning kregen winnaars op de Spelen van 1896?",a:"Zilveren medaille en olijfkrans (geen goud)",c:"Olympische Spelen"},
                 // Atletiek moeilijk
                 {q:"Welke sprong van Bob Beamon werd beroemd als 'de sprong naar de 21e eeuw'?",a:"Verspringen: 8,90 m (Mexico-Stad 1968)",c:"Atletiek"},
-                {q:"Welke vrouw brak officieel de 10-secondenbarriere op de 100 m?",a:"Geen: WR staat op 10,49 (Griffith-Joyner)",c:"Atletiek"},
                 {q:"Noem de vier werponderdelen in olympische atletiek.",a:"Kogelstoten, discuswerpen, speerwerpen, hamerslingeren",c:"Atletiek"},
-                {q:"Welke twee disciplines worden samen de 'vertical jumps' genoemd?",a:"Hoogspringen en polsstokhoogspringen",c:"Atletiek"},
-                {q:"In atletiek uitslagen: wat betekent Q en wat betekent q?",a:"Q = geplaatst op plaats; q = geplaatst op tijd",c:"Atletiek"},
-                {q:"Is windmeting relevant voor wereldrecords op de 800 m?",a:"Nee; windlimiet geldt bij sprints en sprongen",c:"Atletiek"},
-                {q:"Welke discipline heeft een vaste hindernis plus waterbak?",a:"3000 m steeplechase",c:"Atletiek"},
                 // Voetbal moeilijk
                 {q:"Welke WK-finale was de eerste beslist door strafschoppen?",a:"1994: Brazilie vs Italie (0-0)",c:"Voetbal"},
-                {q:"Kan er direct uit een inworp gescoord worden?",a:"Nee. In tegenstander's doel: doelschop. Eigen doel: corner",c:"Voetbal"},
                 {q:"Welke prijs krijgt de topscorer van de Eredivisie?",a:"De Willy van der Kuijlen-trofee",c:"Voetbal"},
-                {q:"Welke positie wordt bedoeld met 'nummer 6'?",a:"Defensieve middenvelder/controleur",c:"Voetbal"},
                 {q:"Wie heeft het record voor meeste doelpunten in een WK-eindtoernooi?",a:"Just Fontaine: 13 goals (WK 1958)",c:"Voetbal"},
                 {q:"Welke twee landen speelden de eerste WK-finale ooit?",a:"Uruguay - Argentinie, 1930",c:"Voetbal"},
                 // Wielrennen moeilijk
@@ -1693,7 +1685,6 @@
                 {q:"Welke klassieker eindigt traditioneel op de Via Roma?",a:"Milaan-San Remo",c:"Wielrennen"},
                 {q:"Wat bedoelt men met de 'triple crown of cycling'?",a:"Giro, Tour en WK op de weg winnen in een jaar",c:"Wielrennen"},
                 {q:"Welke baanwielren-discipline start achter een derny?",a:"Keirin",c:"Wielrennen"},
-                {q:"Is de wereldkampioenstrui universeel voor alle disciplines?",a:"Nee; de titel geldt per discipline/categorie",c:"Wielrennen"},
                 {q:"Welke vijf kleuren zitten in de UCI regenboogbanden?",a:"Blauw, rood, zwart, geel, groen (wit ontbreekt)",c:"Wielrennen"},
                 // Motorsport moeilijk
                 {q:"Welke race hoort bij de Triple Crown of Motorsport naast Monaco GP en Le Mans?",a:"Indianapolis 500",c:"Motorsport"},
@@ -1703,9 +1694,6 @@
                 {q:"Kan een F1-coureur punten scoren zonder de finish te halen?",a:"Ja, als hij geclassificeerd wordt",c:"Motorsport"},
                 // Tennis moeilijk
                 {q:"Wat betekent de term 'Calendar Grand Slam'?",a:"Alle vier Grand Slams winnen in een kalenderjaar",c:"Tennis"},
-                {q:"Welke twee Grand Slams worden op hardcourt gespeeld?",a:"Australian Open en US Open",c:"Tennis"},
-                {q:"Wat is het maximale aantal games in een set die je met 7-6 wint?",a:"13 games",c:"Tennis"},
-                {q:"Welke term betekent dat je een game wint zonder punt te verliezen?",a:"Love game",c:"Tennis"},
                 {q:"Wat is een 'golden set'?",a:"Set winnen zonder punt te verliezen (6-0)",c:"Tennis"},
                 // US Sports moeilijk
                 {q:"In baseball: wat betekent een walk-off?",a:"Thuisploeg scoort winnende run in laatste slagbeurt",c:"American Football"},
@@ -1716,26 +1704,19 @@
                 {q:"Welke sprinttest uit de NFL Combine is 'de standaard' voor snelheid?",a:"De 40-yard dash",c:"American Football"},
                 // Overige sporten moeilijk
                 {q:"Wat is het belangrijkste regelverschil tussen vrije slag en schoolslag?",a:"Schoolslag heeft vaste arm/beenbeweging",c:"Zwemmen"},
-                {q:"Welke vechtsport gebruikt ippon als directe winnende score?",a:"Judo",c:"Algemeen"},
                 {q:"In snooker: wat is de maximale break?",a:"147",c:"Snooker"},
                 {q:"Welke sport introduceerde de 'clap skate' in de jaren 90?",a:"Langebaanschaatsen",c:"Wintersport"},
                 {q:"Welke judoscore werd afgeschaft maar bestond vroeger wel?",a:"Yuko",c:"Algemeen"},
                 {q:"In cricket: wat is het verschil tussen ODI en Test qua duur?",a:"ODI: 1 dag (50 overs); Test: tot 5 dagen",c:"Algemeen"},
                 {q:"Welke sport gebruikt 'grand slam' buiten tennis?",a:"Rugby Six Nations: alle wedstrijden winnen",c:"Rugby"},
-                {q:"In handbal: hoeveel stappen mag je zonder dribbelen?",a:"3 stappen",c:"Algemeen"},
-                {q:"In volleybal: tot hoeveel punten gaat een set normaal?",a:"25 punten (tiebreak 15), met 2 verschil",c:"Algemeen"},
                 {q:"Welke ratingmethode wordt gebruikt voor schaakranglijsten?",a:"Elo-rating",c:"Algemeen"},
                 // Deep dive Olympisch
                 {q:"Wie sprak de eerste olympische eed uit?",a:"Victor Boin (schermen), Antwerpen 1920",c:"Olympische Spelen"},
                 {q:"Noem twee sporten waarin vrouwen al bij 1900 meededen.",a:"Tennis en golf (ook croquet)",c:"Olympische Spelen"},
-                {q:"Trucvraag: welke stad organiseerde als eerste de Zomerspelen in Afrika?",a:"Geen: nog nooit in Afrika georganiseerd",c:"Olympische Spelen"},
-                {q:"Welk continent heeft nog nooit de Winterspelen georganiseerd?",a:"Afrika",c:"Olympische Spelen"},
-                {q:"Kan een land zonder kust een olympische zeilmedaille winnen?",a:"Ja",c:"Olympische Spelen"},
                 {q:"Welke stad was de eerste in Azie met Zomerspelen?",a:"Tokio, 1964",c:"Olympische Spelen"},
                 {q:"Noem drie edities van de Zomerspelen die geannuleerd werden.",a:"1916, 1940, 1944",c:"Olympische Spelen"},
                 {q:"Noem drie steden die de Winterspelen twee keer organiseerden.",a:"Innsbruck (1964/1976), St. Moritz (1928/1948), Lake Placid (1932/1980)",c:"Olympische Spelen"},
                 {q:"Was honkbal olympisch in Tokio 2020 en Parijs 2024?",a:"Tokio: ja. Parijs: nee",c:"Olympische Spelen"},
-                {q:"Staan de olympische ringen officieel voor 'de vijf continenten'?",a:"Nee; ze staan voor vereniging van de wereld",c:"Olympische Spelen"},
                 {q:"Welke discipline gebruikt 'hammer' als term maar heeft niets met hamerslingeren te maken?",a:"Curling (laatste steen = hammer)",c:"Wintersport"},
                 {q:"Welke stad had de 'Games of the XXXI Olympiad'?",a:"Rio de Janeiro (2016)",c:"Olympische Spelen"},
                 {q:"Kun je olympisch goud winnen zonder in de finale te spelen?",a:"Ja: in teamsporten kun je teamgoud krijgen",c:"Olympische Spelen"},
@@ -1763,14 +1744,11 @@
                 {q:"Hoeveel hoogtemeters telt de Vuelta 2026 in totaal?",a:"Ruim 58.000 meter",c:"Toekomstige Evenementen",w:["Ruim 45.000 meter","Ruim 50.000 meter","Ruim 40.000 meter"]},
 
                 // Olympische Spelen - Zomer
-                {q:"Waar zijn de Olympische Zomerspelen 2028?",a:"Los Angeles (VS)",c:"Toekomstige Evenementen",w:["Parijs","Tokio","Brisbane"]},
-                {q:"In welk jaar zijn de Olympische Spelen in Los Angeles?",a:"2028",c:"Toekomstige Evenementen",w:["2026","2030","2032"]},
                 {q:"Hoe vaak heeft Los Angeles de Olympische Zomerspelen georganiseerd na 2028?",a:"Drie keer (1932, 1984, 2028)",c:"Toekomstige Evenementen",w:["Twee keer","Vier keer","Één keer"]},
                 {q:"Waar zijn de Olympische Zomerspelen 2032?",a:"Brisbane (Australië)",c:"Toekomstige Evenementen",w:["Los Angeles","Parijs","Tokyo"]},
                 {q:"Wanneer zijn de Olympische Zomerspelen 2028 in Los Angeles?",a:"14-30 juli 2028",c:"Toekomstige Evenementen",w:["1-17 augustus 2028","21 juli - 6 augustus 2028","7-23 juli 2028"]},
 
                 // Olympische Spelen - Winter
-                {q:"Waar zijn de Olympische Winterspelen 2026?",a:"Milaan en Cortina d'Ampezzo (Italië)",c:"Toekomstige Evenementen",w:["Pyeongchang","Salt Lake City","Franse Alpen"]},
                 {q:"Wanneer zijn de Winterspelen van 2026?",a:"6-22 februari 2026",c:"Toekomstige Evenementen",w:["1-17 februari 2026","12-28 februari 2026","20 januari - 5 februari 2026"]},
                 {q:"Waar zijn de Olympische Winterspelen 2030?",a:"Franse Alpen (Frankrijk)",c:"Toekomstige Evenementen",w:["Milaan","Salt Lake City","Oslo"]},
                 {q:"Waar zijn de Olympische Winterspelen 2034?",a:"Salt Lake City (VS)",c:"Toekomstige Evenementen",w:["Franse Alpen","Sapporo","Stockholm"]},
@@ -1778,8 +1756,6 @@
                 {q:"Waar is de sluitingsceremonie van de Winterspelen 2026?",a:"Arena di Verona",c:"Toekomstige Evenementen",w:["San Siro","Olympisch Stadion Rome","Stadio Olimpico Cortina"]},
 
                 // WK Voetbal
-                {q:"Welke landen organiseren het WK voetbal 2026?",a:"VS, Mexico en Canada",c:"Toekomstige Evenementen",w:["VS en Mexico","Spanje en Portugal","Marokko en Spanje"]},
-                {q:"Hoeveel teams doen mee aan het WK 2026?",a:"48 teams",c:"Toekomstige Evenementen",w:["32 teams","40 teams","36 teams"]},
                 {q:"Waar is de finale van het WK 2026?",a:"MetLife Stadium (New York)",c:"Toekomstige Evenementen",w:["Azteca Stadium","Rose Bowl","AT&T Stadium"]},
                 {q:"Hoeveel wedstrijden worden er gespeeld op het WK 2026?",a:"104 wedstrijden",c:"Toekomstige Evenementen",w:["64 wedstrijden","80 wedstrijden","96 wedstrijden"]},
                 {q:"Welke landen organiseren het WK voetbal 2030?",a:"Spanje, Portugal en Marokko",c:"Toekomstige Evenementen",w:["VS, Mexico en Canada","Argentinië en Uruguay","Saudi-Arabië"]},
@@ -1789,8 +1765,6 @@
 
                 // EK Voetbal
                 {q:"Welke landen organiseren het EK voetbal 2028?",a:"Engeland, Schotland, Wales, Noord-Ierland en Ierland",c:"Toekomstige Evenementen",w:["Duitsland","Italië en Turkije","Spanje en Portugal"]},
-                {q:"Wanneer is het EK voetbal 2028?",a:"9 juni - 9 juli 2028",c:"Toekomstige Evenementen",w:["14 juni - 14 juli 2028","1-30 juni 2028","15 juni - 15 juli 2028"]},
-                {q:"Waar is de finale van het EK 2028?",a:"Wembley Stadium (Londen)",c:"Toekomstige Evenementen",w:["Hampden Park","Aviva Stadium","Principality Stadium"]},
                 {q:"Waar is de openingswedstrijd van het EK 2028?",a:"National Stadium of Wales (Cardiff)",c:"Toekomstige Evenementen",w:["Wembley","Hampden Park","Aviva Stadium"]},
                 {q:"Welke landen organiseren het EK voetbal 2032?",a:"Italië en Turkije",c:"Toekomstige Evenementen",w:["Engeland en Ierland","Spanje en Portugal","Duitsland en Polen"]},
                 {q:"Is het EK 2032 de eerste keer dat Turkije een groot toernooi organiseert?",a:"Ja",c:"Toekomstige Evenementen",w:["Nee, EK 2008","Nee, WK 2002","Nee, EK 2016"]},
@@ -1803,7 +1777,6 @@
                 {q:"Welke term beschrijft dat in sommige vechtsporten twee bronzen medailles worden uitgereikt in één gewichtsklasse?",a:"Dubbel brons door repêchage-format",c:"Olympische Spelen"},
                 {q:"In welke sport is een 'touch' elektronisch geregistreerd en kan 'priority' beslissen bij gelijke stand?",a:"Schermen",c:"Olympische Spelen"},
                 {q:"Welke olympische sport gebruikt een 'shot clock' per aanval, maar speelt in het water?",a:"Waterpolo",c:"Olympische Spelen"},
-                {q:"Welke olympische discipline bestaat uit vijf verschillende onderdelen met één overkoepelend puntenklassement?",a:"Moderne vijfkamp",c:"Olympische Spelen"},
                 {q:"Noem één olympische sport waar 'repêchage' (tweede kans) vaak voorkomt na een verlies in vroege rondes.",a:"Judo, worstelen of roeien",c:"Olympische Spelen"},
                 {q:"Welke olympische term beschrijft deelname 'neutraal' (zonder nationale vlag) door sancties of NOC-schorsing?",a:"Neutral athletes / Independent Olympic Participants",c:"Olympische Spelen"},
 
@@ -1814,7 +1787,6 @@
                 {q:"Wat is een veelvoorkomende DQ-reden in de 4×100m estafette, los van valse start?",a:"Wissel buiten de wisselzone",c:"Atletiek"},
                 {q:"Waarom is wind cruciaal bij sprintrecords, en wat is de maximale toegestane meewind voor een record?",a:"Windhulp maakt tijden sneller; limiet is +2.0 m/s",c:"Atletiek"},
                 {q:"Wat is het tactische voordeel van een hoogte overslaan in hoogspringen/polsstok?",a:"Je spaart energie en kunt later met minder sprongen een hogere hoogte halen",c:"Atletiek"},
-                {q:"Waarom bestaan er aparte indoorrecords naast outdoorrecords?",a:"Indoor heeft andere baanlengte/bochten en omstandigheden",c:"Atletiek"},
                 {q:"Welke regel in kogelstoten maakt een poging ongeldig bij het verlaten van de ring?",a:"Je mag pas weg als de kogel geland is en moet via de achterkant uitstappen",c:"Atletiek"},
                 {q:"Wat betekent 'negative split' in langeafstand en waarom is dat lastig?",a:"Tweede helft sneller dan de eerste; vraagt discipline en timing",c:"Atletiek"},
                 {q:"Hoe heet het fenomeen waarbij favorieten het tempo laten 'sterven' om een sprint te forceren?",a:"Surging / tempowisselingen",c:"Atletiek"},
@@ -1837,9 +1809,7 @@
                 {q:"Wat is 'restverdediging' (rest defence) in moderne tactiek?",a:"De achterblijvende organisatie om counters te stoppen tijdens eigen aanval",c:"Voetbal"},
                 {q:"Leg het verschil uit tussen 'pressing trigger' en 'pressing trap'.",a:"Trigger: signaal om te pressen; trap: val om tegenstander naar een zone te lokken",c:"Voetbal"},
                 {q:"Wat is een 'underlapping run' en waarom is die lastig te verdedigen?",a:"Loopactie naar binnen (halfspace) i.p.v. buitenom; komt in de blind spot",c:"Voetbal"},
-                {q:"Wat bedoelt men met 'compactness' in een verdedigend blok?",a:"Kleine afstanden tussen linies en spelers",c:"Voetbal"},
                 {q:"Waarom is xG niet hetzelfde als 'hoe groot een kans voelde'?",a:"xG is een modelwaarde, geen garantie en niet alle context zit erin",c:"Voetbal"},
-                {q:"Hoe kun je in één wedstrijd rood krijgen zonder direct rood?",a:"Twee keer geel",c:"Voetbal"},
                 {q:"Wat is 'advantage' en wanneer kan de scheids alsnog een kaart geven?",a:"Scheids laat doorspelen bij voordeel; kaart kan bij volgende onderbreking",c:"Voetbal"},
 
                 // Tennis (Regels, Formats, Jargon)
@@ -1852,8 +1822,6 @@
                 {q:"Wat is een 'walkover' in een toernooi?",a:"Doorgaan zonder te spelen omdat de tegenstander vóór aanvang terugtrekt",c:"Tennis"},
                 {q:"Wat is het verschil tussen unforced en forced errors?",a:"Unforced: eigen fout zonder grote druk; forced: door druk/kwaliteit tegenstander",c:"Tennis"},
                 {q:"Wat is 'I-formation' in dubbel?",a:"Netspeler start op de T en beweegt na de serve om return te verstoren",c:"Tennis"},
-                {q:"Wat beoordeelt Hawk-Eye in de kern?",a:"Of de bal in/uit was op basis van tracking",c:"Tennis"},
-
                 // Wintersport & Watersport
                 {q:"In roeien: wat is het verschil tussen scullen en boordroeien (sweep)?",a:"Scullen: twee riemen per roeier; boordroeien: één riem per roeier",c:"Roeien"},
                 {q:"In zwemmen: wat is de volgorde van de wisselslagen in de 4×100m wisselslag estafette?",a:"Rugslag → schoolslag → vlinderslag → vrije slag",c:"Zwemmen"},
@@ -1861,7 +1829,6 @@
                 {q:"In alpineskiën: wat is het belangrijkste verschil tussen 'giant slalom' en 'super-G'?",a:"GS: twee runs, meer technische bochten; super-G: één run, hogere snelheid",c:"Wintersport"},
                 {q:"In curling: wat betekent 'hammer' en waarom is het strategisch?",a:"Hammer = laatste steen in een end; geeft scoringsvoordeel",c:"Wintersport"},
                 {q:"In schansspringen: wat is een telemark-landing?",a:"Landing met één voet voor, knieën gebogen (klassieke stijl)",c:"Wintersport"},
-                {q:"In volleybal: welke speler mag een ander kleur shirt dragen en heeft specifieke beperkingen?",a:"De libero",c:"Algemeen"},
                 {q:"In badminton: hoe heet het scoringssysteem dat tot 21 gaat en best-of-3 games gebruikt?",a:"Rally point scoring (21 punten, best of 3)",c:"Algemeen"},
                 {q:"In handbal: wanneer krijg je een 7-meterworp?",a:"Bij het ontnemen van een duidelijke scoringskans",c:"Algemeen"},
                 {q:"In ijshockey: wat betekent 'power play'?",a:"Numeriek voordeel door een penalty bij de tegenstander",c:"IJshockey"},
@@ -1875,8 +1842,6 @@
                 {q:"Wanneer kies je 'intermediates' boven 'slicks'?",a:"Bij licht nat/vochtig wanneer full wets te langzaam zijn",c:"Motorsport"},
                 {q:"Wat zijn 'track limits' en wat is de consequentie bij herhaald overschrijden?",a:"Buiten de witte lijnen met voordeel; waarschuwingen gevolgd door penalty",c:"Motorsport"},
                 {q:"Wat betekent 'Balance of Performance (BoP)'?",a:"Prestatie-equalisatie tussen auto's; vooral in GT/endurance",c:"Motorsport"},
-                {q:"Wat is een formation lap?",a:"Opwarmronde(s) voor de start",c:"Motorsport"},
-
                 // Amerikaanse sporten & Overige
                 {q:"In basketbal: wat is het verschil tussen goaltending en basket interference?",a:"Goaltending: bal op neerwaartse baan blokkeren; interference: ring/net aanraken",c:"Basketbal"},
                 {q:"In American football: wat is een two-minute drill?",a:"Snelle aanval in de laatste ~2 minuten met strak klokmanagement",c:"American Football"},
@@ -1885,13 +1850,9 @@
                 {q:"In cricket: wat betekent 'duck'?",a:"Uit met 0 runs",c:"Algemeen"},
                 {q:"In rugby union: wat is het verschil tussen try en conversion?",a:"Try: bal drukken; conversion: schot na try voor extra punten",c:"Rugby"},
                 {q:"In golf: wat is het verschil tussen match play en stroke play?",a:"Match play: holes winnen; stroke play: totaal slagen",c:"Golf"},
-                {q:"In darts: wat is een 9-darter in 501?",a:"Een leg uitgooien in 9 pijlen",c:"Darts"},
                 {q:"In snooker: hoe ontstaat een 147 maximum break?",a:"15× rood+zwart + alle kleuren in volgorde",c:"Snooker"},
-                {q:"In handbal: wat is 'passief spel' en wat probeert de regel te voorkomen?",a:"Te lang aanvallen zonder doelpoging; voorkomt tijdrekken",c:"Algemeen"},
-
                 // === SET 3 - PROMPT 2: 50 EXTREEM MOEILIJKE OLYMPISCHE VRAGEN ===
                 // Zomerspelen - Obscure Geschiedenis
-                {q:"Welke olympische sport was ooit op het programma en lijkt op een krachtmeting tussen teams die aan een touw trekken?",a:"Touwtrekken (Tug of War)",c:"Olympische Spelen"},
                 {q:"Welke sport stond in 1900 olympisch en gebruikt een 'cesta' (mand) om de bal met hoge snelheid te werpen?",a:"Baskische pelota (Jai alai)",c:"Olympische Spelen"},
                 {q:"Welke sport stond in 1900 olympisch en lijkt op kroket met wickets?",a:"Croquet",c:"Olympische Spelen"},
                 {q:"Welke obscure zwemdiscipline bestond ooit olympisch waarbij je 'zo ver mogelijk glijdt' onder water?",a:"Plunge for distance",c:"Olympische Spelen"},
@@ -1905,9 +1866,6 @@
                 {q:"Welke zomereditie staat bekend om extreem hoge hoogte en wordt vaak genoemd bij records?",a:"Mexico-Stad 1968",c:"Olympische Spelen"},
 
                 // Winterspelen - Formats, Disciplines
-                {q:"Welke discipline combineert schansspringen en langlaufen in één overall klassement?",a:"Nordic combined",c:"Wintersport"},
-                {q:"Welke discipline combineert skiën en schieten, en gebruikt strafrondes of tijdstraffen?",a:"Biatlon",c:"Wintersport"},
-                {q:"Welke sport rijdt met het hoofd eerst op een slede, en welke met de voeten eerst?",a:"Skeleton (hoofd eerst) en rodelen/luge (voeten eerst)",c:"Wintersport"},
                 {q:"Wat is het kernverschil tussen moguls en aerials in freestyle skiën?",a:"Moguls: buckels + sprongen + snelheid; aerials: grote sprongen/rotaties",c:"Wintersport"},
                 {q:"Welke sport gebruikt 'stones', het 'house' en de 'hammer'?",a:"Curling",c:"Wintersport"},
                 {q:"Wat is een 'blank end' in curling?",a:"Een end zonder score",c:"Wintersport"},
@@ -1924,10 +1882,7 @@
                 {q:"In bobslee: waarom is de start (push) bijna net zo bepalend als het sturen?",a:"Marges zijn klein; een snelle start geeft snelheid die lastig in te halen is",c:"Wintersport"},
                 {q:"Wat is het 'team event' in kunstschaatsen grofweg?",a:"Landenteams scoren op meerdere disciplines samen tot één totaalscore",c:"Wintersport"},
                 {q:"Waarom is hoogte (altitude) soms een discussiepunt bij Winterspelen-locaties?",a:"Minder zuurstof beïnvloedt uithoudingsonderdelen en pacing",c:"Wintersport"},
-                {q:"Welke sport speelt met een puck in drie periodes?",a:"IJshockey",c:"IJshockey"},
-                {q:"Wat betekent 'mixed relay' en waarom komt dit vaker op de Spelen?",a:"Gemengde teams mannen+vrouwen; IOC stimuleert genderbalans",c:"Olympische Spelen"},
                 {q:"Wat is het verschil tussen parallel giant slalom en snowboard cross?",a:"Parallel: 1-op-1 op twee banen; cross: meerdere tegelijk op één parcours",c:"Wintersport"},
-                {q:"Wat is het concept van Nordic combined startverschil in één zin?",a:"Sprongscore wordt omgezet in tijdsverschil bij de start van langlauf",c:"Wintersport"},
                 {q:"Welke factor maakt mass start biatlon extra tactisch?",a:"Je kunt meeliften/positioneren en schietseries onder directe druk rijden",c:"Wintersport"},
 
                 // === SET 4: 20 PER ONDERDEEL v2 - 220 VRAGEN ===
@@ -1941,7 +1896,6 @@
                 {q:"Wat is een 'gegenpress' in één zin?",a:"Direct na balverlies agressief druk zetten om de bal snel terug te veroveren",c:"Voetbal"},
                 {q:"Wat is het doel van de 6-secondenregel voor keepers?",a:"Beperken hoe lang een keeper de bal in de handen mag houden om tijdrekken te voorkomen",c:"Voetbal"},
                 {q:"Wat betekent 'playing distance' bij buitenspelbeoordeling?",a:"Of een verdediger de bal realistisch kon spelen; weegt mee bij bepalen of aanvaller tegenstander beïnvloedt",c:"Voetbal"},
-                {q:"Hoe heet de regel waarbij de bal 'in het spel' is bij een vrije trap?",a:"De bal is in het spel zodra hij is getrapt en duidelijk beweegt",c:"Voetbal"},
                 {q:"Welke WK-editie was de eerste en welk land won?",a:"1930 was de eerste FIFA World Cup; Uruguay won",c:"Voetbal"},
                 {q:"Wat is het verschil tussen man-to-man pressing en zonale pressing?",a:"Man-to-man: spelers volgen directe tegenstanders; zonal: druk op zones/passing lanes",c:"Voetbal"},
                 {q:"Wat is een 'underlap' versus een 'overlap'?",a:"Underlap: loopactie naar binnen in halfspace; overlap: buitenom langs de flank",c:"Voetbal"},
