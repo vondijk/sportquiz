@@ -386,7 +386,7 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v21');
+            const stored = localStorage.getItem('sportquiz_questions_v22');
             if (stored) {
                 questions = JSON.parse(stored);
             } else {
@@ -396,7 +396,7 @@
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v21', JSON.stringify(questions));
+            localStorage.setItem('sportquiz_questions_v22', JSON.stringify(questions));
             updateStats();
         }
 
@@ -1417,7 +1417,6 @@
             return [
                 // === DOCUMENT 1: circa 536 vragen ===
                 // Algemeen / Basis
-                {q:"Wat is het verschil tussen een 'long course' (LCM) en 'short course' (SCM) zwembad qua afmetingen en recordtijden?",a:"LCM=50m, SCM=25m; SCM-tijden zijn sneller door extra keerpunten",c:"Zwemmen"},
                 {q:"Wie won zes opeenvolgende Wimbledon-titels in de jaren tachtig?",a:"Martina Navratilova",c:"Tennis"},
                 {q:"Wat was het eerste land dat twee maal de wereldbeker voetbal won?",a:"Italie",c:"Voetbal"},
                 {q:"Wat is Double Dutch bij rope skipping en hoeveel touwen worden gebruikt?",a:"Twee touwen draaien in tegengestelde richting terwijl springer trucs uitvoert",c:"Algemeen"},
@@ -1443,10 +1442,8 @@
                 {q:"Hoe noemt men de extra rit voorafgaande aan de eerste rit?",a:"Proloog",c:"Wielrennen"},
                 // Olympische Spelen
                 {q:"Wat is het olympisch motto (klassiek) in het Latijn?",a:"Citius, Altius, Fortius",c:"Olympische Spelen"},
-                {q:"Welke continenten worden door welke kleuren vertegenwoordigd in de olympische ringen?",a:"Geen vaste toewijzing; elke nationale vlag bevat minimaal één ringkleur",c:"Olympische Spelen"},
                 {q:"Wat is de minimale watertemperatuur voor olympisch zwemmen volgens FINA-regels?",a:"25-28 graden Celsius",c:"Zwemmen"},
                 {q:"Waarom zijn de buitenste banen (1 en 8) bij olympisch zwemmen het minst gewild?",a:"Meer turbulentie door golfslag tegen de muur",c:"Zwemmen"},
-                {q:"Wat is het verschil tussen een NOK en IOC?",a:"NOK is nationaal olympisch comite; IOC is het internationale olympische comite",c:"Olympische Spelen"},
                 {q:"Hoe heet de openingsceremonie-traditie waarbij landen binnenkomen?",a:"Parade of Nations",c:"Olympische Spelen"},
                 {q:"Welke sport maakte zijn intrede op de Spelen van 2020 (Tokio-nieuwkomer)?",a:"Skateboarden",c:"Olympische Spelen"},
                 {q:"Welke klimsport werd nieuw op de Spelen van 2020?",a:"Sportklimmen",c:"Olympische Spelen"},
@@ -1455,13 +1452,10 @@
                 // Atletiek
                 {q:"Wie heeft het wereldrecord 800 m vrouwen?",a:"Jarmila Kratochvilova - 1:53,28",c:"Atletiek"},
                 {q:"Wie heeft het wereldrecord Marathon mannen?",a:"Kelvin Kiptum - 2:00:35 (Chicago 2023, overleed feb 2024)",c:"Atletiek"},
-                {q:"Wat is het verschil tussen 10.000 m en 10 km op de weg?",a:"10.000 m is baan; 10 km is wegwedstrijd",c:"Atletiek"},
                 // Wielrennen
-                {q:"Noem de vijf wielermonumenten.",a:"Milaan-San Remo, Ronde van Vlaanderen, Parijs-Roubaix, Luik-Bastenaken-Luik, Ronde van Lombardije",c:"Wielrennen"},
                 {q:"Wat is een 'Domestique'?",a:"Helper/ploegmaat die werkt voor de kopman",c:"Wielrennen"},
                 {q:"Wat is een 'Lead-out'?",a:"Sprinttrein die sprinter in perfecte positie afzet",c:"Wielrennen"},
                 {q:"Wat is 'Lactaatdrempel'?",a:"Intensiteit waarbij lactaatproductie snel toeneemt",c:"Wielrennen"},
-                {q:"Wat is het verschil tussen een proloog en een individuele tijdrit?",a:"Proloog is kort en voor etappe 1; ITT kan elke lengte",c:"Wielrennen"},
                 {q:"Wat is een 'baroudeur'?",a:"Renner die vaak aanvalt/ontsnapt",c:"Wielrennen"},
                 {q:"Wie wordt 'De Kannibaal' genoemd?",a:"Eddy Merckx",c:"Wielrennen"},
                 // Voetbal
@@ -1472,7 +1466,6 @@
                 {q:"Wat is 'Ski cross'?",a:"Meerdere skieers tegelijk op parcours met sprongen/bochten",c:"Wintersport"},
                 {q:"Wat is het kernverschil tussen slalom en reuzenslalom?",a:"Slalom: kortere bochten/poorten dichter; reuzenslalom: verder uit elkaar",c:"Wintersport"},
                 {q:"Wat is 'telemark landing' in schansspringen?",a:"Landingsstijl met een ski voor de ander, knieen gebogen",c:"Wintersport"},
-                {q:"Wat is het verschil tussen skeleton en rodelen in houding?",a:"Skeleton: op buik hoofd eerst; rodelen: op rug voeten eerst",c:"Wintersport"},
                 // Motorsport
                 {q:"Wat betekent 'pole position'?",a:"Startplek 1 na kwalificatie",c:"Motorsport"},
                 {q:"Wat is een 'undercut' in F1?",a:"Eerder pitten om met verse banden positie te winnen",c:"Motorsport"},
@@ -1688,7 +1681,6 @@
                 {q:"Welke vijf kleuren zitten in de UCI regenboogbanden?",a:"Blauw, rood, zwart, geel, groen (wit ontbreekt)",c:"Wielrennen"},
                 // Motorsport moeilijk
                 {q:"Welke race hoort bij de Triple Crown of Motorsport naast Monaco GP en Le Mans?",a:"Indianapolis 500",c:"Motorsport"},
-                {q:"Wat is het verschil tussen pole position en fastest lap?",a:"Pole: snelste kwalificatie; fastest lap: snelste ronde in race",c:"Motorsport"},
                 {q:"In MotoGP: wat betekent 'premier class' historisch?",a:"De 500cc-klasse (nu MotoGP)",c:"Motorsport"},
                 {q:"Wat is in rally de rol van de co-driver?",a:"Leest pace notes en navigeert",c:"Motorsport"},
                 {q:"Kan een F1-coureur punten scoren zonder de finish te halen?",a:"Ja, als hij geclassificeerd wordt",c:"Motorsport"},
@@ -1746,10 +1738,7 @@
                 // Olympische Spelen - Zomer
                 {q:"Hoe vaak heeft Los Angeles de Olympische Zomerspelen georganiseerd na 2028?",a:"Drie keer (1932, 1984, 2028)",c:"Toekomstige Evenementen",w:["Twee keer","Vier keer","Één keer"]},
                 {q:"Waar zijn de Olympische Zomerspelen 2032?",a:"Brisbane (Australië)",c:"Toekomstige Evenementen",w:["Los Angeles","Parijs","Tokyo"]},
-                {q:"Wanneer zijn de Olympische Zomerspelen 2028 in Los Angeles?",a:"14-30 juli 2028",c:"Toekomstige Evenementen",w:["1-17 augustus 2028","21 juli - 6 augustus 2028","7-23 juli 2028"]},
-
                 // Olympische Spelen - Winter
-                {q:"Wanneer zijn de Winterspelen van 2026?",a:"6-22 februari 2026",c:"Toekomstige Evenementen",w:["1-17 februari 2026","12-28 februari 2026","20 januari - 5 februari 2026"]},
                 {q:"Waar zijn de Olympische Winterspelen 2030?",a:"Franse Alpen (Frankrijk)",c:"Toekomstige Evenementen",w:["Milaan","Salt Lake City","Oslo"]},
                 {q:"Waar zijn de Olympische Winterspelen 2034?",a:"Salt Lake City (VS)",c:"Toekomstige Evenementen",w:["Franse Alpen","Sapporo","Stockholm"]},
                 {q:"In welk stadion is de openingsceremonie van de Winterspelen 2026?",a:"San Siro (Milaan)",c:"Toekomstige Evenementen",w:["Olympisch Stadion Rome","Arena di Verona","Allianz Stadium Turijn"]},
@@ -1772,7 +1761,6 @@
                 // === SET 3 - PROMPT 1: 80 MOEILIJKE VRAGEN ===
                 // Olympisch (Algemeen)
                 {q:"Welke olympische sport kent het begrip 'apparatus finals' (toestelfinales) als apart wedstrijdonderdeel?",a:"Turnen (artistieke gymnastiek)",c:"Olympische Spelen"},
-                {q:"Wat is het verschil tussen een NOC en een IF binnen de olympische context?",a:"NOC = Nationaal Olympisch Comité; IF = Internationale Federatie van een sport",c:"Olympische Spelen"},
                 {q:"Wat heet een 'universality place' in olympische kwalificatie?",a:"Een plek om landen/atleten zonder normale kwalificatie toch te laten deelnemen",c:"Olympische Spelen"},
                 {q:"Welke term beschrijft dat in sommige vechtsporten twee bronzen medailles worden uitgereikt in één gewichtsklasse?",a:"Dubbel brons door repêchage-format",c:"Olympische Spelen"},
                 {q:"In welke sport is een 'touch' elektronisch geregistreerd en kan 'priority' beslissen bij gelijke stand?",a:"Schermen",c:"Olympische Spelen"},
@@ -1788,34 +1776,20 @@
                 {q:"Waarom is wind cruciaal bij sprintrecords, en wat is de maximale toegestane meewind voor een record?",a:"Windhulp maakt tijden sneller; limiet is +2.0 m/s",c:"Atletiek"},
                 {q:"Wat is het tactische voordeel van een hoogte overslaan in hoogspringen/polsstok?",a:"Je spaart energie en kunt later met minder sprongen een hogere hoogte halen",c:"Atletiek"},
                 {q:"Welke regel in kogelstoten maakt een poging ongeldig bij het verlaten van de ring?",a:"Je mag pas weg als de kogel geland is en moet via de achterkant uitstappen",c:"Atletiek"},
-                {q:"Wat betekent 'negative split' in langeafstand en waarom is dat lastig?",a:"Tweede helft sneller dan de eerste; vraagt discipline en timing",c:"Atletiek"},
                 {q:"Hoe heet het fenomeen waarbij favorieten het tempo laten 'sterven' om een sprint te forceren?",a:"Surging / tempowisselingen",c:"Atletiek"},
 
                 // Wielrennen (Tactieken, Formats, Jargon)
-                {q:"Wat is het functionele verschil tussen een 'GC-rijder' en een 'puncheur'?",a:"GC = klassement over meerdere dagen; puncheur = explosief op korte hellingen",c:"Wielrennen"},
-                {q:"Waarom zijn bonificatieseconden tactisch belangrijk in korte rittenkoersen?",a:"Ze kunnen het klassement beslissen zonder echte tijdsverschillen op de weg",c:"Wielrennen"},
                 {q:"Wat is het verschil tussen een 'lead-out' en een 'pilot fish' in sprinttreinen?",a:"Lead-out = laatste afzet voor sprint; pilot fish = begeleider door chaos",c:"Wielrennen"},
                 {q:"Wat is een 'satellietrenner' en waarom stuur je die vooruit?",a:"Een ploegmaat die vooruit zit om later te helpen (tempo, bidons, afstoppen)",c:"Wielrennen"},
                 {q:"Wat is het risico van 'te vroeg pieken' richting een grote ronde?",a:"Vorm is top vóór de koers en zakt tijdens de beslissende weken",c:"Wielrennen"},
                 {q:"In baanwielrennen: wat is een Madison in één zin?",a:"Koppelkoers met aflossing via handslings",c:"Wielrennen"},
                 {q:"Wat is het verschil tussen 'klassieker' en 'monument'?",a:"Monumenten zijn de vijf grootste eendagskoersen; klassiekers zijn breder",c:"Wielrennen"},
-                {q:"Waarom is positionering op kasseien vaak belangrijker dan puur vermogen?",a:"Smalle stroken + valpartijen → wie voorin zit vermijdt chaos",c:"Wielrennen"},
                 {q:"Wat betekent 'dieselen' in wielerjargon?",a:"Lang, constant hard tempo rijden (motorisch)",c:"Wielrennen"},
                 {q:"Wat is een 'counter' in de finale en wanneer werkt die het best?",a:"Tegenaanval na een demarrage wanneer het peloton twijfelt/markeert",c:"Wielrennen"},
 
                 // Voetbal (Regels, Tactieken, Analyse)
-                {q:"Wat is het verschil tussen een directe en indirecte vrije trap?",a:"Direct: je mag direct scoren; indirect: iemand anders moet raken; scheids houdt arm omhoog",c:"Voetbal"},
-                {q:"Noem één overtreding die altijd een indirecte vrije trap oplevert, ook in het strafschopgebied.",a:"Keeper pakt bal op na terugspeelbal met voet (of gevaarlijk spel zonder contact)",c:"Voetbal"},
-                {q:"Wat is 'restverdediging' (rest defence) in moderne tactiek?",a:"De achterblijvende organisatie om counters te stoppen tijdens eigen aanval",c:"Voetbal"},
-                {q:"Leg het verschil uit tussen 'pressing trigger' en 'pressing trap'.",a:"Trigger: signaal om te pressen; trap: val om tegenstander naar een zone te lokken",c:"Voetbal"},
-                {q:"Wat is een 'underlapping run' en waarom is die lastig te verdedigen?",a:"Loopactie naar binnen (halfspace) i.p.v. buitenom; komt in de blind spot",c:"Voetbal"},
-                {q:"Waarom is xG niet hetzelfde als 'hoe groot een kans voelde'?",a:"xG is een modelwaarde, geen garantie en niet alle context zit erin",c:"Voetbal"},
-                {q:"Wat is 'advantage' en wanneer kan de scheids alsnog een kaart geven?",a:"Scheids laat doorspelen bij voordeel; kaart kan bij volgende onderbreking",c:"Voetbal"},
-
                 // Tennis (Regels, Formats, Jargon)
-                {q:"Wat is het verschil tussen een 'let' en een 'fault' bij service?",a:"Let: net geraakt maar in → opnieuw; fault: fout → tweede service",c:"Tennis"},
                 {q:"Hoe heet het format waarbij een set tot 10 punten gaat i.p.v. een derde set?",a:"Match tiebreak / super tiebreak",c:"Tennis"},
-                {q:"Wat is het verschil tussen break point en set point?",a:"Break point: kans om servicegame te winnen; set point: kans om set te winnen",c:"Tennis"},
                 {q:"Wat is een 'bagel' en wat is een 'breadstick' in tennis?",a:"Bagel: 6-0; breadstick: 6-1",c:"Tennis"},
                 {q:"Welke ondergrond staat bekend om lage stuit en relatief snelle punten?",a:"Gras",c:"Tennis"},
                 {q:"Wat betekent 'inside-out forehand'?",a:"Forehand gespeeld naar crosshoek vanaf de backhand-kant",c:"Tennis"},
@@ -1834,7 +1808,6 @@
                 {q:"In ijshockey: wat betekent 'power play'?",a:"Numeriek voordeel door een penalty bij de tegenstander",c:"IJshockey"},
 
                 // Motorsport
-                {q:"Wat betekent 'parc fermé' en waarom is het belangrijk?",a:"Beperkte aanpassingen aan de auto tussen kwalificatie en race",c:"Motorsport"},
                 {q:"Wat is het verschil tussen undercut en overcut?",a:"Undercut: eerder pitten; overcut: langer doorrijden",c:"Motorsport"},
                 {q:"In endurance racing: wat is een 'stint' en waarom zijn er limieten?",a:"Rijperiode per coureur; limieten voor veiligheid en vermoeidheid",c:"Motorsport"},
                 {q:"Wat is het grote risico bij een herstart na safety car?",a:"Koude banden/remmen + agressieve inhaalpogingen",c:"Motorsport"},
@@ -1869,14 +1842,11 @@
                 {q:"Wat is het kernverschil tussen moguls en aerials in freestyle skiën?",a:"Moguls: buckels + sprongen + snelheid; aerials: grote sprongen/rotaties",c:"Wintersport"},
                 {q:"Welke sport gebruikt 'stones', het 'house' en de 'hammer'?",a:"Curling",c:"Wintersport"},
                 {q:"Wat is een 'blank end' in curling?",a:"Een end zonder score",c:"Wintersport"},
-                {q:"In alpineskiën: wat is het verschil tussen slalom en reuzenslalom?",a:"Slalom: kort, veel bochten; GS: wijder, sneller ritme",c:"Wintersport"},
                 {q:"Wat is het verschil tussen downhill en super-G?",a:"Downhill: langste/snelste; super-G: korter met meer technische secties",c:"Wintersport"},
                 {q:"Wat betekent 'hill size (HS)' bij schansspringen?",a:"Maat voor schansgrootte en referentiepunt voor veiligheid/scoring",c:"Wintersport"},
                 {q:"Wat is het tactische verschil tussen mass start en intervalstart in langlaufen?",a:"Mass start = positionering/drafting; interval = puur tegen de klok",c:"Wintersport"},
                 {q:"Wat is skiathlon in langlaufen?",a:"Eerst klassieke stijl, dan wissel naar skating (vrije stijl)",c:"Wintersport"},
                 {q:"Welke wintersport heeft zowel halfpipe als slopestyle-disciplines?",a:"Snowboarden (en freestyle skiën)",c:"Wintersport"},
-                {q:"Wat is het verschil tussen big air en slopestyle?",a:"Big air: één grote sprong; slopestyle: reeks obstakels/jumps",c:"Wintersport"},
-                {q:"In shorttrack: waarom zijn penalties zo onvoorspelbaar?",a:"Contact/voordeel is vaak interpretatie; een penalty kan alles omgooien",c:"Wintersport"},
                 {q:"Welke schaatsdiscipline is een race met peloton en punten i.p.v. alleen tijd?",a:"Mass start (schaatsen)",c:"Wintersport"},
                 {q:"Welke schaatsdiscipline draait om een team en paceline met tijd als uitkomst?",a:"Team pursuit (ploegenachtervolging)",c:"Wintersport"},
                 {q:"In bobslee: waarom is de start (push) bijna net zo bepalend als het sturen?",a:"Marges zijn klein; een snelle start geeft snelheid die lastig in te halen is",c:"Wintersport"},
@@ -1888,19 +1858,9 @@
                 // === SET 4: 20 PER ONDERDEEL v2 - 220 VRAGEN ===
                 // VOETBAL (20)
                 {q:"Wat betekent DOGSO en wat is de gebruikelijke consequentie?",a:"Denying an Obvious Goal-Scoring Opportunity; vaak rood",c:"Voetbal"},
-                {q:"Wanneer is een terugspeelbal naar de keeper strafbaar?",a:"Als een veldspeler de bal opzettelijk met de voet naar de keeper speelt en de keeper hem met de handen aanraakt",c:"Voetbal"},
                 {q:"Wat is het verschil tussen SFP en VC in scheidsrechtersterminologie?",a:"SFP (Serious Foul Play) = zware overtreding in balactie; VC (Violent Conduct) = geweld los van balactie",c:"Voetbal"},
                 {q:"Wat is 'double jeopardy' bij een penaltysituatie?",a:"Bij penalty-overtreding met poging bal te spelen wordt DOGSO vaak met geel bestraft i.p.v. rood",c:"Voetbal"},
-                {q:"Wat is het verschil tussen een 'false nine' en een klassieke spits?",a:"False nine zakt naar het middenveld; klassieke spits blijft hoog als aanspeelpunt",c:"Voetbal"},
-                {q:"Wat is een 'inverted fullback'?",a:"Een back die in balbezit naar binnen schuift in plaats van de flank hoog te houden",c:"Voetbal"},
-                {q:"Wat is een 'gegenpress' in één zin?",a:"Direct na balverlies agressief druk zetten om de bal snel terug te veroveren",c:"Voetbal"},
-                {q:"Wat is het doel van de 6-secondenregel voor keepers?",a:"Beperken hoe lang een keeper de bal in de handen mag houden om tijdrekken te voorkomen",c:"Voetbal"},
-                {q:"Wat betekent 'playing distance' bij buitenspelbeoordeling?",a:"Of een verdediger de bal realistisch kon spelen; weegt mee bij bepalen of aanvaller tegenstander beïnvloedt",c:"Voetbal"},
                 {q:"Welke WK-editie was de eerste en welk land won?",a:"1930 was de eerste FIFA World Cup; Uruguay won",c:"Voetbal"},
-                {q:"Wat is het verschil tussen man-to-man pressing en zonale pressing?",a:"Man-to-man: spelers volgen directe tegenstanders; zonal: druk op zones/passing lanes",c:"Voetbal"},
-                {q:"Wat is een 'underlap' versus een 'overlap'?",a:"Underlap: loopactie naar binnen in halfspace; overlap: buitenom langs de flank",c:"Voetbal"},
-                {q:"Wat betekent 'tempo control' in een wedstrijdcontext?",a:"Bewust versnellen/vertragen van het speltempo om de wedstrijd te sturen",c:"Voetbal"},
-
                 // GOLF (20)
                 {q:"Noem de vier 'majors' in het herengolf.",a:"The Masters, PGA Championship, U.S. Open, The Open Championship",c:"Golf"},
                 {q:"Wat betekent 'stroke-and-distance' in golf?",a:"Je krijgt een strafslag én speelt opnieuw vanaf de plek van je vorige slag",c:"Golf"},
@@ -1923,11 +1883,9 @@
 
                 // TENNIS (20)
                 {q:"Wat is 'no-ad scoring' in tennis?",a:"Bij deuce wordt één beslissend punt gespeeld; geen voordeelspel",c:"Tennis"},
-                {q:"Wat is het verschil tussen inside-out en inside-in forehand?",a:"Inside-out: forehand naar crosshoek vanaf backhandkant; inside-in: naar de lijn",c:"Tennis"},
                 {q:"Wanneer heet een wedstrijd een 'straight-sets win'?",a:"Winst zonder een set te verliezen",c:"Tennis"},
                 {q:"Wat is 'serve-and-volley'?",a:"Na de service direct naar het net komen om met volley af te maken",c:"Tennis"},
                 {q:"Wat is het doel van 'kick serve'?",a:"Serve met veel topspin die hoog wegstuitert om return te bemoeilijken",c:"Tennis"},
-                {q:"Wat is een 'drop shot' in tennis?",a:"Zachte bal die kort achter het net valt om tegenstander naar voren te lokken",c:"Tennis"},
                 {q:"Wat betekent 'break back'?",a:"Direct na verliezen eigen servicegame de service van tegenstander terugbreken",c:"Tennis"},
                 {q:"Wat is 'holding serve'?",a:"Je eigen servicegame winnen",c:"Tennis"},
                 {q:"Wat betekent 'poaching' in dubbel?",a:"Netspeler steekt over en pakt de bal af op de andere helft",c:"Tennis"},
@@ -1935,26 +1893,14 @@
 
                 // ATLETIEK (20)
                 {q:"Waarom zijn starts op 200m/400m 'staggered'?",a:"Buitenbanen lopen langere bocht; stagger compenseert dat",c:"Atletiek"},
-                {q:"Wat is het verschil tussen een heat, halve finale en finale?",a:"Heats selecteren door; halve finales bepalen finalisten; finale beslist medailles",c:"Atletiek"},
-                {q:"Wat is het verschil tussen discuswerpen en kogelslingeren (hammer)?",a:"Discus is een schijf; hammer is een kogel aan een draad/handvat",c:"Atletiek"},
-                {q:"Waarom is de bocht op 400m technisch belangrijk?",a:"Hoge snelheid + centripetale kracht; lijnvoering bepaalt tempoverlies",c:"Atletiek"},
-                {q:"Wat is het verschil tussen steeplechase en horden?",a:"Steeple heeft vaste barrières + waterbak; horden zijn licht/omvallend",c:"Atletiek"},
-                {q:"Wat is een 'pacemaker' (haas) in weg- of baanraces?",a:"Een haas die afgesproken tempo loopt om snelle tijden mogelijk te maken",c:"Atletiek"},
-                {q:"Wat is het verschil tussen kwalificatie en finale bij werpnummers?",a:"In kwalificatie moet je limiet halen; finale heeft 3 + 3 pogingen (top 8 extra)",c:"Atletiek"},
                 {q:"Waarom worden in sprint finales de middenbanen als gunstig gezien?",a:"Minder scherpe bocht en beter overzicht",c:"Atletiek"},
-                {q:"Wat is het principe van 'take-off board' bij verspringen?",a:"Je moet vóór de plank afzetten; over de plank is overschrijding en ongeldig",c:"Atletiek"},
                 {q:"Wat is 'Fosbury flop'?",a:"Moderne hoogspringtechniek waarbij je achterwaarts over de lat gaat",c:"Atletiek"},
-                {q:"Wat is het verschil tussen 10.000m baan en marathon qua pacing?",a:"10.000m is rondjes met splits; marathon vraagt energiebeheer over 42,195 km",c:"Atletiek"},
-
                 // ZWEMMEN (20)
-                {q:"Wat is de volgorde van de wisselslag in de individuele wisselslag (IM)?",a:"Vlinder → rugslag → schoolslag → vrije slag",c:"Zwemmen"},
                 {q:"Wat is de 15-meterregel bij start/keerpunten?",a:"In rug/vlinder/vrij moet je vóór 15 m weer aan de oppervlakte zijn",c:"Zwemmen"},
-                {q:"Wat is het verschil tussen kortebaan (25m) en langebaan (50m)?",a:"Meer keerpunten op 25m; meer afzetmomenten en onderwaterfase",c:"Zwemmen"},
                 {q:"Wat is 'drafting' in openwaterzwemmen?",a:"In iemands slipstream zwemmen om energie te besparen",c:"Zwemmen"},
                 {q:"Wat is een relay takeover fout?",a:"Te vroeg starten vóórdat de vorige zwemmer aantikt → DQ",c:"Zwemmen"},
                 {q:"Wat is een veelvoorkomende DQ-reden bij schoolslag?",a:"Onjuiste beenbeweging of niet gelijktijdig aantikken met twee handen",c:"Zwemmen"},
                 {q:"Wat is het verschil tussen 'split times' en 'reaction time'?",a:"Splits zijn tussentijden; reaction time is tijd tussen startsein en afzet",c:"Zwemmen"},
-                {q:"Wat is 'underwater phase' en waarom is die belangrijk?",a:"Onderwaterdolfijn na start/keer; vaak snelste deel van de baan",c:"Zwemmen"},
                 {q:"Wat betekent 'distance per stroke' (DPS)?",a:"Hoeveel meter je per slagcyclus aflegt; maat voor efficiëntie",c:"Zwemmen"},
                 {q:"Waarom trainen zwemmers op 'stroke count' per baan?",a:"Om techniek/efficiëntie te meten en tempo te sturen",c:"Zwemmen"},
                 {q:"Wat is het verschil tussen openwater en zwembadzwemmen qua tactiek?",a:"Openwater: navigatie, drafting, positionering; zwembad: banen, keerpunten, pure tijd",c:"Zwemmen"},
@@ -2113,8 +2059,6 @@
                 // Bron: raadsels.nu (sportquiz)
                 {q:"Bij welke sport maak je een volte?",a:"Paardensport",c:"Algemeen"},
                 {q:"Onder welke sport vallen dammen, bridge en scrabble?",a:"Denksport",c:"Algemeen"},
-                {q:"Waarom wordt badminton in een zaal gespeeld?",a:"Vanwege eventuele wind",c:"Algemeen"},
-
                 // === EXTREEM MOEILIJKE ALGEMEEN VRAGEN ===
                 {q:"Welke sport is de enige die ooit op de maan is beoefend?",a:"Golf (Alan Shepard, Apollo 14, 1971)",c:"Algemeen"},
                 {q:"Welk land heeft het vaakst deelgenomen aan de Olympische Zomerspelen zonder ooit goud te winnen?",a:"Filipijnen (21 deelnames tot 2020)",c:"Algemeen"},
@@ -2169,8 +2113,6 @@
 
                 // Champions League 2026
                 {q:"Welk team eindigde bovenaan de Champions League league phase met een perfect 8-0-0 record?",a:"Arsenal",c:"Actualiteit",w:["Liverpool","Bayern München","Manchester City"]},
-                {q:"Welke verdedigende Champions League kampioen speelt tegen Monaco in de knockout play-offs?",a:"Paris Saint-Germain",c:"Actualiteit",w:["Real Madrid","Manchester City","Inter"]},
-
                 // === PIRMIN BLAAK - SPECIALE CATEGORIE ===
                 {q:"Wat is de exacte datum van Pirmin Blaaks debuut in het Nederlands herenteam?",a:"24 januari 2011",c:"Presentator",w:["15 maart 2010","8 juni 2012","20 september 2011"]},
                 {q:"Hoeveel interlands had Blaak achter zijn naam toen hij vertrok bij Oranje-Rood?",a:"143 interlands",c:"Presentator",w:["128 interlands","156 interlands","134 interlands"]},
@@ -2207,7 +2149,6 @@
                 {q:"Wie was de tegenstander in de kwartfinale en wat was de uitslag?",a:"Australië; 2-0",c:"Presentator",w:["India; 3-1","België; 2-1","Groot-Brittannië; 4-2"]},
                 {q:"Wie was de tegenstander in de halve finale en wat was de uitslag?",a:"Spanje; 4-0",c:"Presentator",w:["Duitsland; 3-1","België; 2-0","Groot-Brittannië; 3-2"]},
                 {q:"Noem de vier Nederlandse doelpuntenmakers in de halve finale tegen Spanje.",a:"Jip Janssen, Thierry Brinkman, Thijs van Dam, Duco Telgenkamp",c:"Presentator",w:["Janssen, Brinkman, Pieters, Van Dam","Brinkman, Van Dam, Fuchs, Janssen","Telgenkamp, Janssen, De Wijn, Brinkman"]},
-                {q:"Wanneer en hoe laat werd de finale Duitsland-Nederland gespeeld?",a:"8 augustus 2024 om 19:00",c:"Presentator",w:["9 augustus 2024 om 20:00","8 augustus 2024 om 21:00","7 augustus 2024 om 18:00"]},
                 {q:"Wie maakte de Nederlandse treffer in de finale en in welke minuut?",a:"Thierry Brinkman in de 46e minuut",c:"Presentator",w:["Jip Janssen in de 52e minuut","Thijs van Dam in de 38e minuut","Duco Telgenkamp in de 41e minuut"]},
                 {q:"Wie maakte de Duitse treffer in de finale, in welke minuut, en uit welke spelhervatting?",a:"Thies Prinz in de 50e minuut, uit een strafcorner",c:"Presentator",w:["Gonzalo Peillat in de 48e minuut, uit open spel","Christopher Rühr in de 55e minuut, uit een strafcorner","Niklas Wellen in de 52e minuut, uit een penalty"]},
                 {q:"Wat was de uitslag van de shoot-outs in de finale?",a:"Nederland won 3-1",c:"Presentator",w:["Nederland won 4-2","Nederland won 3-2","Nederland won 2-1"]},
