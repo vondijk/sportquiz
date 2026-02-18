@@ -145,6 +145,7 @@
             <button class="menu-btn secondary" onclick="showRefreshInfo()" style="border-color: #e94560;">🔄 Actualiteit Updaten</button>
             <button class="menu-btn secondary" onclick="showPassport()" style="border-color: #f1c40f;">🎖️ Mijn Paspoort</button>
             <button class="menu-btn secondary" onclick="window.location.href='logo_quiz.html'" style="margin-top: 20px;">⚽ Logo Quiz</button>
+            <button class="menu-btn secondary" onclick="resetQuiz()" style="margin-top: 10px; border-color: #e74c3c; font-size: 0.8rem;">🔄 Reset Vragen</button>
         </div>
         <div class="category-screen hidden" id="categoryScreen">
             <h2 style="text-align: center; margin-bottom: 15px;">Kies categorie(en)</h2>
@@ -380,38 +381,66 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('[QUIZ] DOMContentLoaded - start initialisatie');
             loadQuestions();
             loadPlayerStats();
             updateStats();
+            console.log('[QUIZ] Initialisatie compleet - ' + questions.length + ' vragen geladen');
         });
 
         function loadQuestions() {
+            console.log('[QUIZ] loadQuestions() gestart');
             try {
-                const stored = localStorage.getItem('sportquiz_questions_v24');
+                // Verwijder oude localStorage keys
+                try { localStorage.removeItem('sportquiz_questions_v24'); } catch(ex) {}
+
+                const stored = localStorage.getItem('sportquiz_questions_v25');
+                console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
                     if (parsed && parsed.length > 0) {
                         questions = parsed;
+                        console.log('[QUIZ] Geladen uit localStorage: ' + questions.length + ' vragen');
                     } else {
+                        console.log('[QUIZ] localStorage was leeg array, laden van defaults...');
                         questions = getDefaultQuestions();
+                        console.log('[QUIZ] Default vragen geladen: ' + questions.length);
                         saveQuestions();
                     }
                 } else {
+                    console.log('[QUIZ] Geen localStorage data, laden van defaults...');
                     questions = getDefaultQuestions();
+                    console.log('[QUIZ] Default vragen geladen: ' + questions.length);
                     saveQuestions();
                 }
             } catch(e) {
-                console.error('localStorage error:', e);
-                questions = getDefaultQuestions();
-                saveQuestions();
+                console.error('[QUIZ] FOUT in loadQuestions:', e);
+                console.error('[QUIZ] Error stack:', e.stack);
+                try {
+                    questions = getDefaultQuestions();
+                    console.log('[QUIZ] Fallback default vragen geladen: ' + questions.length);
+                } catch(e2) {
+                    console.error('[QUIZ] KRITIEKE FOUT - getDefaultQuestions() faalde ook:', e2);
+                    console.error('[QUIZ] Stack:', e2.stack);
+                    questions = [];
+                }
+            }
+        }
+
+        function resetQuiz() {
+            if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
+                try { localStorage.removeItem('sportquiz_questions_v25'); } catch(e) {}
+                location.reload();
             }
         }
 
         function saveQuestions() {
             try {
-                localStorage.setItem('sportquiz_questions_v24', JSON.stringify(questions));
+                const data = JSON.stringify(questions);
+                console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
+                localStorage.setItem('sportquiz_questions_v25', data);
             } catch(e) {
-                console.error('saveQuestions error:', e);
+                console.error('[QUIZ] saveQuestions error:', e);
             }
             updateStats();
         }
@@ -420,6 +449,7 @@
             document.getElementById('totalQuestions').textContent = questions.length;
             const categories = new Set(questions.map(q => q.category));
             document.getElementById('totalCategories').textContent = categories.size;
+            console.log('[QUIZ] updateStats: ' + questions.length + ' vragen, ' + categories.size + ' categorieën');
         }
 
         function showMenu() {
