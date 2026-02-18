@@ -386,17 +386,33 @@
         });
 
         function loadQuestions() {
-            const stored = localStorage.getItem('sportquiz_questions_v24');
-            if (stored) {
-                questions = JSON.parse(stored);
-            } else {
+            try {
+                const stored = localStorage.getItem('sportquiz_questions_v24');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (parsed && parsed.length > 0) {
+                        questions = parsed;
+                    } else {
+                        questions = getDefaultQuestions();
+                        saveQuestions();
+                    }
+                } else {
+                    questions = getDefaultQuestions();
+                    saveQuestions();
+                }
+            } catch(e) {
+                console.error('localStorage error:', e);
                 questions = getDefaultQuestions();
                 saveQuestions();
             }
         }
 
         function saveQuestions() {
-            localStorage.setItem('sportquiz_questions_v24', JSON.stringify(questions));
+            try {
+                localStorage.setItem('sportquiz_questions_v24', JSON.stringify(questions));
+            } catch(e) {
+                console.error('saveQuestions error:', e);
+            }
             updateStats();
         }
 
