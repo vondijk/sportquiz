@@ -196,6 +196,10 @@
             </div>
         </div>
         <div class="quiz-screen" id="quizScreen">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <button onclick="quitQuiz()" style="background: none; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">← Menu</button>
+                <span style="color: rgba(255,255,255,0.4); font-size: 0.75rem;" id="quizCategoryLabel"></span>
+            </div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <!-- Timer voor tijdsdruk modus -->
             <div id="timerContainer" class="hidden">
@@ -472,6 +476,13 @@
             alert('🔄 ACTUALITEIT UPDATEN\n\nGa naar Claude en zeg:\n\n"Update de sportquiz actualiteit"\n\nClaude doorzoekt dan NOS Sport, AD, Sporza etc. en maakt nieuwe vragen die je hier kunt importeren.\n\nTip: Vraag ook om specifieke onderwerpen zoals "Maak vragen over de Tour de France 2026"');
         }
 
+        function quitQuiz() {
+            if (confirm('Weet je zeker dat je terug wilt naar het hoofdmenu? Je voortgang gaat verloren.')) {
+                if (timer) clearInterval(timer);
+                showMenu();
+            }
+        }
+
         function hideAllScreens() {
             document.getElementById('menuScreen').classList.add('hidden');
             document.getElementById('categoryScreen').classList.add('hidden');
@@ -624,21 +635,33 @@
         function updateQuestionCountVisibility() {
             const questionCountContainer = document.getElementById('questionCountContainer');
             const singleCategoryInfo = document.getElementById('singleCategoryInfo');
-            const singleCategoryCount = document.getElementById('singleCategoryCount');
 
-            // Als precies 1 specifieke categorie is geselecteerd (niet 'all')
-            if (selectedCategories.size === 1 && !selectedCategories.has('all')) {
-                const selectedCategory = [...selectedCategories][0];
-                const categoryQuestionCount = questions.filter(q => q.category === selectedCategory).length;
-
-                questionCountContainer.style.display = 'none';
-                singleCategoryInfo.style.display = 'block';
-                singleCategoryCount.textContent = categoryQuestionCount;
+            // Bereken beschikbare vragen voor huidige selectie
+            let availCount;
+            if (selectedCategories.has('all')) {
+                availCount = questions.length;
             } else {
-                // Meerdere categorieën of 'all' - toon de dropdown
-                questionCountContainer.style.display = 'block';
-                singleCategoryInfo.style.display = 'none';
+                availCount = questions.filter(q => selectedCategories.has(q.category)).length;
             }
+
+            // Toon altijd de dropdown, update opties op basis van beschikbaar aantal
+            questionCountContainer.style.display = 'block';
+            singleCategoryInfo.style.display = 'none';
+
+            const select = document.getElementById('questionsPerRound');
+            const options = [10, 20, 50, 100, 200, 400];
+            let html = '';
+            options.forEach(n => {
+                if (n <= availCount) {
+                    html += `<option value="${n}">${n} vragen</option>`;
+                }
+            });
+            html += `<option value="all">Alle vragen (${availCount})</option>`;
+            select.innerHTML = html;
+
+            // Selecteer standaard 20 als dat beschikbaar is, anders de eerste optie
+            const prefer = select.querySelector('option[value="20"]');
+            if (prefer) prefer.selected = true;
         }
 
         function startQuiz() {
@@ -651,17 +674,9 @@
                 return;
             }
 
-            // Bij 1 specifieke categorie: gebruik ALLE vragen van die categorie
-            // Bij meerdere of 'all': gebruik de dropdown selectie
-            let numQuestions;
-            if (selectedCategories.size === 1 && !selectedCategories.has('all')) {
-                // Enkele categorie geselecteerd - gebruik alle vragen
-                numQuestions = availableQuestions.length;
-            } else {
-                // Meerdere categorieën of alle - gebruik dropdown
-                const questionSelection = document.getElementById('questionsPerRound').value;
-                numQuestions = questionSelection === 'all' ? availableQuestions.length : parseInt(questionSelection);
-            }
+            // Gebruik altijd de dropdown selectie
+            const questionSelection = document.getElementById('questionsPerRound').value;
+            let numQuestions = questionSelection === 'all' ? availableQuestions.length : parseInt(questionSelection);
 
             currentQuiz = shuffleArray([...availableQuestions]).slice(0, numQuestions);
             currentIndex = 0;
@@ -678,6 +693,13 @@
 
             hideAllScreens();
             document.getElementById('quizScreen').style.display = 'block';
+            // Toon categorie label
+            const catLabel = document.getElementById('quizCategoryLabel');
+            if (selectedCategories.has('all')) {
+                catLabel.textContent = 'Alle categorieën';
+            } else {
+                catLabel.textContent = [...selectedCategories].join(', ');
+            }
             showQuestion();
         }
 
