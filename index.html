@@ -398,7 +398,7 @@
                 // Verwijder oude localStorage keys
                 try { localStorage.removeItem('sportquiz_questions_v24'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v25');
+                const stored = localStorage.getItem('sportquiz_questions_v26');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -433,7 +433,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v25'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v26'); } catch(e) {}
                 location.reload();
             }
         }
@@ -442,7 +442,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v25', data);
+                localStorage.setItem('sportquiz_questions_v26', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3425,6 +3425,77 @@
                 {q:"Bij welke sport kan je een 'eagle', 'birdie', 'bogey' en 'albatross' scoren?",a:"Golf",c:"Algemeen"},
                 {q:"Hoeveel landen in de wereld hebben voetbal NIET als populairste sport?",a:"Circa 30-40 landen (o.a. VS, Canada, Australië, India, Japan — afhankelijk van definitie)",c:"Algemeen"},
                 {q:"DE ALLERALLERLAAATSTE VRAAG: Hoeveel unieke categorieën zijn er in totaal geweest over alle 12 sets van deze sportquiz?",a:"Meer dan 80 verschillende categorieën! Van 'Bizarre Sporten' tot 'Sportgeluiden', van 'Tweelingsporten' tot 'Waar of Niet Waar'. 1200 vragen verdeeld over 12 sets.",c:"Algemeen"},
+                // === ACTUALITEIT UPDATE FEBRUARI 2026 ===
+                // --- Winterspelen 2026 Milaan-Cortina ---
+                {q:"In welke twee Italiaanse steden worden de Olympische Winterspelen 2026 gehouden?",a:"Milaan en Cortina d'Ampezzo",c:"Winterspelen 2026",w:["Rome en Turijn","Milaan en Turijn","Venetië en Cortina d'Ampezzo"]},
+                {q:"Wat zijn de data van de Olympische Winterspelen 2026?",a:"6 tot en met 22 februari 2026",c:"Winterspelen 2026",w:["1 tot en met 17 februari 2026","10 tot en met 26 februari 2026","13 februari tot en met 1 maart 2026"]},
+                {q:"Hoe heten de twee mascottes van de Winterspelen 2026 in Milaan-Cortina?",a:"Tina en Milo (twee hermelijnen)",c:"Winterspelen 2026",w:["Luna en Stella","Neve en Gliz","Bianco en Rosso"]},
+                {q:"Waaraan zijn de namen van mascottes Tina en Milo ontleend?",a:"Tina van Cortina d'Ampezzo, Milo van Milano",c:"Winterspelen 2026",w:["De namen van Italiaanse olympische kampioenen","Italiaanse woorden voor sneeuw en ijs","De bergen Tina en Milo in de Dolomieten"]},
+                {q:"Welk bijzonder kenmerk heeft mascotte Milo van de Paralympische Winterspelen 2026?",a:"Milo is zonder een poot geboren en gebruikt zijn staart om te lopen",c:"Winterspelen 2026",w:["Milo draagt een prothese aan zijn achterpoot","Milo heeft een blinddoek omdat hij slechtziend is","Milo zit in een kleine rolstoel"]},
+                {q:"In welk stadion vond de openingsceremonie van de Winterspelen 2026 plaats?",a:"Giuseppe Meazza / San Siro in Milaan",c:"Winterspelen 2026",w:["Olympisch Stadion in Rome","Allianz Stadium in Turijn","Fiera Milano"]},
+                {q:"Wie waren de Nederlandse vlaggendragers bij de openingsceremonie van de Winterspelen 2026?",a:"Jens van 't Wout (shorttrack) en Kimberley Bos (skeleton)",c:"Winterspelen 2026",w:["Jutta Leerdam en Jorrit Bergsma","Xandra Velzeboer en Jenning de Boo","Femke Kok en Kjeld Nuis"]},
+                {q:"Welke Nederlandse schaatsster won goud op de 1000 meter bij de Winterspelen 2026 met een olympisch record?",a:"Jutta Leerdam (1:12.31)",c:"Winterspelen 2026",w:["Femke Kok","Irene Schouten","Antoinette Rijpma-de Jong"]},
+                {q:"Welke Nederlandse schaatsster won goud op de 500 meter bij de Winterspelen 2026?",a:"Femke Kok (met een olympisch record van 36,49 seconden)",c:"Winterspelen 2026",w:["Jutta Leerdam","Xandra Velzeboer","Michelle Velzeboer"]},
+                {q:"Welke medaille won Jutta Leerdam op de 500 meter in Milaan 2026?",a:"Zilver (achter Femke Kok)",c:"Winterspelen 2026",w:["Goud","Brons","Geen medaille"]},
+                {q:"Op welke twee afstanden won Jenning de Boo zilver bij het schaatsen in Milaan 2026?",a:"De 500 meter en de 1000 meter",c:"Winterspelen 2026",w:["De 1000 meter en de 1500 meter","De 500 meter en de 5000 meter","De 1500 meter en de 10.000 meter"]},
+                {q:"Hoe oud was Jorrit Bergsma toen hij brons won op de 10.000 meter in Milaan 2026?",a:"40 jaar",c:"Winterspelen 2026",w:["38 jaar","42 jaar","36 jaar"]},
+                {q:"Welke bijzondere mijlpaal behaalde Jorrit Bergsma met zijn brons op de 10.000 meter in Milaan?",a:"Hij werd de oudste Nederlandse medaillewinnaar bij het langebaanschaatsen op de Spelen",c:"Winterspelen 2026",w:["Hij brak het olympisch record","Hij won zijn vierde opeenvolgende medaille op de 10km","Hij werd de snelste 40-plusser ooit op de 10km"]},
+                {q:"Welke jonge Tsjechische schaatser won verrassend goud op de 10.000 meter in Milaan 2026?",a:"Metodej Jilek",c:"Winterspelen 2026",w:["Vladimir Semirunniy","Nils van der Poel","Patrick Roest"]},
+                {q:"Welke drie medailles (goud/zilver/brons) heeft Jorrit Bergsma in zijn carriere op de 10.000 meter OS gewonnen?",a:"Goud in Sotsji 2014, zilver in Pyeongchang 2018, brons in Milaan 2026",c:"Winterspelen 2026",w:["Goud in Vancouver 2010, zilver in Sotsji 2014, brons in Peking 2022","Zilver in Sotsji 2014, goud in Pyeongchang 2018, brons in Milaan 2026","Brons in Sotsji 2014, zilver in Peking 2022, goud in Milaan 2026"]},
+                {q:"Wie won zilver op de 5000 meter vrouwen schaatsen in Milaan 2026 voor Nederland?",a:"Merel Conijn",c:"Winterspelen 2026",w:["Irene Schouten","Joy Beune","Antoinette Rijpma-de Jong"]},
+                {q:"Welke drie Nederlandse schaatssters wonnen zilver op de ploegenachtervolging vrouwen in Milaan 2026?",a:"Joy Beune, Marijke Groenewoud en Antoinette Rijpma-de Jong",c:"Winterspelen 2026",w:["Irene Schouten, Jutta Leerdam en Femke Kok","Merel Conijn, Femke Kok en Joy Beune","Carlijn Achtereekte, Ireen Wust en Sanne in 't Hof"]},
+                {q:"Op welke twee individuele afstanden won Xandra Velzeboer goud bij het shorttrack in Milaan 2026?",a:"De 500 meter en de 1000 meter",c:"Winterspelen 2026",w:["De 500 meter en de 1500 meter","De 1000 meter en de 1500 meter","De 500 meter en de relay"]},
+                {q:"Welk record brak Xandra Velzeboer in de halve finales van de 500 meter shorttrack in Milaan?",a:"Haar eigen wereldrecord (41,399 seconden)",c:"Winterspelen 2026",w:["Het olympisch record","Het Europees record","Het baanrecord"]},
+                {q:"Op welke twee individuele afstanden won Jens van 't Wout goud bij het shorttrack in Milaan 2026?",a:"De 1000 meter en de 1500 meter",c:"Winterspelen 2026",w:["De 500 meter en de 1000 meter","De 500 meter en de 1500 meter","De 1000 meter en de 3000 meter"]},
+                {q:"Welke medaille won Jens van 't Wout op de 500 meter shorttrack in Milaan (naast zijn twee gouden)?",a:"Brons",c:"Winterspelen 2026",w:["Zilver","Goud","Geen medaille"]},
+                {q:"Wie won zilver op de 500 meter shorttrack mannen in Milaan 2026, de broer van Jens?",a:"Melle van 't Wout",c:"Winterspelen 2026",w:["Itzhak de Laat","Friso Emons","Sjinkie Knegt"]},
+                {q:"Wie won het goud op de 500 meter shorttrack mannen in Milaan 2026?",a:"Steven Dubois (Canada)",c:"Winterspelen 2026",w:["Jens van 't Wout (Nederland)","Hwang Dae-heon (Zuid-Korea)","Ren Ziwei (China)"]},
+                {q:"Hoeveel gouden medailles had Nederland bij het shorttrack in Milaan 2026 (tot 18 feb)?",a:"Vier gouden medailles",c:"Winterspelen 2026",w:["Twee gouden medailles","Drie gouden medailles","Vijf gouden medailles"]},
+                {q:"In welk gebouw in Milaan vinden het langebaanschaatsen bij de Winterspelen 2026 plaats?",a:"Fiera Milano (het expositiecentrum, omgetoverd tot olympisch ijsstadion)",c:"Winterspelen 2026",w:["San Siro","PalaSharp Arena","Milano Ice Skating Arena"]},
+                {q:"In welke arena vinden shorttrack en kunstschaatsen plaats bij de Winterspelen 2026?",a:"Milano Ice Skating Arena in Assago",c:"Winterspelen 2026",w:["Fiera Milano","PalaLottomatica","San Siro"]},
+                {q:"Welk land staat bovenaan de medaillespiegel van de Winterspelen 2026 (per 19 feb)?",a:"Noorwegen (15 goud, 33 totaal)",c:"Winterspelen 2026",w:["Italië","Duitsland","Nederland"]},
+                {q:"Hoeveel totale medailles had Nederland op de Winterspelen 2026 per 19 februari?",a:"15 medailles (6 goud, 7 zilver, 2 brons)",c:"Winterspelen 2026",w:["12 medailles (5 goud, 5 zilver, 2 brons)","18 medailles (7 goud, 8 zilver, 3 brons)","10 medailles (4 goud, 4 zilver, 2 brons)"]},
+                {q:"Welke Noorse langlaufer brak het record voor meeste gouden medailles ooit op de Winterspelen?",a:"Johannes Hoesflot Klaebo (10 gouden medailles totaal, 5 in Milaan)",c:"Winterspelen 2026",w:["Ole Einar Bjoerndalen","Marit Bjoergen","Petter Northug"]},
+                {q:"Welke Amerikaanse alpine skiester won haar tweede olympische slalom goud in Milaan, 12 jaar na haar eerste?",a:"Mikaela Shiffrin",c:"Winterspelen 2026",w:["Lindsey Vonn","Bode Miller","Julia Mancuso"]},
+                {q:"Wie won goud op de mannenslalom bij de Winterspelen 2026?",a:"Loic Meillard (Zwitserland)",c:"Winterspelen 2026",w:["Henrik Kristoffersen (Noorwegen)","Marco Odermatt (Zwitserland)","Alexis Pinturault (Frankrijk)"]},
+                {q:"Welke Amerikaanse bobsleester won eindelijk goud op haar vijfde Winterspelen in de monobob?",a:"Elana Meyers Taylor",c:"Winterspelen 2026",w:["Kaillie Humphries","Lolo Jones","Jazmine Fenlator-Victorian"]},
+                {q:"Welke Franse biatlete won drie gouden medailles op de Winterspelen 2026?",a:"Julia Simon",c:"Winterspelen 2026",w:["Marie Dorin Habert","Justine Braisaz-Bouchet","Anais Chevalier-Bouchet"]},
+                {q:"In welke stad vindt de sluitingsceremonie van de Winterspelen 2026 plaats?",a:"Verona (in de Verona Arena)",c:"Winterspelen 2026",w:["Milaan","Cortina d'Ampezzo","Turijn"]},
+                {q:"Hoeveel sporters telt TeamNL op de Winterspelen 2026?",a:"38 sporters",c:"Winterspelen 2026",w:["42 sporters","30 sporters","50 sporters"]},
+                {q:"Van wie nam Xandra Velzeboer de olympische titel op de 1000 meter shorttrack over?",a:"Suzanne Schulting (die won in 2018 en 2022)",c:"Winterspelen 2026",w:["Yara van Kerkhof","Lara van Ruijven","Arianna Fontana"]},
+                {q:"Uit hoeveel landen nemen atleten deel aan de Winterspelen 2026 in Milaan-Cortina?",a:"93 landen",c:"Winterspelen 2026",w:["85 landen","100 landen","78 landen"]},
+                // --- Darts ---
+                {q:"Wie won het PDC WK Darts 2025-2026 in Alexandra Palace?",a:"Luke Littler (hij versloeg Gian van Veen 7-1 in de finale)",c:"Darts",w:["Michael van Gerwen","Luke Humphries","Gian van Veen"]},
+                {q:"Met welke uitslag won Luke Littler de WK-finale darts 2026 van Gian van Veen?",a:"7-1",c:"Darts",w:["7-3","7-4","7-2"]},
+                {q:"Welk record brak Luke Littler als WK-kampioen darts 2026?",a:"Hij werd de eerste miljoenkampioen - het prijzengeld steeg naar 1 miljoen pond",c:"Darts",w:["Hij gooide de meeste 180's in een finale","Hij werd de jongste tweevoudig kampioen ooit","Hij had het hoogste gemiddelde in een finale ooit"]},
+                {q:"Welke Nederlandse darter bereikte de WK-finale darts 2026 als runner-up?",a:"Gian van Veen",c:"Darts",w:["Michael van Gerwen","Danny Noppert","Dirk van Duijvenbode"]},
+                {q:"Hoeveel keer heeft Luke Littler het PDC WK Darts gewonnen (tot en met 2026)?",a:"Twee keer (2025 en 2026)",c:"Darts",w:["Drie keer","Een keer","Vier keer"]},
+                {q:"Wat was het totale prijzengeld van het PDC WK Darts 2025-2026?",a:"5 miljoen pond",c:"Darts",w:["3 miljoen pond","2,5 miljoen pond","4 miljoen pond"]},
+                // --- Tennis ---
+                {q:"Wie won de Australian Open 2026 bij de mannen?",a:"Carlos Alcaraz (hij versloeg Novak Djokovic in de finale)",c:"Tennis",w:["Novak Djokovic","Jannik Sinner","Daniil Medvedev"]},
+                {q:"Met welke setstanden won Alcaraz de Australian Open finale 2026 van Djokovic?",a:"2-6, 6-2, 6-3, 7-5",c:"Tennis",w:["6-4, 6-3, 6-2","3-6, 6-4, 7-6, 6-3","6-7, 6-3, 6-4, 6-4"]},
+                {q:"Welke bijzondere mijlpaal behaalde Alcaraz met zijn Australian Open titel 2026?",a:"Hij werd de jongste man ooit die de Career Grand Slam voltooide (22 jaar)",c:"Tennis",w:["Hij won zijn tiende Grand Slam","Hij werd de jongste nummer 1 ooit","Hij versloeg Djokovic voor de eerste keer"]},
+                {q:"Wie won de Australian Open 2026 bij de vrouwen?",a:"Elena Rybakina (zij versloeg Aryna Sabalenka in de finale)",c:"Tennis",w:["Aryna Sabalenka","Iga Swiatek","Coco Gauff"]},
+                {q:"Hoeveel Grand Slam-titels had Carlos Alcaraz na de Australian Open 2026?",a:"Zeven",c:"Tennis",w:["Vijf","Zes","Acht"]},
+                // --- American Football ---
+                {q:"Wie won Super Bowl LX in februari 2026?",a:"Seattle Seahawks (29-13 tegen de New England Patriots)",c:"American Football",w:["New England Patriots","Kansas City Chiefs","San Francisco 49ers"]},
+                {q:"Wie werd MVP van Super Bowl LX in 2026?",a:"Kenneth Walker III (running back, 135 yards rushing)",c:"American Football",w:["Drake Maye","Geno Smith","DK Metcalf"]},
+                {q:"In welk stadion werd Super Bowl LX (2026) gespeeld?",a:"Levi's Stadium in Santa Clara, Californie",c:"American Football",w:["SoFi Stadium in Los Angeles","Allegiant Stadium in Las Vegas","MetLife Stadium in New Jersey"]},
+                {q:"Hoeveel field goals maakte kicker Jason Myers in Super Bowl LX, een nieuw record?",a:"Vijf",c:"American Football",w:["Vier","Zes","Drie"]},
+                {q:"Welke artiest was de headliner van de halftime show van Super Bowl LX?",a:"Bad Bunny (met optredens van Lady Gaga en Ricky Martin)",c:"American Football",w:["Drake","Beyonce","Taylor Swift"]},
+                {q:"Wanneer hadden de Seahawks voor het laatst de Super Bowl gewonnen voor 2026?",a:"Super Bowl XLVIII in 2014 (tegen de Denver Broncos)",c:"American Football",w:["Super Bowl XLIX in 2015","Super Bowl XL in 2006","Ze hadden nog nooit gewonnen"]},
+                // --- Voetbal actueel ---
+                {q:"Welke acht clubs plaatsten zich direct voor de achtste finales van de Champions League 2025-26?",a:"Arsenal, Barcelona, Bayern Munchen, Chelsea, Liverpool, Manchester City, Sporting CP en Tottenham",c:"Voetbal",w:["Real Madrid, Barcelona, Bayern, Liverpool, PSG, Man City, Inter, Juventus","Arsenal, Real Madrid, Bayern, PSG, Liverpool, Man City, Inter, Chelsea","Barcelona, Liverpool, Bayern, Dortmund, PSG, Man City, Arsenal, Napoli"]},
+                {q:"In welk stadion wordt de Champions League-finale 2025-26 gespeeld?",a:"Puskas Arena in Boedapest (Hongarije)",c:"Voetbal",w:["Wembley in Londen","Allianz Arena in Munchen","San Siro in Milaan"]},
+                {q:"Welk team staat bovenaan de Eredivisie 2025-26 met ruime voorsprong (per februari 2026)?",a:"PSV (59 punten uit 23 wedstrijden)",c:"Voetbal",w:["Ajax","Feyenoord","AZ"]},
+                {q:"Welke drie clubs promoveerden naar de Eredivisie voor seizoen 2025-26?",a:"FC Volendam (kampioen), Excelsior (2e) en Telstar (via play-offs)",c:"Voetbal",w:["De Graafschap, Excelsior en Roda JC","FC Volendam, NAC Breda en Telstar","ADO Den Haag, Excelsior en FC Eindhoven"]},
+                {q:"Na hoeveel jaar keerde Telstar terug in de Eredivisie in seizoen 2025-26?",a:"47 jaar",c:"Voetbal",w:["25 jaar","35 jaar","52 jaar"]},
+                {q:"Welke regel werd voor het eerst ingevoerd in de Eredivisie vanaf seizoen 2025-26?",a:"Kunstgras is niet meer toegestaan - alle clubs moeten op natuurgras spelen",c:"Voetbal",w:["VAR wordt afgeschaft","Vijf wissels per wedstrijd","Elke club moet minimaal 3 jeugdspelers opstellen"]},
+                {q:"Welke Eredivisie-wedstrijd werd op 30 november 2025 gestaakt wegens vuurwerk op het veld?",a:"Ajax - FC Groningen (gestaakt in de 6e minuut, later achter gesloten deuren uitgespeeld)",c:"Voetbal",w:["Feyenoord - Sparta","PSV - FC Utrecht","AZ - FC Twente"]},
+                {q:"Wie won de Afrika Cup 2025 (finale gespeeld op 18 januari 2026)?",a:"Senegal (1-0 tegen Marokko na verlenging)",c:"Voetbal",w:["Marokko","Nigeria","Egypte"]},
+                {q:"In welk stadion en welke stad werd de Afrika Cup-finale 2025 gespeeld?",a:"Prince Moulay Abdellah Stadion in Rabat (Marokko)",c:"Voetbal",w:["Cairo International Stadium in Cairo","Stade des Martyrs in Kinshasa","Stade Olympique in Casablanca"]},
+                {q:"Wie scoorde het winnende doelpunt in de Afrika Cup-finale 2025 voor Senegal?",a:"Pape Gueye (in de 94e minuut van de verlenging)",c:"Voetbal",w:["Sadio Mane","Ismaila Sarr","Kalidou Koulibaly"]},
+                {q:"Met welke spectaculaire uitslag won Galatasaray thuis van Juventus in de CL-playoffs 2026?",a:"5-2",c:"Voetbal",w:["4-1","3-2","6-3"]},
 
             ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
         }
