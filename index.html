@@ -148,7 +148,8 @@
             <button class="menu-btn secondary" onclick="resetQuiz()" style="margin-top: 10px; border-color: #e74c3c; font-size: 0.8rem;">🔄 Reset Vragen</button>
         </div>
         <div class="category-screen hidden" id="categoryScreen">
-            <h2 style="text-align: center; margin-bottom: 15px;">Kies categorie(en)</h2>
+            <h2 style="text-align: center; margin-bottom: 15px;">Kies een categorie</h2>
+            <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); margin: -10px 0 10px;">Ctrl/Shift + klik om meerdere te selecteren</p>
             <div class="category-grid" id="categoryGrid"></div>
             <div class="game-options">
                 <h3>⚙️ Spelinstellingen</h3>
@@ -609,24 +610,38 @@
                 categories[q.category]++;
             });
             const grid = document.getElementById('categoryGrid');
-            grid.innerHTML = `<button class="category-btn ${selectedCategories.has('all') ? 'selected' : ''}" onclick="toggleCategory('all')">Alle categorieen<span class="count">${questions.length} vragen</span></button>`;
+            grid.innerHTML = `<button class="category-btn ${selectedCategories.has('all') ? 'selected' : ''}" onclick="toggleCategory('all', event)">Alle categorieen<span class="count">${questions.length} vragen</span></button>`;
             Object.entries(categories).sort((a, b) => b[1] - a[1]).forEach(([cat, count]) => {
-                grid.innerHTML += `<button class="category-btn ${selectedCategories.has(cat) ? 'selected' : ''}" onclick="toggleCategory('${cat}')">${cat}<span class="count">${count} vragen</span></button>`;
+                grid.innerHTML += `<button class="category-btn ${selectedCategories.has(cat) ? 'selected' : ''}" onclick="toggleCategory('${cat}', event)">${cat}<span class="count">${count} vragen</span></button>`;
             });
         }
 
-        function toggleCategory(category) {
+        function toggleCategory(category, event) {
             if (category === 'all') {
                 selectedCategories.clear();
                 selectedCategories.add('all');
             } else {
-                selectedCategories.delete('all');
-                if (selectedCategories.has(category)) {
-                    selectedCategories.delete(category);
+                // Met Ctrl/Cmd ingedrukt: multi-select
+                const multiSelect = event && (event.ctrlKey || event.metaKey || event.shiftKey);
+                if (multiSelect) {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                    } else {
+                        selectedCategories.add(category);
+                    }
+                    if (selectedCategories.size === 0) selectedCategories.add('all');
                 } else {
-                    selectedCategories.add(category);
+                    // Normale klik: selecteer alleen deze categorie
+                    // Als deze al de enige geselecteerde is, ga terug naar 'all'
+                    if (selectedCategories.size === 1 && selectedCategories.has(category)) {
+                        selectedCategories.clear();
+                        selectedCategories.add('all');
+                    } else {
+                        selectedCategories.clear();
+                        selectedCategories.add(category);
+                    }
                 }
-                if (selectedCategories.size === 0) selectedCategories.add('all');
             }
             renderCategories();
             updateQuestionCountVisibility();
