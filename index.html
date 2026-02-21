@@ -149,7 +149,9 @@
         </div>
         <div class="category-screen hidden" id="categoryScreen">
             <h2 style="text-align: center; margin-bottom: 15px;">Kies een categorie</h2>
-            <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); margin: -10px 0 10px;">Ctrl/Shift + klik om meerdere te selecteren</p>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <button id="multiSelectToggle" onclick="toggleMultiSelect()" style="background: none; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); padding: 5px 14px; border-radius: 15px; cursor: pointer; font-size: 0.8rem;">Meerdere selecteren</button>
+            </div>
             <div class="category-grid" id="categoryGrid"></div>
             <div class="game-options">
                 <h3>⚙️ Spelinstellingen</h3>
@@ -363,6 +365,7 @@
         let currentIndex = 0;
         let score = 0;
         let selectedCategories = new Set(['all']);
+        let multiSelectMode = false;
 
         // Nieuwe game mode variabelen
         let gameMode = 'normaal';
@@ -616,31 +619,43 @@
             });
         }
 
+        function toggleMultiSelect() {
+            multiSelectMode = !multiSelectMode;
+            const btn = document.getElementById('multiSelectToggle');
+            if (multiSelectMode) {
+                btn.style.background = 'rgba(78, 204, 163, 0.3)';
+                btn.style.borderColor = '#4ecca3';
+                btn.style.color = '#4ecca3';
+                btn.textContent = 'Multi-select aan';
+            } else {
+                btn.style.background = 'none';
+                btn.style.borderColor = 'rgba(255,255,255,0.3)';
+                btn.style.color = 'rgba(255,255,255,0.6)';
+                btn.textContent = 'Meerdere selecteren';
+            }
+        }
+
         function toggleCategory(category, event) {
+            const isMulti = multiSelectMode || (event && (event.ctrlKey || event.metaKey || event.shiftKey));
             if (category === 'all') {
                 selectedCategories.clear();
                 selectedCategories.add('all');
-            } else {
-                // Met Ctrl/Cmd ingedrukt: multi-select
-                const multiSelect = event && (event.ctrlKey || event.metaKey || event.shiftKey);
-                if (multiSelect) {
-                    selectedCategories.delete('all');
-                    if (selectedCategories.has(category)) {
-                        selectedCategories.delete(category);
-                    } else {
-                        selectedCategories.add(category);
-                    }
-                    if (selectedCategories.size === 0) selectedCategories.add('all');
+            } else if (isMulti) {
+                selectedCategories.delete('all');
+                if (selectedCategories.has(category)) {
+                    selectedCategories.delete(category);
                 } else {
-                    // Normale klik: selecteer alleen deze categorie
-                    // Als deze al de enige geselecteerde is, ga terug naar 'all'
-                    if (selectedCategories.size === 1 && selectedCategories.has(category)) {
-                        selectedCategories.clear();
-                        selectedCategories.add('all');
-                    } else {
-                        selectedCategories.clear();
-                        selectedCategories.add(category);
-                    }
+                    selectedCategories.add(category);
+                }
+                if (selectedCategories.size === 0) selectedCategories.add('all');
+            } else {
+                // Normale klik: selecteer alleen deze categorie
+                if (selectedCategories.size === 1 && selectedCategories.has(category)) {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                } else {
+                    selectedCategories.clear();
+                    selectedCategories.add(category);
                 }
             }
             renderCategories();
