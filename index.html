@@ -400,9 +400,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v26'); } catch(ex) {}
+                try { localStorage.removeItem('sportquiz_questions_v27'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v27');
+                const stored = localStorage.getItem('sportquiz_questions_v28');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +437,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v27'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v28'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +446,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v27', data);
+                localStorage.setItem('sportquiz_questions_v28', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3480,11 +3480,11 @@
                 {q:"Welke medaille won Jens van 't Wout op de 500 meter shorttrack in Milaan (naast zijn twee gouden)?",a:"Brons",c:"Winterspelen 2026",w:["Zilver","Goud","Geen medaille"]},
                 {q:"Wie won zilver op de 500 meter shorttrack mannen in Milaan 2026, de broer van Jens?",a:"Melle van 't Wout",c:"Winterspelen 2026",w:["Itzhak de Laat","Friso Emons","Sjinkie Knegt"]},
                 {q:"Wie won het goud op de 500 meter shorttrack mannen in Milaan 2026?",a:"Steven Dubois (Canada)",c:"Winterspelen 2026",w:["Jens van 't Wout (Nederland)","Hwang Dae-heon (Zuid-Korea)","Ren Ziwei (China)"]},
-                {q:"Hoeveel gouden medailles had Nederland bij het shorttrack in Milaan 2026 (tot 18 feb)?",a:"Vier gouden medailles",c:"Winterspelen 2026",w:["Twee gouden medailles","Drie gouden medailles","Vijf gouden medailles"]},
+                {q:"Hoeveel gouden medailles won Nederland bij het shorttrack in Milaan 2026?",a:"Vijf gouden medailles (meer dan bij alle vorige Spelen samen)",c:"Winterspelen 2026",w:["Drie gouden medailles","Vier gouden medailles","Zes gouden medailles"]},
                 {q:"In welk gebouw in Milaan vinden het langebaanschaatsen bij de Winterspelen 2026 plaats?",a:"Fiera Milano (het expositiecentrum, omgetoverd tot olympisch ijsstadion)",c:"Winterspelen 2026",w:["San Siro","PalaSharp Arena","Milano Ice Skating Arena"]},
                 {q:"In welke arena vinden shorttrack en kunstschaatsen plaats bij de Winterspelen 2026?",a:"Milano Ice Skating Arena in Assago",c:"Winterspelen 2026",w:["Fiera Milano","PalaLottomatica","San Siro"]},
-                {q:"Welk land staat bovenaan de medaillespiegel van de Winterspelen 2026?",a:"Noorwegen (18 goud, 40 medailles totaal — beide records voor een enkel Winterspel)",c:"Winterspelen 2026",w:["Italië","Verenigde Staten","Nederland"]},
-                {q:"Hoeveel totale medailles won Nederland op de Winterspelen 2026?",a:"18 medailles (8 goud, 7 zilver, 3 brons)",c:"Winterspelen 2026",w:["15 medailles (6 goud, 7 zilver, 2 brons)","20 medailles (9 goud, 8 zilver, 3 brons)","14 medailles (7 goud, 5 zilver, 2 brons)"]},
+                {q:"Welk land staat bovenaan de eindstand van de medaillespiegel van de Winterspelen 2026?",a:"Noorwegen (18 goud, 12 zilver, 11 brons — 41 medailles totaal, records voor goud en totaal op een enkel Winterspel)",c:"Winterspelen 2026",w:["Verenigde Staten (12 goud, 33 totaal)","Italië (10 goud, 30 totaal)","Nederland (10 goud, 20 totaal)"]},
+                {q:"Hoeveel totale medailles won Nederland op de Winterspelen 2026?",a:"20 medailles (10 goud, 7 zilver, 3 brons — 10 goud is een nationaal record)",c:"Winterspelen 2026",w:["18 medailles (8 goud, 7 zilver, 3 brons)","16 medailles (7 goud, 6 zilver, 3 brons)","22 medailles (11 goud, 8 zilver, 3 brons)"]},
                 {q:"Welke Noorse langlaufer brak het record voor meeste gouden medailles op een enkel Winterspel?",a:"Johannes Hoesflot Klaebo (6 gouden medailles in Milaan, 11 totaal in carriere)",c:"Winterspelen 2026",w:["Ole Einar Bjoerndalen","Marit Bjoergen","Petter Northug"]},
                 {q:"Welke Amerikaanse alpine skiester won haar tweede olympische slalom goud in Milaan, 12 jaar na haar eerste?",a:"Mikaela Shiffrin",c:"Winterspelen 2026",w:["Lindsey Vonn","Bode Miller","Julia Mancuso"]},
                 {q:"Wie won goud op de mannenslalom bij de Winterspelen 2026?",a:"Loic Meillard (Zwitserland)",c:"Winterspelen 2026",w:["Henrik Kristoffersen (Noorwegen)","Marco Odermatt (Zwitserland)","Alexis Pinturault (Frankrijk)"]},
@@ -3522,8 +3522,29 @@
                 {q:"Op welk evenement won Klaebo zijn zesde en laatste goud in Milaan 2026?",a:"De 50km mass start klassiek (op 21 februari, de voorlaatste dag)",c:"Winterspelen 2026",w:["De teamsprint","De individuele sprint","De 20km skiathlon"]},
                 {q:"Hoeveel olympische gouden medailles heeft Klaebo nu in zijn carriere na de Winterspelen 2026?",a:"Elf (een record voor de Winterspelen, meer dan wie dan ook in de geschiedenis)",c:"Winterspelen 2026",w:["Acht","Negen","Tien"]},
                 {q:"Welk Noors record behaalde het Noorse team op de 50km langlaufen in Milaan 2026?",a:"Een volledig Noors podium: Klaebo goud, Nyenget zilver, Iversen brons",c:"Winterspelen 2026",w:["Noorwegen won zowel de mannen- als vrouwen-50km","Alle vijf Noorse langlaufers eindigden in de top 10","Het was de snelste 50km ooit gereden"]},
-                {q:"Hoeveel gouden medailles won de Verenigde Staten op de Winterspelen 2026, een nationaal record?",a:"Elf gouden medailles (nieuw Amerikaans record, vorige record was 10 in Salt Lake City 2002)",c:"Winterspelen 2026",w:["Tien gouden medailles","Negen gouden medailles","Twaalf gouden medailles"]},
-                {q:"Hoeveel medailles won gastland Italie op de Winterspelen 2026?",a:"27 medailles (9 goud, 5 zilver, 13 brons)",c:"Winterspelen 2026",w:["20 medailles","24 medailles","30 medailles"]},
+                {q:"Hoeveel gouden medailles won de Verenigde Staten op de Winterspelen 2026, een nationaal record?",a:"Twaalf gouden medailles (nieuw Amerikaans record, vorige was 10 in Salt Lake City 2002)",c:"Winterspelen 2026",w:["Tien gouden medailles","Elf gouden medailles","Veertien gouden medailles"]},
+                {q:"Hoeveel medailles won gastland Italie op de Winterspelen 2026?",a:"30 medailles (10 goud, 6 zilver, 14 brons — het beste resultaat ooit voor Italie, ver boven de 20 van Lillehammer 1994)",c:"Winterspelen 2026",w:["25 medailles","20 medailles","35 medailles"]},
+                // --- Winterspelen 2026: Finale Resultaten & Sluitingsceremonie ---
+                {q:"Welk land won goud bij het ijshockey mannen op de Winterspelen 2026?",a:"Verenigde Staten (2-1 na verlenging tegen Canada)",c:"Winterspelen 2026",w:["Canada","Zweden","Finland"]},
+                {q:"Wie scoorde het winnende doelpunt in de overtime van de ijshockey-finale mannen (VS-Canada) in Milaan?",a:"Jack Hughes (1:41 in de overtime, met assist van Zach Werenski)",c:"Winterspelen 2026",w:["Auston Matthews","Jack Eichel","Connor McDavid"]},
+                {q:"Wanneer had de VS voor het laatst goud gewonnen bij het ijshockey mannen voor 2026?",a:"In 1980 in Lake Placid (het beroemde Miracle on Ice)",c:"Winterspelen 2026",w:["In 1998 in Nagano","In 2002 in Salt Lake City","In 1960 in Squaw Valley"]},
+                {q:"Welk bijzonder toeval was er bij de gouden ijshockeymedaille van de VS mannen in 2026?",a:"Het was precies 46 jaar na het Miracle on Ice (21 februari 1980 vs. de Sovjet-Unie)",c:"Winterspelen 2026",w:["Het was precies 20 jaar na de laatste NHL-deelname aan de Spelen","De finale werd gespeeld in hetzelfde stadion als in 1980","Jack Hughes werd geboren op dezelfde dag als het Miracle on Ice"]},
+                {q:"Welk uniek record vestigde het Amerikaanse ijshockeyteam op de Winterspelen 2026?",a:"Zowel de mannen als de vrouwen wonnen goud — beiden 2-1 na verlenging tegen Canada",c:"Winterspelen 2026",w:["De VS wonnen de meeste ijshockeymedailles ooit","Het was de eerste keer dat een land alle drie ijshockeymedailles won","De VS scoorden de meeste goals in een toernooi"]},
+                {q:"Wie werd de doelman-held van Team USA ijshockey mannen in de finale tegen Canada?",a:"Connor Hellebuyck (stopte 41 van 42 schoten)",c:"Winterspelen 2026",w:["Jack Campbell","Jeremy Swayman","Thatcher Demko"]},
+                {q:"Wie won goud op de mass start mannen langebaanschaatsen op de Winterspelen 2026?",a:"Jorrit Bergsma (40 jaar oud — de oudste olympisch schaatskampioen ooit)",c:"Winterspelen 2026",w:["Jordan Stolz","Bart Swings","Andrea Giovannini"]},
+                {q:"Hoeveel olympische medailles heeft Jorrit Bergsma in totaal na de Winterspelen 2026?",a:"Vijf medailles: goud 10km Sotsji, zilver 10km Pyeongchang, brons 10km Milaan, brons 5km Sotsji, goud mass start Milaan",c:"Winterspelen 2026",w:["Drie medailles","Vier medailles","Zes medailles"]},
+                {q:"Welk land won verrassend zilver op de mass start mannen schaatsen in Milaan 2026?",a:"Denemarken (Viktor Hald Thorup — pas de tweede Winter-medaille ooit voor Denemarken)",c:"Winterspelen 2026",w:["Belgie","Italie","Japan"]},
+                {q:"In welke twee sporten won Nederland AL zijn 20 medailles op de Winterspelen 2026?",a:"Langebaanschaatsen (13 medailles) en shorttrack (7 medailles)",c:"Winterspelen 2026",w:["Langebaanschaatsen en bobslee","Shorttrack en skieen","Langebaanschaatsen en skeleton"]},
+                {q:"Wie werd de meest gedecoreerde shorttrack-atleet aller tijden op de Winterspelen 2026?",a:"Arianna Fontana (Italie) — 14 olympische medailles in zes opeenvolgende Winterspelen",c:"Winterspelen 2026",w:["Apolo Ohno","Viktor Ahn","Charles Hamelin"]},
+                {q:"Welke bijzondere prestatie leverde Arianna Fontana op de Winterspelen 2026?",a:"Ze werd Italie's meest gedecoreerde olympier ooit (14 medailles, zomer en winter samen) en de eerste vrouw die op 6 opeenvolgende Winterspelen een medaille won",c:"Winterspelen 2026",w:["Ze won drie gouden medailles","Ze brak het wereldrecord op de 500m","Ze werd de jongste olympisch kampioene"]},
+                {q:"Welke Chinese freeskiester verdedigde haar olympische titel op de halfpipe op de laatste dag in Milaan?",a:"Eileen Gu (haar tweede opeenvolgende olympische halfpipe-goud)",c:"Winterspelen 2026",w:["Eileen Gu won goud op de slopestyle","Chloe Kim verdedigde haar snowboard-titel","Mikaela Shiffrin won de halfpipe"]},
+                {q:"Welke Zweedse langlaufster won goud op de 50km mass start vrouwen op de Winterspelen 2026?",a:"Ebba Andersson",c:"Winterspelen 2026",w:["Charlotte Kalla","Stina Nilsson","Frida Karlsson"]},
+                {q:"Op welke plek eindigde Nederland op de eindstand van de medaillespiegel van de Winterspelen 2026?",a:"Derde (na Noorwegen en de VS, gedeeld met Italie op goud maar meer zilver)",c:"Winterspelen 2026",w:["Vierde","Vijfde","Tweede"]},
+                {q:"Hoeveel landen wonnen minstens een medaille op de Winterspelen 2026?",a:"29 landen",c:"Winterspelen 2026",w:["25 landen","32 landen","22 landen"]},
+                {q:"Welke Italiaanse shorttrack-prestatie opende de Winterspelen 2026 spectaculair voor het gastland?",a:"Goud op de mixed team relay (met o.a. Arianna Fontana)",c:"Winterspelen 2026",w:["Goud op de 500m mannen","Goud op de 1000m vrouwen","Goud op de 5000m relay mannen"]},
+                {q:"Wie is na de Winterspelen 2026 de meest gedecoreerde Winter-olympier aller tijden qua gouden medailles?",a:"Johannes Hoesflot Klaebo met 11 gouden medailles",c:"Winterspelen 2026",w:["Ole Einar Bjoerndalen met 8","Marit Bjoergen met 8","Eric Heiden met 5"]},
+                {q:"Hoeveel keer op rij heeft Noorwegen nu de medaillespiegel gewonnen op de Winterspelen?",a:"Drie keer op rij (Pyeongchang 2018, Peking 2022, Milaan 2026)",c:"Winterspelen 2026",w:["Twee keer op rij","Vier keer op rij","Dit was de eerste keer"]},
+                {q:"Welke topschaatser van Nederland won zowel goud op de 10.000m (2014) als mass start (2026)?",a:"Jorrit Bergsma",c:"Winterspelen 2026",w:["Sven Kramer","Bob de Jong","Jan Blokhuijsen"]},
                 // --- Darts ---
                 {q:"Wie won het PDC WK Darts 2025-2026 in Alexandra Palace?",a:"Luke Littler (hij versloeg Gian van Veen 7-1 in de finale)",c:"Darts",w:["Michael van Gerwen","Luke Humphries","Gian van Veen"]},
                 {q:"Met welke uitslag won Luke Littler de WK-finale darts 2026 van Gian van Veen?",a:"7-1",c:"Darts",w:["7-3","7-4","7-2"]},
