@@ -400,9 +400,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v27'); } catch(ex) {}
+                try { localStorage.removeItem('sportquiz_questions_v28'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v28');
+                const stored = localStorage.getItem('sportquiz_questions_v29');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +437,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v28'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v29'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +446,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v28', data);
+                localStorage.setItem('sportquiz_questions_v29', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3545,6 +3545,51 @@
                 {q:"Wie is na de Winterspelen 2026 de meest gedecoreerde Winter-olympier aller tijden qua gouden medailles?",a:"Johannes Hoesflot Klaebo met 11 gouden medailles",c:"Winterspelen 2026",w:["Ole Einar Bjoerndalen met 8","Marit Bjoergen met 8","Eric Heiden met 5"]},
                 {q:"Hoeveel keer op rij heeft Noorwegen nu de medaillespiegel gewonnen op de Winterspelen?",a:"Drie keer op rij (Pyeongchang 2018, Peking 2022, Milaan 2026)",c:"Winterspelen 2026",w:["Twee keer op rij","Vier keer op rij","Dit was de eerste keer"]},
                 {q:"Welke topschaatser van Nederland won zowel goud op de 10.000m (2014) als mass start (2026)?",a:"Jorrit Bergsma",c:"Winterspelen 2026",w:["Sven Kramer","Bob de Jong","Jan Blokhuijsen"]},
+                // === PIRMIN BLAAK & NEDERLANDS HOCKEY ===
+                // --- Pirmin Blaak: carrière en persoonlijk ---
+                {q:"Bij welke drie hockeyclubs heeft Pirmin Blaak in zijn loopbaan gekeept?",a:"HC Rotterdam (2006-2016), HC Oranje-Rood (2016-2024) en Braxgata HC in België (vanaf 2024)",c:"Pirmin Blaak",w:["HC Bloemendaal, Kampong en SV Kampong","HC Den Bosch, Oranje Zwart en Royal Leopold","HC Rotterdam, Amsterdam H&BC en Waterloo Ducks"]},
+                {q:"Hoeveel interlands heeft Pirmin Blaak gespeeld voor het Nederlands hockeyelftal?",a:"154 interlands (van 2011 tot en met 2024)",c:"Pirmin Blaak",w:["128 interlands","175 interlands","102 interlands"]},
+                {q:"In welk jaar maakte Pirmin Blaak zijn interlanddebuut en tegen welke tegenstander?",a:"In 2011, tegen Ierland (op 24 januari in Sevilla)",c:"Pirmin Blaak",w:["In 2010, tegen Engeland in Londen","In 2012, tegen Duitsland in Amstelveen","In 2009, tegen Belgie in Brussel"]},
+                {q:"Welke olympische medailles heeft Pirmin Blaak gewonnen?",a:"Goud op de Spelen van Parijs 2024 (als eerste keeper) en zilver op de Spelen van Londen 2012 (als reservekeeper)",c:"Pirmin Blaak",w:["Alleen goud in 2024","Goud in 2024 en brons in 2016","Zilver in 2012 en brons in 2024"]},
+                {q:"Hoeveel keer is Pirmin Blaak Europees kampioen geworden en in welke jaren?",a:"Drie keer: in 2015, 2017 en 2021",c:"Pirmin Blaak",w:["Twee keer: in 2017 en 2021","Vier keer: in 2013, 2015, 2017 en 2021","Een keer: in 2021"]},
+                {q:"Heeft Pirmin Blaak ooit een WK-finale hockey gewonnen?",a:"Nee, hij verloor twee WK-finales (2014 tegen Australie en 2018 tegen Belgie)",c:"Pirmin Blaak",w:["Ja, in 2018 tegen Belgie","Ja, in 2014 tegen Australie","Nee, hij heeft nooit een WK-finale gespeeld"]},
+                {q:"Waarmee onderscheidde Blaak zich in de finale van de Olympische Spelen 2024?",a:"Hij stopte drie shoot-outs van Duitsland, waarmee hij de gouden medaille voor Nederland veiligstelde",c:"Pirmin Blaak",w:["Hij hield de nul in de reguliere speeltijd","Hij scoorde zelf uit een strafcorner","Hij stopte een strafbal in de laatste minuut"]},
+                {q:"Naar welke beroemde sporter is Pirmin Blaak vernoemd?",a:"De Zwitserse ski-legende Pirmin Zurbriggen",c:"Pirmin Blaak",w:["De Duitse voetballer Pirmin Schwegler","De Oostenrijkse skier Pirmin Neureuther","De Noorse langlaufer Pirmin Bolgen"]},
+                {q:"Welke individuele prijs won Pirmin Blaak in 2023?",a:"Wereldkeeper van het Jaar 2023 (FIH — beste hockeykeeper ter wereld)",c:"Pirmin Blaak",w:["Nederlandse Sportman van het Jaar","Best Goalkeeper Award van de Pro League","Hockey Stars Award voor beste Europese keeper"]},
+                {q:"Welke opleiding heeft Pirmin Blaak afgerond naast zijn hockeycarriere?",a:"HBO Bedrijfskundige MER (Management, Economie & Recht) in 2015",c:"Pirmin Blaak",w:["Sportmanagement aan de ALO","Rechten aan de Erasmus Universiteit","Fysiotherapie aan de Hogeschool Rotterdam"]},
+                {q:"Welk bedrijf runt Pirmin Blaak naast zijn hockeycarriere?",a:"Een hockeywinkel en webshop (HockeyGear/Sportslabel) met een magazijn in Enschede en een winkel in Barendrecht",c:"Pirmin Blaak",w:["Een sportschool in Rotterdam","Een fysiotherapiepraktijk in Eindhoven","Een personal training bedrijf in Amsterdam"]},
+                {q:"Wat is GoalieWorks, het initiatief van Pirmin Blaak?",a:"Een netwerk van keepersscholen op circa 13 locaties in Nederland, waar wekelijks honderden jonge keepers trainen",c:"Pirmin Blaak",w:["Een lijn van keepershandschoenen","Een YouTube-kanaal over keeperstechnieken","Een app voor hockeystatistieken"]},
+                {q:"Met wie richtte Pirmin Blaak GoalieWorks op?",a:"Collega-keeper Jan Lelieveldt",c:"Pirmin Blaak",w:["Jaap Stockmann","Sam van der Ven","David Harte"]},
+                {q:"Hoe heet de zoon van Pirmin Blaak?",a:"Keje (geboren in 2023)",c:"Pirmin Blaak",w:["Mees","Bram","Stijn"]},
+                {q:"Wat is de bijnaam van Pirmin Blaak als hockeykeeper?",a:"De onwrikbare muur",c:"Pirmin Blaak",w:["De Vliegende Hollander","Het Blok van Barendrecht","De Kattenman"]},
+                {q:"Bij welke hockeyclub werd Pirmin Blaak landskampioen en in welk jaar?",a:"HC Rotterdam in 2013 (voor het eerst in de clubhistorie)",c:"Pirmin Blaak",w:["HC Oranje-Rood in 2018","HC Rotterdam in 2010","HC Bloemendaal in 2015"]},
+                {q:"Waarom stapte Blaak in 2024 over naar Braxgata in Belgie?",a:"Oranje-Rood wilde rouleren met een jonge keeper, waar Blaak het niet mee eens was",c:"Pirmin Blaak",w:["Hij wilde dichter bij zijn familie in Belgie wonen","Braxgata bood een recordsalaris","Hij wilde in de Champions League spelen"]},
+                {q:"Op welk WK stopte Blaak drie shoot-outs van Australie in de halve finale?",a:"Het WK 2018 in Bhubaneswar (India)",c:"Pirmin Blaak",w:["Het WK 2014 in Den Haag","Het WK 2023 in India","Het EK 2021 in Amstelveen"]},
+                {q:"Welke prijs won Blaak op het WK 2018?",a:"Beste Keeper van het Toernooi",c:"Pirmin Blaak",w:["Beste Speler van het Toernooi","Meeste saves van het toernooi","Topscorer van het toernooi"]},
+                {q:"Op welk EK stopte Blaak bijna alle shoot-outs in zowel de halve finale als de finale?",a:"Het EK 2021 in Amstelveen (slechts 1x gepasseerd in twee shoot-outseries)",c:"Pirmin Blaak",w:["Het EK 2017 in Amstelveen","Het EK 2015 in Londen","Het EK 2019 in Antwerpen"]},
+                {q:"Wanneer nam Pirmin Blaak afscheid als international?",a:"Op 30 september 2024, na het winnen van olympisch goud in Parijs",c:"Pirmin Blaak",w:["Direct na de olympische finale in augustus 2024","In december 2024 na een afscheidswedstrijd","In januari 2025 bij het begin van het nieuwe seizoen"]},
+                {q:"Welke studievriend van Blaak is ook olympisch kampioen geworden?",a:"Arvin Slagter (olympisch kampioen 3x3 basketbal)",c:"Pirmin Blaak",w:["Epke Zonderland (turnen)","Niek Kimmann (BMX)","Kiran Badloe (windsurfen)"]},
+                {q:"Aan welk goed doel is Pirmin Blaak verbonden?",a:"Right To Play (hij deed mee aan een charity-quizavond die ruim 100.000 euro ophaalde)",c:"Pirmin Blaak",w:["UNICEF","War Child","Johan Cruyff Foundation"]},
+                {q:"Wie was jarenlang de eerste keeper van Nederland voor Pirmin Blaak?",a:"Jaap Stockmann (tot eind 2016 de vaste doelman van Oranje)",c:"Pirmin Blaak",w:["Guus Vogels","Ronald Jansen","Sander Baart"]},
+                // --- Nederlands Hockey: geschiedenis en feiten ---
+                {q:"Hoeveel keer werden de Nederlandse hockeymannen olympisch kampioen en in welke jaren?",a:"Drie keer: 1996 (Atlanta), 2000 (Sydney) en 2024 (Parijs)",c:"Pirmin Blaak",w:["Twee keer: 2000 en 2024","Vier keer: 1988, 1996, 2000 en 2024","Drie keer: 1984, 2000 en 2024"]},
+                {q:"In welk jaar werden de Nederlandse hockeyheren voor het laatst wereldkampioen?",a:"In 1998, tijdens het WK in Utrecht",c:"Pirmin Blaak",w:["In 2006, tijdens het WK in Monchengladbach","In 2014, tijdens het WK in Den Haag","In 2002, tijdens het WK in Kuala Lumpur"]},
+                {q:"Welke Nederlandse hockeykeeper won tweemaal olympisch goud (1996 en 2000)?",a:"Ronald Jansen",c:"Pirmin Blaak",w:["Jaap Stockmann","Guus Vogels","Jacques de Koning"]},
+                {q:"Hoeveel Europese titels hebben de Nederlandse hockeyheren in totaal gewonnen?",a:"Zes keer Europees kampioen (1983, 1987, 2007, 2015, 2017, 2021)",c:"Pirmin Blaak",w:["Vier keer","Acht keer","Vijf keer"]},
+                {q:"Welk land heeft meer Europese hockeytitels bij de mannen: Nederland of Duitsland?",a:"Duitsland (9 titels tegenover 6 voor Nederland)",c:"Pirmin Blaak",w:["Nederland heeft er meer","Ze staan gelijk","Spanje heeft de meeste"]},
+                {q:"Wie is de vader van huidig Oranje-aanvoerder Thierry Brinkman?",a:"Jacques Brinkman — hockeylegende die olympisch goud won in 1996 en 2000",c:"Pirmin Blaak",w:["Floris Jan Bovelander","Stephan Veen","Marc Delissen"]},
+                {q:"Welke Nederlandse hockeykeeper stond bekend om het afzetten van zijn helm bij strafballen?",a:"Frank Leistra (een gewoonte die inmiddels niet meer is toegestaan)",c:"Pirmin Blaak",w:["Ronald Jansen","Jaap Stockmann","Guus Vogels"]},
+                {q:"Wie is de bondscoach van de Nederlandse hockeymannen die olympisch goud won in 2024?",a:"Jeroen Delmee (bondscoach sinds 2021/2022)",c:"Pirmin Blaak",w:["Max Caldas","Paul van Ass","Michel van den Heuvel"]},
+                {q:"Welke medaille wonnen de Nederlandse hockeyheren op het WK 2023 in India?",a:"Brons (derde plaats)",c:"Pirmin Blaak",w:["Zilver","Goud","Vierde plaats (geen medaille)"]},
+                {q:"Welk land is de regerend Europees kampioen hockey bij de heren (anno 2025)?",a:"Duitsland (won het EK 2023 in Monchengladbach)",c:"Pirmin Blaak",w:["Nederland","Belgie","Engeland"]},
+                {q:"Wie werd door de FIH uitgeroepen tot Wereldspeler van het Jaar 2023 bij de hockeymannen?",a:"Arthur van Doren (Belgie)",c:"Pirmin Blaak",w:["Thierry Brinkman (Nederland)","Harmanpreet Singh (India)","Tom Boon (Belgie)"]},
+                {q:"Wie is de huidige aanvoerder van het Nederlands herenhockeyteam na het vertrek van Blaak?",a:"Thierry Brinkman",c:"Pirmin Blaak",w:["Jorrit Croon","Billy Bakker","Jonas de Geus"]},
+                {q:"Wat was de uitslag van de olympische hockeyfinale 2024 in Parijs?",a:"Nederland-Duitsland: 1-1 na reguliere tijd, Nederland won na shoot-outs",c:"Pirmin Blaak",w:["Nederland-Belgie: 2-0","Nederland-Duitsland: 3-1","Nederland-Australie: 2-1 na verlenging"]},
+                {q:"Na hoeveel jaar droogte won Nederland weer olympisch hockeygoud in 2024?",a:"24 jaar (het vorige goud was in 2000 in Sydney)",c:"Pirmin Blaak",w:["16 jaar","28 jaar","20 jaar"]},
+                {q:"Welke Nederlandse hockeykeeper werd voor Blaak uitgeroepen tot FIH Wereldkeeper van het Jaar?",a:"Jaap Stockmann (in 2014)",c:"Pirmin Blaak",w:["Ronald Jansen (in 2000)","Guus Vogels (in 1998)","Sander Baart (in 2016)"]},
+                {q:"Hoeveel clubs in Nederland en Belgie levert Blaak's bedrijf tenues en materialen?",a:"38 clubs (36 in Nederland en 2 in Belgie)",c:"Pirmin Blaak",w:["25 clubs","50 clubs","15 clubs"]},
+                {q:"Wanneer is Pirmin Blaak geboren?",a:"8 maart 1988",c:"Pirmin Blaak",w:["15 juni 1990","22 januari 1987","3 november 1989"]},
+                {q:"Bij welke jeugdclub begon Pirmin Blaak met hockeyen?",a:"HC Barendrecht",c:"Pirmin Blaak",w:["HC Rotterdam","HC Oranje-Rood","HC Den Bosch"]},
                 // --- Darts ---
                 {q:"Wie won het PDC WK Darts 2025-2026 in Alexandra Palace?",a:"Luke Littler (hij versloeg Gian van Veen 7-1 in de finale)",c:"Darts",w:["Michael van Gerwen","Luke Humphries","Gian van Veen"]},
                 {q:"Met welke uitslag won Luke Littler de WK-finale darts 2026 van Gian van Veen?",a:"7-1",c:"Darts",w:["7-3","7-4","7-2"]},
