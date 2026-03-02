@@ -400,9 +400,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v28'); } catch(ex) {}
+                try { localStorage.removeItem('sportquiz_questions_v29'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v29');
+                const stored = localStorage.getItem('sportquiz_questions_v30');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +437,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v29'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v30'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +446,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v29', data);
+                localStorage.setItem('sportquiz_questions_v30', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3613,7 +3613,7 @@
                 // --- Voetbal actueel ---
                 {q:"Welke acht clubs plaatsten zich direct voor de achtste finales van de Champions League 2025-26?",a:"Arsenal, Barcelona, Bayern Munchen, Chelsea, Liverpool, Manchester City, Sporting CP en Tottenham",c:"Voetbal",w:["Real Madrid, Barcelona, Bayern, Liverpool, PSG, Man City, Inter, Juventus","Arsenal, Real Madrid, Bayern, PSG, Liverpool, Man City, Inter, Chelsea","Barcelona, Liverpool, Bayern, Dortmund, PSG, Man City, Arsenal, Napoli"]},
                 {q:"In welk stadion wordt de Champions League-finale 2025-26 gespeeld?",a:"Puskas Arena in Boedapest (Hongarije)",c:"Voetbal",w:["Wembley in Londen","Allianz Arena in Munchen","San Siro in Milaan"]},
-                {q:"Welk team staat bovenaan de Eredivisie 2025-26 met ruime voorsprong (per februari 2026)?",a:"PSV (59 punten uit 23 wedstrijden)",c:"Voetbal",w:["Ajax","Feyenoord","AZ"]},
+                {q:"Welk team staat bovenaan de Eredivisie 2025-26 met ruime voorsprong (per maart 2026)?",a:"PSV (65 punten uit 25 wedstrijden, 17 punten voorsprong op nummer 2)",c:"Voetbal",w:["Ajax","Feyenoord","AZ"]},
                 {q:"Welke drie clubs promoveerden naar de Eredivisie voor seizoen 2025-26?",a:"FC Volendam (kampioen), Excelsior (2e) en Telstar (via play-offs)",c:"Voetbal",w:["De Graafschap, Excelsior en Roda JC","FC Volendam, NAC Breda en Telstar","ADO Den Haag, Excelsior en FC Eindhoven"]},
                 {q:"Na hoeveel jaar keerde Telstar terug in de Eredivisie in seizoen 2025-26?",a:"47 jaar",c:"Voetbal",w:["25 jaar","35 jaar","52 jaar"]},
                 {q:"Welke regel werd voor het eerst ingevoerd in de Eredivisie vanaf seizoen 2025-26?",a:"Kunstgras is niet meer toegestaan - alle clubs moeten op natuurgras spelen",c:"Voetbal",w:["VAR wordt afgeschaft","Vijf wissels per wedstrijd","Elke club moet minimaal 3 jeugdspelers opstellen"]},
@@ -3622,6 +3622,35 @@
                 {q:"In welk stadion en welke stad werd de Afrika Cup-finale 2025 gespeeld?",a:"Prince Moulay Abdellah Stadion in Rabat (Marokko)",c:"Voetbal",w:["Cairo International Stadium in Cairo","Stade des Martyrs in Kinshasa","Stade Olympique in Casablanca"]},
                 {q:"Wie scoorde het winnende doelpunt in de Afrika Cup-finale 2025 voor Senegal?",a:"Pape Gueye (in de 94e minuut van de verlenging)",c:"Voetbal",w:["Sadio Mane","Ismaila Sarr","Kalidou Koulibaly"]},
                 {q:"Met welke spectaculaire uitslag won Galatasaray thuis van Juventus in de CL-playoffs 2026?",a:"5-2",c:"Voetbal",w:["4-1","3-2","6-3"]},
+                // === ACTUALITEIT UPDATE MAART 2026 ===
+                // --- Champions League achtste finales ---
+                {q:"Welke twee topclubs treffen elkaar in de achtste finales van de Champions League 2025-26 (loting 27 februari)?",a:"Real Madrid vs Manchester City",c:"Voetbal",w:["Barcelona vs Bayern Munchen","Liverpool vs PSG","Arsenal vs Juventus"]},
+                {q:"Wie is de titelverdediger in de Champions League 2025-26?",a:"Paris Saint-Germain (won hun eerste CL-titel vorig seizoen)",c:"Voetbal",w:["Real Madrid","Manchester City","Bayern Munchen"]},
+                {q:"Tegen welke club speelt PSG in de achtste finales van de CL 2025-26?",a:"Chelsea",c:"Voetbal",w:["Liverpool","Arsenal","Tottenham"]},
+                {q:"Welke Noorse club haalde sensationeel de achtste finales van de CL 2025-26?",a:"Bodo/Glimt (zij spelen tegen Sporting CP)",c:"Voetbal",w:["Rosenborg","Molde","Brann Bergen"]},
+                {q:"Op welke data worden de achtste finales van de Champions League 2025-26 gespeeld?",a:"10/11 maart (heenwedstrijden) en 17/18 maart (returnwedstrijden)",c:"Voetbal",w:["3/4 en 10/11 maart","17/18 en 24/25 maart","24/25 februari en 3/4 maart"]},
+                // --- WK 2026 ---
+                {q:"In welke groep zit Nederland op het WK 2026?",a:"Groep F (met Japan, Tunesie en een Europese play-off winnaar)",c:"Voetbal",w:["Groep A (met Mexico en Zuid-Korea)","Groep C (met Brazilie en Marokko)","Groep H (met Spanje en Senegal)"]},
+                {q:"Wat is de eerste WK-wedstrijd van Nederland op het WK 2026?",a:"Nederland - Japan op 14 juni in het AT&T Stadium in Dallas",c:"Voetbal",w:["Nederland - Tunesie op 11 juni in Houston","Nederland - Polen op 14 juni in Kansas City","Nederland - Japan op 20 juni in New York"]},
+                {q:"Hoeveel landen doen er voor het eerst mee aan het WK 2026?",a:"48 landen (uitbreiding van 32 naar 48, verdeeld over 12 groepen van 4)",c:"Voetbal",w:["32 landen in 8 groepen","40 landen in 10 groepen","64 landen in 16 groepen"]},
+                {q:"In welke drie landen wordt het WK 2026 gehouden?",a:"Verenigde Staten, Canada en Mexico",c:"Voetbal",w:["Verenigde Staten, Brazilie en Argentinie","Canada, Mexico en Colombia","Verenigde Staten, Canada en Jamaica"]},
+                {q:"Wanneer is de WK-finale 2026 en waar?",a:"19 juli 2026 in het MetLife Stadium in New Jersey",c:"Voetbal",w:["26 juli in het AT&T Stadium in Dallas","12 juli in het SoFi Stadium in Los Angeles","19 juli in het Azteca Stadium in Mexico-Stad"]},
+                {q:"Welke play-offs bepalen in maart 2026 de laatste WK-deelnemers voor Europa?",a:"Vier UEFA-play-off routes met o.a. Italie, Polen, Zweden, Oekraine, Turkije en Wales",c:"Voetbal",w:["Alleen Italie en Portugal spelen play-offs","Er zijn geen play-offs meer nodig","Alleen niet-Europese landen spelen nog play-offs"]},
+                // --- Eredivisie actueel ---
+                {q:"Welke club staat tweede in de Eredivisie per maart 2026?",a:"Feyenoord (48 punten uit 24 wedstrijden)",c:"Voetbal",w:["Ajax","AZ","FC Twente"]},
+                {q:"Hoeveel punten voorsprong heeft PSV op nummer 2 Feyenoord in de Eredivisie (maart 2026)?",a:"17 punten",c:"Voetbal",w:["12 punten","8 punten","21 punten"]},
+                {q:"Welke Eredivisie-speler werd voor de vierde keer uitgeroepen tot Player of the Month in februari 2026, een record?",a:"Joey Veerman (PSV)",c:"Voetbal",w:["Luuk de Jong (PSV)","Brian Brobbey (Ajax)","Santiago Gimenez (Feyenoord)"]},
+                // --- Paralympische Winterspelen 2026 ---
+                {q:"Wanneer vinden de Paralympische Winterspelen 2026 plaats?",a:"6 tot en met 15 maart 2026 in Milaan en Cortina d'Ampezzo",c:"Winterspelen 2026",w:["1 tot en met 10 maart 2026","13 tot en met 22 maart 2026","20 februari tot en met 1 maart 2026"]},
+                {q:"Waar vindt de openingsceremonie van de Paralympische Winterspelen 2026 plaats?",a:"In de Verona Arena in Verona (een oud Romeins amfitheater)",c:"Winterspelen 2026",w:["In het San Siro stadion in Milaan","In het Olympisch stadion in Rome","In de Fiera Milano"]},
+                {q:"Hoeveel para-atleten doen mee aan de Paralympische Winterspelen 2026?",a:"665 para-atleten (een recordaantal)",c:"Winterspelen 2026",w:["500 para-atleten","750 para-atleten","400 para-atleten"]},
+                {q:"In hoeveel sporten wordt er gestreden op de Paralympische Winterspelen 2026?",a:"Zes sporten (para-alpineskien, para-biatlon, para-langlaufen, para-ijshockey, para-snowboard, rolstoelcurling)",c:"Winterspelen 2026",w:["Vier sporten","Acht sporten","Tien sporten"]},
+                {q:"Welke bijzondere mijlpaal vieren de Paralympische Winterspelen 2026?",a:"Het 50-jarig jubileum van de Paralympische Winterspelen",c:"Winterspelen 2026",w:["Het 25-jarig jubileum","Het 75-jarig jubileum","Het is de eerste keer in Italie"]},
+                {q:"Welke Nederlandse para-snowboardster was een pionier die goud won bij het paralympisch debuut van para-snowboard in 2014?",a:"Bibian Mentel-Spee (zij won ook in 2018 twee keer goud ondanks kankerbehandelingen)",c:"Winterspelen 2026",w:["Lisa Bunschoten","Chris Vos","Renske Bos"]},
+                // --- Six Nations Rugby 2026 ---
+                {q:"Welk land is op koers voor een Grand Slam in het Six Nations Rugby 2026?",a:"Frankrijk (ongeslagen na drie rondes)",c:"Rugby",w:["Ierland","Engeland","Schotland"]},
+                {q:"Welke historische primeur vond plaats tijdens het Six Nations 2026?",a:"Hollie Davidson werd de eerste vrouw die een wedstrijd in het mannen Six Nations floot",c:"Rugby",w:["Er werd voor het eerst op donderdag gespeeld","Italie won voor het eerst van Engeland","Er werd een nieuw puntenrecord gebroken"]},
+                {q:"Welke verrassende uitslag zorgde voor opschudding in het Six Nations 2026?",a:"Ierland won met 42-21 van Engeland (grootste Ierse uitoverwinning op Engeland ooit)",c:"Rugby",w:["Italie versloeg Frankrijk met 30-10","Schotland won van Ierland met 35-0","Wales versloeg Frankrijk met 28-14"]},
 
             ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
         }
