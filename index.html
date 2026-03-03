@@ -400,9 +400,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v29'); } catch(ex) {}
+                try { localStorage.removeItem('sportquiz_questions_v30'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v30');
+                const stored = localStorage.getItem('sportquiz_questions_v31');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +437,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v30'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v31'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +446,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v30', data);
+                localStorage.setItem('sportquiz_questions_v31', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3651,6 +3651,57 @@
                 {q:"Welk land is op koers voor een Grand Slam in het Six Nations Rugby 2026?",a:"Frankrijk (ongeslagen na drie rondes)",c:"Rugby",w:["Ierland","Engeland","Schotland"]},
                 {q:"Welke historische primeur vond plaats tijdens het Six Nations 2026?",a:"Hollie Davidson werd de eerste vrouw die een wedstrijd in het mannen Six Nations floot",c:"Rugby",w:["Er werd voor het eerst op donderdag gespeeld","Italie won voor het eerst van Engeland","Er werd een nieuw puntenrecord gebroken"]},
                 {q:"Welke verrassende uitslag zorgde voor opschudding in het Six Nations 2026?",a:"Ierland won met 42-21 van Engeland (grootste Ierse uitoverwinning op Engeland ooit)",c:"Rugby",w:["Italie versloeg Frankrijk met 30-10","Schotland won van Ierland met 35-0","Wales versloeg Frankrijk met 28-14"]},
+
+                // ===== ATLETIEK WERELDRECORDS =====
+                // --- Mannen sprint ---
+                {q:"Wat is het wereldrecord op de 100 meter bij de mannen?",a:"9,58 seconden — Usain Bolt (Jamaica, WK Berlijn 2009)",c:"Atletiek Wereldrecords",w:["9,69 seconden — Usain Bolt (2008)","9,72 seconden — Asafa Powell (2008)","9,63 seconden — Usain Bolt (2012)"]},
+                {q:"Wat is het wereldrecord op de 200 meter bij de mannen?",a:"19,19 seconden — Usain Bolt (Jamaica, WK Berlijn 2009)",c:"Atletiek Wereldrecords",w:["19,30 seconden — Usain Bolt (2008)","19,32 seconden — Michael Johnson (1996)","19,26 seconden — Yohan Blake (2012)"]},
+                {q:"Wat is het wereldrecord op de 400 meter bij de mannen?",a:"43,03 seconden — Wayde van Niekerk (Zuid-Afrika, OS Rio 2016)",c:"Atletiek Wereldrecords",w:["43,18 seconden — Michael Johnson (1999)","43,29 seconden — Wayde van Niekerk (2017)","43,45 seconden — Kirani James (2016)"]},
+                {q:"In welke baan liep Wayde van Niekerk zijn wereldrecord op de 400 meter?",a:"Baan 8 (de buitenste baan, wat zeer ongebruikelijk is voor een record)",c:"Atletiek Wereldrecords",w:["Baan 4","Baan 6","Baan 3"]},
+                // --- Mannen middellange en lange afstand ---
+                {q:"Wat is het wereldrecord op de 800 meter bij de mannen?",a:"1:40,91 — David Rudisha (Kenia, OS Londen 2012)",c:"Atletiek Wereldrecords",w:["1:41,01 — David Rudisha (2010)","1:41,11 — Wilson Kipketer (1997)","1:40,55 — Emmanuel Korir (2022)"]},
+                {q:"Wat is het wereldrecord op de 1500 meter bij de mannen?",a:"3:26,00 — Hicham El Guerrouj (Marokko, Rome 1998)",c:"Atletiek Wereldrecords",w:["3:26,12 — Bernard Lagat (2005)","3:27,37 — Noureddine Morceli (1995)","3:28,32 — Jakob Ingebrigtsen (2024)"]},
+                {q:"Wat is het wereldrecord op de 5000 meter bij de mannen?",a:"12:35,36 — Joshua Cheptegei (Oeganda, Monaco 2020)",c:"Atletiek Wereldrecords",w:["12:37,35 — Kenenisa Bekele (2004)","12:39,36 — Daniel Komen (1998)","12:40,18 — Haile Gebrselassie (1998)"]},
+                {q:"Wat is het wereldrecord op de 10.000 meter bij de mannen?",a:"26:11,00 — Joshua Cheptegei (Oeganda, Valencia 2020)",c:"Atletiek Wereldrecords",w:["26:17,53 — Kenenisa Bekele (2005)","26:20,31 — Haile Gebrselassie (1998)","26:22,75 — Paul Tergat (1997)"]},
+                {q:"Welke Oegandese atleet houdt zowel het wereldrecord op de 5000m als de 10.000m?",a:"Joshua Cheptegei (beide gevestigd in 2020)",c:"Atletiek Wereldrecords",w:["Kenenisa Bekele","Haile Gebrselassie","Mo Farah"]},
+                // --- Mannen marathon ---
+                {q:"Wat is het wereldrecord op de marathon bij de mannen?",a:"2:00:35 — Kelvin Kiptum (Kenia, Chicago Marathon 2023)",c:"Atletiek Wereldrecords",w:["2:01:09 — Eliud Kipchoge (2022)","2:01:39 — Eliud Kipchoge (2018)","2:02:57 — Dennis Kimetto (2014)"]},
+                {q:"Wat is er bijzonder aan Kelvin Kiptum, houder van het marathon wereldrecord?",a:"Hij overleed in februari 2024 op 24-jarige leeftijd bij een auto-ongeluk in Kenia",c:"Atletiek Wereldrecords",w:["Hij liep het record in zijn eerste marathon ooit","Hij was de oudste marathonrecordhouder ooit","Hij brak het record drie keer in één jaar"]},
+                // --- Mannen veldnummers ---
+                {q:"Wat is het wereldrecord verspringen bij de mannen?",a:"8,95 meter — Mike Powell (VS, WK Tokio 1991)",c:"Atletiek Wereldrecords",w:["8,90 meter — Bob Beamon (1968)","8,87 meter — Carl Lewis (1991)","9,01 meter — Mike Powell (1993)"]},
+                {q:"Wie hield het legendarische verspringrecord van 8,90 meter dat Mike Powell in 1991 verbrak?",a:"Bob Beamon (gevestigd op de OS Mexico-Stad 1968, stond 23 jaar)",c:"Atletiek Wereldrecords",w:["Carl Lewis","Jesse Owens","Ralph Boston"]},
+                {q:"Wat is het wereldrecord hoogspringen bij de mannen?",a:"2,45 meter — Javier Sotomayor (Cuba, Salamanca 1993)",c:"Atletiek Wereldrecords",w:["2,43 meter — Mutaz Essa Barshim (2019)","2,42 meter — Patrik Sjöberg (1987)","2,44 meter — Javier Sotomayor (1989)"]},
+                {q:"Wat is het wereldrecord polsstokhoogspringen bij de mannen (per maart 2026)?",a:"6,30 meter — Armand 'Mondo' Duplantis (Zweden, WK Tokio 2025)",c:"Atletiek Wereldrecords",w:["6,26 meter — Armand Duplantis (2024)","6,24 meter — Armand Duplantis (2024)","6,15 meter — Sergej Bubka (1993)"]},
+                {q:"Hoe vaak heeft Armand Duplantis het wereldrecord polsstokhoogspringen verbeterd?",a:"Veertien keer (van 6,17m in 2020 tot 6,30m in 2025)",c:"Atletiek Wereldrecords",w:["Acht keer","Tien keer","Twaalf keer"]},
+                {q:"Welk legendarisch record van Sergej Bubka (6,14m uit 1994) verbrak Duplantis?",a:"Bubka's outdoor wereldrecord van 6,14 meter dat 26 jaar had standgehouden",c:"Atletiek Wereldrecords",w:["Bubka's indoor record van 6,15 meter","Bubka's record van 6,10 meter","Bubka's olympisch record van 5,90 meter"]},
+                {q:"Wat is het wereldrecord kogelstoten bij de mannen?",a:"23,56 meter — Ryan Crouser (VS, Los Angeles 2023)",c:"Atletiek Wereldrecords",w:["23,37 meter — Ryan Crouser (2021)","23,12 meter — Randy Barnes (1990)","23,06 meter — Ulf Timmermann (1988)"]},
+                {q:"Wat is het wereldrecord discuswerpen bij de mannen (per maart 2026)?",a:"75,56 meter — Mykolas Alekna (Litouwen, 2025)",c:"Atletiek Wereldrecords",w:["74,35 meter — Mykolas Alekna (2024)","73,88 meter — Jürgen Schult (1986)","74,08 meter — Daniel Ståhl (2023)"]},
+                {q:"Wat is bijzonder aan het discusrecord van Mykolas Alekna?",a:"Hij is de eerste man ooit die de 75 meter grens doorbreekt, en zijn vader Virgilijus was ook olympisch kampioen discus",c:"Atletiek Wereldrecords",w:["Hij brak het record op zijn 18e verjaardag","Hij is de jongste recordhouder ooit","Hij wierp het record met zijn linkerhand"]},
+                {q:"Wat is het wereldrecord speerwerpen bij de mannen?",a:"98,48 meter — Jan Železný (Tsjechië, Jena 1996)",c:"Atletiek Wereldrecords",w:["95,66 meter — Johannes Vetter (2020)","93,09 meter — Jan Železný (1993)","97,76 meter — Neeraj Chopra (2024)"]},
+                // --- Vrouwen sprint ---
+                {q:"Wat is het wereldrecord op de 100 meter bij de vrouwen?",a:"10,49 seconden — Florence Griffith-Joyner (VS, Indianapolis 1988)",c:"Atletiek Wereldrecords",w:["10,61 seconden — Elaine Thompson-Herah (2021)","10,62 seconden — Florence Griffith-Joyner (1988)","10,65 seconden — Sha'Carri Richardson (2023)"]},
+                {q:"Wat is het wereldrecord op de 200 meter bij de vrouwen?",a:"21,34 seconden — Florence Griffith-Joyner (VS, OS Seoul 1988)",c:"Atletiek Wereldrecords",w:["21,53 seconden — Dafne Schippers (2015)","21,56 seconden — Shericka Jackson (2022)","21,62 seconden — Merlene Ottey (1991)"]},
+                {q:"Waarom zijn de records van Florence Griffith-Joyner controversieel?",a:"Er bestaan vermoedens van dopinggebruik, maar ze is nooit positief getest. Ze overleed in 1998 op 38-jarige leeftijd",c:"Atletiek Wereldrecords",w:["Ze werden gelopen met ongeldig schoeisel","De windmeting was defect bij haar records","Ze liep met een valse start die niet werd opgemerkt"]},
+                {q:"Wat is het wereldrecord op de 400 meter bij de vrouwen?",a:"47,60 seconden — Marita Koch (Oost-Duitsland, Canberra 1985)",c:"Atletiek Wereldrecords",w:["48,25 seconden — Sanya Richards-Ross (2006)","47,99 seconden — Jarmila Kratochvílová (1983)","48,14 seconden — Salwa Eid Naser (2019)"]},
+                // --- Vrouwen middellange en lange afstand ---
+                {q:"Wat is het wereldrecord op de 800 meter bij de vrouwen?",a:"1:53,28 — Jarmila Kratochvílová (Tsjechoslowakije, München 1983)",c:"Atletiek Wereldrecords",w:["1:54,01 — Caster Semenya (2018)","1:53,50 — Pamela Jelimo (2008)","1:54,25 — Keely Hodgkinson (2025)"]},
+                {q:"Wat is bijzonder aan het 800 meter record van Jarmila Kratochvílová?",a:"Het is het oudste individuele wereldrecord in de atletiek (staat sinds 1983, meer dan 42 jaar)",c:"Atletiek Wereldrecords",w:["Het werd gelopen op grote hoogte","Het werd gelopen bij de eerste vrouwen-WK","Het is het enige record uit Oost-Europa dat nog staat"]},
+                {q:"Wat is het wereldrecord op de 1500 meter bij de vrouwen (per maart 2026)?",a:"3:48,68 — Faith Kipyegon (Kenia, Eugene 2025)",c:"Atletiek Wereldrecords",w:["3:49,11 — Faith Kipyegon (2023)","3:50,07 — Genzebe Dibaba (2015)","3:50,46 — Qu Yunxia (1993)"]},
+                {q:"Hoe vaak heeft Faith Kipyegon het 1500 meter wereldrecord verbeterd?",a:"Drie keer (2023 Florence, 2023 Parijs, 2025 Eugene)",c:"Atletiek Wereldrecords",w:["Twee keer","Vier keer","Eén keer"]},
+                {q:"Wat is het wereldrecord op de marathon bij de vrouwen?",a:"2:09:56 — Ruth Chepngetich (Kenia, Chicago Marathon 2024)",c:"Atletiek Wereldrecords",w:["2:11:53 — Tigst Assefa (2023)","2:14:04 — Brigid Kosgei (2019)","2:15:25 — Paula Radcliffe (2003)"]},
+                {q:"Wat is bijzonder aan het marathonrecord van Ruth Chepngetich?",a:"Ze was de eerste vrouw ooit onder de 2 uur en 10 minuten, maar werd later geschorst voor 3 jaar wegens dopingregels (het record blijft staan)",c:"Atletiek Wereldrecords",w:["Ze liep het in haar eerste marathon","Ze was 40 jaar oud bij het record","Ze brak het record met meer dan 10 minuten"]},
+                // --- Vrouwen veldnummers ---
+                {q:"Wat is het wereldrecord hoogspringen bij de vrouwen (per maart 2026)?",a:"2,10 meter — Yaroslava Mahuchikh (Oekraïne, Parijs 2024)",c:"Atletiek Wereldrecords",w:["2,09 meter — Stefka Kostadinova (1987)","2,08 meter — Blanka Vlašić (2009)","2,07 meter — Mariya Lasitskene (2021)"]},
+                {q:"Welk record verbrak Yaroslava Mahuchikh met haar sprong van 2,10 meter?",a:"Het 37 jaar oude record van Stefka Kostadinova (Bulgarije, 2,09m uit 1987)",c:"Atletiek Wereldrecords",w:["Het record van Blanka Vlašić (2,08m)","Het record van Heike Henkel (2,07m)","Het record van Tamara Bykova (2,05m)"]},
+                {q:"Wat is het wereldrecord polsstokhoogspringen bij de vrouwen?",a:"5,06 meter — Jelena Isinbajeva (Rusland, Zürich 2009)",c:"Atletiek Wereldrecords",w:["5,01 meter — Jelena Isinbajeva (2005)","4,95 meter — Sandi Morris (2016)","5,03 meter — Angelica Bengtsson (2019)"]},
+                // --- Bijzondere feiten ---
+                {q:"Welke atleet wordt beschouwd als de snelste mens aller tijden?",a:"Usain Bolt (Jamaica) — houder van zowel het 100m (9,58s) als 200m (19,19s) record",c:"Atletiek Wereldrecords",w:["Carl Lewis","Tyson Gay","Yohan Blake"]},
+                {q:"Op welk evenement vestigde Usain Bolt zowel zijn 100m als 200m wereldrecord?",a:"De WK atletiek 2009 in Berlijn",c:"Atletiek Wereldrecords",w:["De Olympische Spelen 2012 in Londen","De Olympische Spelen 2008 in Peking","De WK atletiek 2011 in Daegu"]},
+                {q:"Welk atletiekrecord staat het langst van alle individuele records?",a:"De 800 meter vrouwen: 1:53,28 van Jarmila Kratochvílová uit 1983",c:"Atletiek Wereldrecords",w:["De 400 meter vrouwen van Marita Koch uit 1985","Het verspringen van Mike Powell uit 1991","Het hoogspringen van Javier Sotomayor uit 1993"]},
+                {q:"Welk land heeft de meeste atletiek-wereldrecordhouders op de sprint (100m en 200m)?",a:"Jamaica (Usain Bolt houdt zowel het mannen 100m als 200m record)",c:"Atletiek Wereldrecords",w:["Verenigde Staten","Kenia","Groot-Brittannië"]},
+                {q:"Wie houdt het langst staande mannenrecord in de atletiek veldnummers?",a:"Javier Sotomayor met 2,45m hoogspringen (sinds 1993, meer dan 32 jaar)",c:"Atletiek Wereldrecords",w:["Mike Powell met 8,95m verspringen (1991)","Jan Železný met 98,48m speerwerpen (1996)","Sergej Bubka met 6,14m polsstokhoogspringen (1994)"]},
+                {q:"Welke twee atletiek-wereldrecords uit de jaren '80 bij de vrouwen worden geassocieerd met het Oost-Europese dopingtijdperk?",a:"De 400m van Marita Koch (1985, Oost-Duitsland) en de 800m van Jarmila Kratochvílová (1983, Tsjechoslowakije)",c:"Atletiek Wereldrecords",w:["De 100m en 200m van Florence Griffith-Joyner","De 1500m en 3000m records","De verspringen en hoogspringen records"]},
+                {q:"Welke Nederlander hield tot 2015 de snelste 200 meter door een Europese vrouw?",a:"Dafne Schippers liep 21,63 seconden op de WK 2015 in Peking (zilver achter het wereldrecord)",c:"Atletiek Wereldrecords",w:["Nelli Cooman","Fanny Blankers-Koen","Femke Bol"]},
 
             ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
         }
