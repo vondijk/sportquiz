@@ -400,9 +400,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v30'); } catch(ex) {}
+                try { localStorage.removeItem('sportquiz_questions_v31'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v31');
+                const stored = localStorage.getItem('sportquiz_questions_v32');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +437,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v31'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v32'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +446,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v31', data);
+                localStorage.setItem('sportquiz_questions_v32', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3702,6 +3702,66 @@
                 {q:"Wie houdt het langst staande mannenrecord in de atletiek veldnummers?",a:"Javier Sotomayor met 2,45m hoogspringen (sinds 1993, meer dan 32 jaar)",c:"Atletiek Wereldrecords",w:["Mike Powell met 8,95m verspringen (1991)","Jan Železný met 98,48m speerwerpen (1996)","Sergej Bubka met 6,14m polsstokhoogspringen (1994)"]},
                 {q:"Welke twee atletiek-wereldrecords uit de jaren '80 bij de vrouwen worden geassocieerd met het Oost-Europese dopingtijdperk?",a:"De 400m van Marita Koch (1985, Oost-Duitsland) en de 800m van Jarmila Kratochvílová (1983, Tsjechoslowakije)",c:"Atletiek Wereldrecords",w:["De 100m en 200m van Florence Griffith-Joyner","De 1500m en 3000m records","De verspringen en hoogspringen records"]},
                 {q:"Welke Nederlander hield tot 2015 de snelste 200 meter door een Europese vrouw?",a:"Dafne Schippers liep 21,63 seconden op de WK 2015 in Peking (zilver achter het wereldrecord)",c:"Atletiek Wereldrecords",w:["Nelli Cooman","Fanny Blankers-Koen","Femke Bol"]},
+
+                // ===== OLYMPISCHE RECORDS & STATISTIEKEN =====
+                // --- Michael Phelps ---
+                {q:"Hoeveel Olympische medailles heeft Michael Phelps in totaal gewonnen?",a:"28 medailles (23 goud, 3 zilver, 2 brons) — de meest gedecoreerde Olympiër aller tijden",c:"Olympische Records",w:["25 medailles","30 medailles","22 medailles"]},
+                {q:"Hoeveel gouden medailles won Michael Phelps op de Olympische Spelen van Peking 2008?",a:"Acht gouden medailles — een record voor één Spelen, waarmee hij Mark Spitz' record van 7 (1972) verbrak",c:"Olympische Records",w:["Zes gouden medailles","Zeven gouden medailles","Vijf gouden medailles"]},
+                {q:"Hoe oud was Michael Phelps bij zijn Olympisch debuut in Sydney 2000?",a:"15 jaar oud (hij eindigde als vijfde op de 200m vlinderslag)",c:"Olympische Records",w:["16 jaar oud","17 jaar oud","14 jaar oud"]},
+                {q:"Welk individueel nummer won Michael Phelps op vier opeenvolgende Olympische Spelen?",a:"De 200 meter wisselslag (2004, 2008, 2012 en 2016)",c:"Olympische Records",w:["De 200 meter vlinderslag","De 100 meter vlinderslag","De 400 meter wisselslag"]},
+                // --- Meest gedecoreerde Olympiërs ---
+                {q:"Wie hield het record van meeste Olympische medailles voordat Michael Phelps het verbrak?",a:"Larisa Latynina (USSR, turnen) met 18 medailles (9 goud, 5 zilver, 4 brons) — zij hield het record 48 jaar",c:"Olympische Records",w:["Mark Spitz (zwemmen)","Carl Lewis (atletiek)","Paavo Nurmi (atletiek)"]},
+                {q:"Wie is de meest gedecoreerde vrouwelijke Olympiër aller tijden?",a:"Larisa Latynina (USSR) met 18 medailles in het turnen (1956-1964)",c:"Olympische Records",w:["Katie Ledecky (zwemmen)","Birgit Fischer (kanovaren)","Marit Bjørgen (langlaufen)"]},
+                // --- Klæbo & Winterspelen records ---
+                {q:"Wie is de meest gedecoreerde Winterolympiër qua gouden medailles?",a:"Johannes Høsflot Klæbo (Noorwegen, langlaufen) met 11 gouden medailles",c:"Olympische Records",w:["Marit Bjørgen (8 goud)","Ole Einar Bjørndalen (8 goud)","Bjørn Dæhlie (8 goud)"]},
+                {q:"Hoeveel gouden medailles won Klæbo op de Winterspelen 2026 in Milaan?",a:"Zes gouden medailles — een record voor één Winterspelen, waarmee hij Eric Heidens record van 5 (1980) verbrak",c:"Olympische Records",w:["Vier gouden medailles","Vijf gouden medailles","Zeven gouden medailles"]},
+                {q:"Welke zes nummers won Klæbo allemaal op de Winterspelen 2026?",a:"Skiathlon, 10km vrij, sprint klassiek, estafette, teamsprint vrij en 50km massastart",c:"Olympische Records",w:["Alleen individuele nummers, geen estafettes","Vier individuele nummers en twee estafettes","Vijf nummers, hij miste de 50km"]},
+                {q:"Wie is de meest gedecoreerde Winterolympiër qua totaal aantal medailles?",a:"Marit Bjørgen (Noorwegen, langlaufen) met 15 medailles (8 goud, 4 zilver, 3 brons)",c:"Olympische Records",w:["Ole Einar Bjørndalen (14 medailles)","Arianna Fontana (14 medailles)","Johannes Klæbo (13 medailles)"]},
+                // --- Marit Bjørgen ---
+                {q:"Op hoeveel Winterspelen won Marit Bjørgen medailles?",a:"Vijf Winterspelen (2002, 2006, 2010, 2014, 2018)",c:"Olympische Records",w:["Vier Winterspelen","Zes Winterspelen","Drie Winterspelen"]},
+                {q:"Hoeveel medailles won Marit Bjørgen op de Winterspelen van Pyeongchang 2018?",a:"Vijf medailles (2 goud, 2 zilver, 1 brons), waarmee ze het record voor meeste Winterolympische medailles vestigde",c:"Olympische Records",w:["Drie medailles","Vier medailles","Zes medailles"]},
+                // --- Ole Einar Bjørndalen ---
+                {q:"Hoeveel Olympische medailles won Ole Einar Bjørndalen in het biatlon?",a:"14 medailles (8 goud, 4 zilver, 2 brons) — de 'Koning van het Biatlon'",c:"Olympische Records",w:["12 medailles","16 medailles","10 medailles"]},
+                {q:"Wat presteerde Ole Einar Bjørndalen op de Winterspelen 2002 in Salt Lake City?",a:"Hij won alle vier de mannen-biatlonnummers (sprint, pursuit, individueel, estafette) — een unieke clean sweep",c:"Olympische Records",w:["Hij won drie van de vier nummers","Hij won twee gouden en twee zilveren medailles","Hij won alleen de sprint"]},
+                // --- Arianna Fontana ---
+                {q:"Hoeveel Olympische medailles heeft Arianna Fontana (shorttrack) in totaal?",a:"14 medailles (3 goud, 6 zilver, 5 brons) over 6 opeenvolgende Winterspelen (2006-2026)",c:"Olympische Records",w:["12 medailles over 5 Winterspelen","10 medailles over 4 Winterspelen","16 medailles over 6 Winterspelen"]},
+                {q:"Welk bijzonder record vestigde Arianna Fontana op de Winterspelen 2026?",a:"Ze werd Italië's meest gedecoreerde Olympiër ooit (zomer én winter), met 14 medailles",c:"Olympische Records",w:["Ze werd de eerste vrouw met 10 Winterolympische gouden medailles","Ze werd de jongste shorttrack-kampioene ooit","Ze won alle vier de shorttrack-nummers"]},
+                // --- Opeenvolgende gouden medailles ---
+                {q:"Welke atleet won de meeste opeenvolgende gouden medailles in hetzelfde individuele nummer?",a:"Mijaín López (Cuba, Grieks-Romeins worstelen 130kg) — vijf keer goud op rij (2008-2024)",c:"Olympische Records",w:["Carl Lewis (verspringen, 4x goud)","Al Oerter (discus, 4x goud)","Michael Phelps (200m wisselslag, 4x goud)"]},
+                {q:"Hoe oud was Mijaín López toen hij zijn vijfde opeenvolgende Olympische goud won in Parijs 2024?",a:"41 jaar oud",c:"Olympische Records",w:["38 jaar oud","44 jaar oud","35 jaar oud"]},
+                {q:"Welke Amerikaanse atleet won vier keer op rij goud in het verspringen (1984-1996)?",a:"Carl Lewis",c:"Olympische Records",w:["Mike Powell","Bob Beamon","Jesse Owens"]},
+                {q:"Welke Amerikaanse discuswerper won vier opeenvolgende Olympische gouden medailles (1956-1968)?",a:"Al Oerter — hij wierp bij elke Spelen een persoonlijk record",c:"Olympische Records",w:["Robert Garrett","Mac Wilkins","Wink Roberts"]},
+                // --- Steve Redgrave ---
+                {q:"Welke Britse roeier won goud op vijf opeenvolgende Olympische Spelen (1984-2000)?",a:"Sir Steve Redgrave",c:"Olympische Records",w:["Matthew Pinsent","James Cracknell","Jack Beresford"]},
+                {q:"Wat zei Steve Redgrave na zijn vierde gouden medaille in 1996?",a:"'Anybody who sees me in a boat has my permission to shoot me' — waarna hij in 2000 alsnog goud won",c:"Olympische Records",w:["'Ik stop definitief met roeien'","'Dit was mijn laatste race ooit'","'Vijf keer goud is onmogelijk'"]},
+                // --- Usain Bolt Olympische records ---
+                {q:"Wat is de 'triple-triple' van Usain Bolt?",a:"Hij won de 100m, 200m én 4x100m estafette op drie opeenvolgende Olympische Spelen (2008, 2012, 2016)",c:"Olympische Records",w:["Hij won drie keer de 100m","Hij liep drie wereldrecords op rij","Hij won negen individuele gouden medailles"]},
+                {q:"Hoeveel Olympische gouden medailles heeft Usain Bolt?",a:"Acht gouden medailles (oorspronkelijk 9, maar één 4x100m-goud werd afgenomen wegens doping van een teamgenoot)",c:"Olympische Records",w:["Negen gouden medailles","Zeven gouden medailles","Zes gouden medailles"]},
+                // --- Jongste en oudste Olympiërs ---
+                {q:"Wie is de jongste bevestigde Olympische medaillewinnaar?",a:"Dimitrios Loundras (Griekenland) — 10 jaar en 218 dagen oud bij de eerste moderne Spelen in 1896 (turnen)",c:"Olympische Records",w:["Nadia Comăneci (14 jaar)","Kim Yun-mi (13 jaar)","Momiji Nishiya (13 jaar)"]},
+                {q:"Wie is de oudste Olympische gouden medaillewinnaar?",a:"Oscar Swahn (Zweden) — 64 jaar oud bij de Spelen van 1912 (schieten, teamonderdeel)",c:"Olympische Records",w:["Hiroshi Hoketsu (71 jaar, paardensport)","Nino Salukvadze (55 jaar, schieten)","Ian Millar (65 jaar, paardensport)"]},
+                // --- Meeste deelnames ---
+                {q:"Welke atleet nam deel aan de meeste Olympische Spelen?",a:"Ian Millar (Canada, paardensport) en Nino Salukvadze (Georgië, schieten) — beiden 10 Spelen",c:"Olympische Records",w:["Noriaki Kasai (8 Winterspelen)","Paul Elvstrom (8 Zomerspelen)","Claudia Pechstein (8 Winterspelen)"]},
+                {q:"Welke Japanse skispringer nam deel aan 8 Winterspelen (1992-2018)?",a:"Noriaki Kasai — hij was 45 jaar oud bij zijn laatste deelname",c:"Olympische Records",w:["Takanobu Okabe","Kazuyoshi Funaki","Daiki Ito"]},
+                // --- Bijzondere prestaties ---
+                {q:"Welke Tsjechische atleet won op de Spelen van 1952 de 5.000m, 10.000m én de marathon?",a:"Emil Zátopek — hij liep de marathon voor het eerst in zijn leven en won goud",c:"Olympische Records",w:["Lasse Virén","Mo Farah","Haile Gebrselassie"]},
+                {q:"Welke Canadese atlete won medailles op zowel de Zomer- als Winterspelen?",a:"Clara Hughes — ze won medailles in het wielrennen (zomer) en schaatsen (winter)",c:"Olympische Records",w:["Cindy Klassen","Catriona Le May Doan","Hayley Wickenheiser"]},
+                {q:"Welke Duitse kanovaarster won goud met 24 jaar verschil (1980 en 2004)?",a:"Birgit Fischer — ze won haar laatste goud op 42-jarige leeftijd en pakte 12 medailles over 6 Spelen",c:"Olympische Records",w:["Katrin Wagner","Anke von Seck","Josefa Idem"]},
+                // --- Landenrecords ---
+                {q:"Welk land staat bovenaan de eeuwige medaillespiegel van de Zomerspelen?",a:"De Verenigde Staten (ruim 2.900 medailles, waarvan circa 1.200 goud)",c:"Olympische Records",w:["Groot-Brittannië","Sovjet-Unie/Rusland","China"]},
+                {q:"Welk land domineert de eeuwige medaillespiegel van de Winterspelen?",a:"Noorwegen (meer dan 440 medailles, waarvan circa 166 goud)",c:"Olympische Records",w:["Verenigde Staten","Duitsland","Oostenrijk"]},
+                // --- Dominante sportnaties ---
+                {q:"Hoeveel van de 32 mogelijke schaatsmedailles won Nederland op de Winterspelen 2014 in Sotsji?",a:"23 medailles, inclusief 4 volledige podiumplaatsen (1-2-3)",c:"Olympische Records",w:["18 medailles","26 medailles","20 medailles"]},
+                {q:"Hoeveel opeenvolgende gouden medailles won het Amerikaanse mannenbasketbalteam tot 1972?",a:"Zeven opeenvolgende gouden medailles (1936-1968) zonder een wedstrijd te verliezen",c:"Olympische Records",w:["Vijf gouden medailles","Negen gouden medailles","Vier gouden medailles"]},
+                {q:"Welke Jamaicaanse sprinter zorgde voor een podiumsweep op de 100m vrouwen op de Spelen van Tokio 2020?",a:"Elaine Thompson-Herah (goud), Shelly-Ann Fraser-Pryce (zilver) en Shericka Jackson (brons) — een volledig Jamaicaans podium",c:"Olympische Records",w:["Alleen Thompson-Herah en Fraser-Pryce stonden op het podium","Jamaica won goud en brons","Er was geen Jamaicaanse sweep"]},
+                // --- Nederlandse Olympische records ---
+                {q:"Wie is de meest gedecoreerde Nederlandse Olympiër aller tijden?",a:"Ireen Wüst met 13 medailles (6 goud, 5 zilver, 2 brons) in het schaatsen",c:"Olympische Records",w:["Sven Kramer (9 medailles)","Anky van Grunsven (9 medailles)","Inge de Bruijn (8 medailles)"]},
+                {q:"Hoeveel Olympische medailles won Sven Kramer in het schaatsen?",a:"9 medailles (4 goud, 3 zilver, 2 brons)",c:"Olympische Records",w:["7 medailles","11 medailles","6 medailles"]},
+                {q:"Wie wordt 'de vliegende huisvrouw' genoemd en won 4 gouden medailles op de Spelen van 1948?",a:"Fanny Blankers-Koen — de eerste vrouw ooit die 4 gouden medailles won op één Spelen",c:"Olympische Records",w:["Inge de Bruijn","Leontien van Moorsel","Anky van Grunsven"]},
+                {q:"In welke sport heeft Nederland de meeste Olympische medailles ooit gewonnen?",a:"Schaatsen (langebaan) met meer dan 140 medailles — veruit het meeste van alle landen",c:"Olympische Records",w:["Zwemmen","Wielrennen","Roeien"]},
+                {q:"Hoeveel gouden medailles won Inge de Bruijn op de Spelen van Sydney 2000?",a:"Drie gouden medailles (50m vrij, 100m vrij, 100m vlinderslag) plus een zilveren medaille",c:"Olympische Records",w:["Twee gouden medailles","Vier gouden medailles","Eén gouden medaille"]},
+                {q:"Welke Nederlandse amazone won drie keer Olympisch goud in de dressuur?",a:"Anky van Grunsven (Sydney 2000, Athene 2004, Peking 2008) — met in totaal 9 Olympische medailles",c:"Olympische Records",w:["Isabell Werth","Edward Gal","Hans Peter Minderhoud"]},
+                {q:"Welke Nederlandse wielrenster won vier Olympische gouden medailles?",a:"Leontien Zijlaard-van Moorsel (tijdrit en wegrace in 2000, en puntenkoers in 2004, plus achtervolging 2000)",c:"Olympische Records",w:["Marianne Vos","Anna van der Breggen","Ellen van Dijk"]},
 
             ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
         }
