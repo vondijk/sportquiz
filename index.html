@@ -400,7 +400,7 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v32'); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
                 const stored = localStorage.getItem('sportquiz_questions_v33');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
