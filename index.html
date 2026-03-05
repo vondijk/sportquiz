@@ -400,9 +400,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { localStorage.removeItem('sportquiz_questions_v31'); } catch(ex) {}
+                try { localStorage.removeItem('sportquiz_questions_v32'); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v32');
+                const stored = localStorage.getItem('sportquiz_questions_v33');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +437,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v32'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v33'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +446,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v32', data);
+                localStorage.setItem('sportquiz_questions_v33', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3651,6 +3651,80 @@
                 {q:"Welk land is op koers voor een Grand Slam in het Six Nations Rugby 2026?",a:"Frankrijk (ongeslagen na drie rondes)",c:"Rugby",w:["Ierland","Engeland","Schotland"]},
                 {q:"Welke historische primeur vond plaats tijdens het Six Nations 2026?",a:"Hollie Davidson werd de eerste vrouw die een wedstrijd in het mannen Six Nations floot",c:"Rugby",w:["Er werd voor het eerst op donderdag gespeeld","Italie won voor het eerst van Engeland","Er werd een nieuw puntenrecord gebroken"]},
                 {q:"Welke verrassende uitslag zorgde voor opschudding in het Six Nations 2026?",a:"Ierland won met 42-21 van Engeland (grootste Ierse uitoverwinning op Engeland ooit)",c:"Rugby",w:["Italie versloeg Frankrijk met 30-10","Schotland won van Ierland met 35-0","Wales versloeg Frankrijk met 28-14"]},
+
+                // === ACTUALITEIT MAART 2026 - UPDATE 2 ===
+                // --- Formula 1 2026 ---
+                {q:"Wie is de regerend Formule 1-wereldkampioen bij de start van het seizoen 2026?",a:"Lando Norris (McLaren) — hij versloeg Max Verstappen in 2025 met slechts 2 punten verschil",c:"Formule 1",w:["Max Verstappen","Charles Leclerc","Carlos Sainz"]},
+                {q:"Welk nieuw team maakt zijn debuut in de Formule 1 in 2026?",a:"Cadillac F1 — het elfde team, waardoor er voor het eerst sinds 2016 weer 22 coureurs op de grid staan",c:"Formule 1",w:["Audi (dat is het omgedoopte Sauber)","Porsche","Lamborghini"]},
+                {q:"Bij welk team rijdt Lewis Hamilton vanaf 2026?",a:"Ferrari (samen met Charles Leclerc)",c:"Formule 1",w:["Mercedes","Red Bull","Aston Martin"]},
+                {q:"Welke ingrijpende technische verandering is er in de Formule 1 in 2026?",a:"DRS is afgeschaft en vervangen door actieve aerodynamica met een 'straight mode' en een inhaalknop",c:"Formule 1",w:["De auto's rijden volledig elektrisch","Er is geen limiet meer op het budget","De races zijn ingekort naar 200 km"]},
+                {q:"Wie zijn de coureurs van Cadillac F1 in hun debuutseizoen 2026?",a:"Sergio Pérez en Valtteri Bottas",c:"Formule 1",w:["Daniel Ricciardo en Kevin Magnussen","Pierre Gasly en Esteban Ocon","Nico Hülkenberg en Mick Schumacher"]},
+                {q:"Welke motorleverancier verlaat de Formule 1 in 2026 na decennia?",a:"Renault — voor het eerst sinds 2000 rijdt er geen auto met Renault-motor",c:"Formule 1",w:["Honda","Mercedes","Ferrari"]},
+                {q:"Wie is de jongste rookie op de F1-grid in 2026?",a:"Arvid Lindblad (18 jaar, Racing Bulls) — de enige rookie van het seizoen",c:"Formule 1",w:["Oliver Bearman (19 jaar, Haas)","Gabriel Bortoleto (20 jaar, Audi)","Franco Colapinto (22 jaar, Alpine)"]},
+                {q:"Bij welk team rijdt Max Verstappen in 2026?",a:"Red Bull (met nieuwe teamgenoot Isack Hadjar)",c:"Formule 1",w:["Mercedes","Ferrari","Aston Martin"]},
+                // --- Tennis update ---
+                {q:"Wie won de Australian Open 2026 bij de mannen?",a:"Carlos Alcaraz — hij versloeg Novak Djokovic in de finale en werd de jongste man ooit met een Career Grand Slam",c:"Tennis",w:["Novak Djokovic","Jannik Sinner","Alexander Zverev"]},
+                {q:"Hoe oud was Carlos Alcaraz toen hij de Career Grand Slam voltooide op de Australian Open 2026?",a:"22 jaar (de jongste man ooit die alle vier de Grand Slams won)",c:"Tennis",w:["21 jaar","23 jaar","24 jaar"]},
+                {q:"Wie won de Australian Open 2026 bij de vrouwen?",a:"Elena Rybakina (zij versloeg Aryna Sabalenka in de finale)",c:"Tennis",w:["Aryna Sabalenka","Iga Swiatek","Coco Gauff"]},
+                {q:"Wie won de ABN AMRO Open Rotterdam 2026?",a:"Alex de Minaur — hij versloeg Felix Auger-Aliassime 6-3, 6-2 in de finale",c:"Tennis",w:["Daniil Medvedev","Jannik Sinner","Stefanos Tsitsipas"]},
+                // --- Eredivisie extra ---
+                {q:"Welke club keerde in 2025-26 terug in de Eredivisie na 47 jaar afwezigheid?",a:"Telstar (via de play-offs gepromoveerd)",c:"Voetbal",w:["De Graafschap","MVV Maastricht","Roda JC"]},
+                {q:"Welke Engelse speler tekende in februari 2026 bij Feyenoord als vrije speler?",a:"Raheem Sterling (ex-Chelsea, Manchester City en Liverpool)",c:"Voetbal",w:["Jack Grealish","Jadon Sancho","Dele Alli"]},
+                {q:"Wie is de trainer van Feyenoord in het seizoen 2025-26?",a:"Robin van Persie",c:"Voetbal",w:["Arne Slot","Brian Priske","Giovanni van Bronckhorst"]},
+                {q:"Welke club versloeg koploper PSV verrassend met 2-1 op 1 maart 2026?",a:"FC Volendam",c:"Voetbal",w:["Heracles Almelo","NAC Breda","Telstar"]},
+                {q:"Hoe heet de Eredivisie officieel sinds het seizoen 2025-26?",a:"De VriendenLoterij Eredivisie (nieuwe naamgevingsrechten)",c:"Voetbal",w:["De KPN Eredivisie","De ING Eredivisie","De Toto Eredivisie"]},
+                // --- Six Nations extra ---
+                {q:"Met welke recordscore versloeg Frankrijk Wales in het Six Nations 2026?",a:"54-12 (de meeste punten ooit gescoord door Frankrijk tegen Wales)",c:"Rugby",w:["42-10","48-7","38-15"]},
+                {q:"Wat gebeurde er met de Six Nations-trofee na ronde 3 van het toernooi 2026?",a:"De trofee raakte beschadigd door brand en werd uit gebruik genomen — een replica wordt uitgereikt",c:"Rugby",w:["De trofee werd gestolen","De trofee viel en brak","De trofee werd verkocht op een veiling"]},
+                {q:"Welke Engelse speler behaalde zijn 100e cap tijdens het Six Nations 2026?",a:"Maro Itoje",c:"Rugby",w:["Owen Farrell","Ben Youngs","Courtney Lawes"]},
+                {q:"Welk land won de Calcutta Cup in het Six Nations 2026?",a:"Schotland (31-20 tegen Engeland)",c:"Rugby",w:["Engeland","Ierland","Wales"]},
+
+                // ===== NAMEN VAN STADIONS =====
+                // --- Nederlandse stadions ---
+                {q:"Hoe heet het stadion van Ajax?",a:"Johan Cruijff ArenA (tot 2018 bekend als Amsterdam ArenA, hernoemd ter ere van Johan Cruijff)",c:"Stadions",w:["De Kuip","Philips Stadion","De Meer"]},
+                {q:"Wat is de officiële naam van 'De Kuip'?",a:"Stadion Feijenoord (met de oude spelling 'Feijenoord', niet de moderne clubnaam 'Feyenoord')",c:"Stadions",w:["Feyenoord Stadion","De Kuip Arena","Rotterdam Stadion"]},
+                {q:"Waarom heet het PSV-stadion het Philips Stadion?",a:"PSV staat voor Philips Sport Vereniging — de club werd in 1913 opgericht door werknemers van Philips",c:"Stadions",w:["Philips kocht de naamrechten in 2000","Het stadion staat naast de Philips-fabriek","Het is vernoemd naar een speler genaamd Philips"]},
+                {q:"Welke bijnaam heeft het stadion van Sparta Rotterdam?",a:"Het Kasteel — vanwege het kasteelachtige uiterlijk",c:"Stadions",w:["De Toren","Het Fort","De Burcht"]},
+                {q:"Hoe heet het stadion van SC Heerenveen en naar wie is het vernoemd?",a:"Abe Lenstra Stadion — vernoemd naar de legendarische spits Abe Lenstra (1920-1985)",c:"Stadions",w:["Foppe de Haan Stadion","Riemer van der Velde Stadion","Thialf Stadion"]},
+                {q:"Welk stadion van FC Utrecht verwijst naar een historische executieplaats?",a:"Stadion Galgenwaard — vernoemd naar het gebied waar vroeger galgen stonden",c:"Stadions",w:["Het Domplein Stadion","De Uithof","Stadion Jaarbeurs"]},
+                {q:"Wat is bijzonder aan het GelreDome in Arnhem?",a:"Het heeft zowel een uitschuifbaar dak als een verrijdbaar natuurgrasveld",c:"Stadions",w:["Het is het oudste stadion van Nederland","Het heeft de grootste capaciteit","Het is gebouwd in een voormalige mijn"]},
+                {q:"Wat betekent 'De Adelaarshorst', het stadion van Go Ahead Eagles?",a:"Het Adelaarsnest — toepasselijk voor een club die Eagles heet",c:"Stadions",w:["De Adelaarsvleugel","Het Adelaarsveld","De Arenbaan"]},
+                {q:"Welk is het grootste stadion van Nederland?",a:"De Johan Cruijff ArenA met circa 55.000 plaatsen",c:"Stadions",w:["De Kuip (47.500)","Philips Stadion (35.000)","De Grolsch Veste (30.000)"]},
+                // --- Engelse stadions ---
+                {q:"Welke bijnaam heeft Old Trafford, het stadion van Manchester United?",a:"The Theatre of Dreams — bedacht door Sir Bobby Charlton",c:"Stadions",w:["The Red Fortress","The Devil's Playground","The Red Cathedral"]},
+                {q:"Hoe heet het stadion van Liverpool FC?",a:"Anfield",c:"Stadions",w:["Goodison Park","Stamford Bridge","Emirates Stadium"]},
+                {q:"Welk stadion verving White Hart Lane als thuisbasis van Tottenham Hotspur?",a:"Tottenham Hotspur Stadium (geopend in 2019, White Hart Lane werd gesloopt in 2017)",c:"Stadions",w:["Emirates Stadium","London Stadium","Wembley Stadium"]},
+                {q:"Wat is Wembley Stadium?",a:"Het nationale voetbalstadion van Engeland met 90.000 plaatsen, ook wel 'The Home of Football' genoemd",c:"Stadions",w:["Het stadion van Arsenal","Het stadion van de Engelse rugbyploeg","Het stadion van Chelsea"]},
+                {q:"Hoe heet het stadion van Arsenal?",a:"Emirates Stadium (voorheen speelde Arsenal op Highbury)",c:"Stadions",w:["Stamford Bridge","Selhurst Park","Craven Cottage"]},
+                // --- Spaanse stadions ---
+                {q:"Hoe heet het stadion van FC Barcelona officieel (per 2026)?",a:"Spotify Camp Nou — het werd in november 2025 heropend na een grote renovatie",c:"Stadions",w:["Estadio Barcelona","Camp Nou Arena","Rakuten Camp Nou"]},
+                {q:"Wat is bijzonder aan de renovatie van het Bernabéu-stadion van Real Madrid?",a:"Het heeft nu een uitschuifbare grasmat die 30 meter ondergronds wordt opgeslagen in het 'Hypogeum'",c:"Stadions",w:["Het dak is gemaakt van zonnepanelen","Het stadion draait 360 graden","Het heeft een zweefbaan over het veld"]},
+                // --- Duitse stadions ---
+                {q:"Hoe heet het stadion van Borussia Dortmund officieel, en wat is de veel gebruikte naam?",a:"Signal Iduna Park (officieel), maar fans noemen het nog steeds het Westfalenstadion",c:"Stadions",w:["BVB Arena / Dortmund Stadion","Ruhr Arena / het Kohlenstadion","Deutsche Bank Park / het Waldstadion"]},
+                {q:"Wat is 'Die Gelbe Wand' (De Gele Muur)?",a:"De Südtribüne van Borussia Dortmunds stadion — met 24.454 staanplaatsen de grootste staantribune van Europa",c:"Stadions",w:["De uitshirtkleur van Dortmund","Een pub naast het stadion","De trainingshal van Dortmund"]},
+                {q:"Welke bijnaam heeft de Allianz Arena in München?",a:"Het Schlauchboot (opblaasboot) — vanwege de kussenvormige buitenpanelen",c:"Stadions",w:["De Biertent","Het Weisswurstpalast","De Lederhose"]},
+                // --- Italiaanse stadions ---
+                {q:"Wat is de officiële naam van San Siro in Milaan?",a:"Stadio Giuseppe Meazza — vernoemd naar de tweevoudig wereldkampioen (1934, 1938) die voor zowel Inter als AC Milan speelde",c:"Stadions",w:["Stadio San Siro","Stadio della Scala","Stadio Lombardia"]},
+                {q:"Welke bijnaam heeft San Siro?",a:"La Scala del Calcio (De La Scala van het Voetbal) — een verwijzing naar het beroemde operagebouw in Milaan",c:"Stadions",w:["Il Teatro del Gol","La Casa del Calcio","Il Colosseo del Calcio"]},
+                // --- Andere internationale stadions ---
+                {q:"Welk stadion is het enige ter wereld dat twee WK-finales heeft georganiseerd?",a:"Estadio Azteca in Mexico-Stad (1970 en 1986 — Maradona's 'Hand van God' en 'Doelpunt van de Eeuw')",c:"Stadions",w:["Maracanã in Rio de Janeiro","Wembley in Londen","Stade de France in Parijs"]},
+                {q:"Welk record heeft het Maracanã in Rio de Janeiro?",a:"Het trok 173.850 toeschouwers bij de WK-finale 1950 (Brazilië vs Uruguay, de 'Maracanazo')",c:"Stadions",w:["Het is het oudste stadion ter wereld","Het heeft het grootste kunstgrasveld","Het is het duurste stadion ooit gebouwd"]},
+                {q:"Welk stadion is het enige dat zowel een WK-finale voetbal, een WK-finale rugby én de Olympische Spelen heeft georganiseerd?",a:"Stade de France in Saint-Denis/Parijs (WK voetbal 1998, WK rugby 2007, OS 2024)",c:"Stadions",w:["Wembley Stadium","Olympiastadion Berlijn","Maracanã"]},
+                // --- WK 2026 stadions ---
+                {q:"In welk stadion wordt de WK-finale 2026 gespeeld?",a:"MetLife Stadium in East Rutherford, New Jersey (bij New York)",c:"Stadions",w:["AT&T Stadium in Dallas","SoFi Stadium in Los Angeles","Estadio Azteca in Mexico-Stad"]},
+                {q:"Welk stadion organiseert de meeste WK-wedstrijden in 2026 (9 stuks)?",a:"AT&T Stadium in Dallas, inclusief een halve finale",c:"Stadions",w:["MetLife Stadium in New York","Hard Rock Stadium in Miami","SoFi Stadium in Los Angeles"]},
+                {q:"Wat doet FIFA met de sponsornamen van WK-stadions in 2026?",a:"FIFA verwijdert de sponsornamen van 14 van de 16 stadions — alleen Estadio Azteca en BC Place houden hun naam",c:"Stadions",w:["Alle stadions behouden hun sponsornaam","FIFA geeft alle stadions een nieuwe naam","Alleen Amerikaanse stadions verliezen hun naam"]},
+                // --- Rugby stadions ---
+                {q:"Welk beroemd rugbystadion verkocht voor het eerst ooit zijn naamrechten in 2024?",a:"Twickenham — het heet nu Allianz Stadium Twickenham (deal van meer dan 100 miljoen pond)",c:"Stadions",w:["Murrayfield","Stade de France","Principality Stadium"]},
+                {q:"Hoe heette het Millennium Stadium in Cardiff voordat het in 2016 werd hernoemd?",a:"Het héét nog steeds het Millennium Stadium bij veel fans, maar officieel is het nu het Principality Stadium",c:"Stadions",w:["Cardiff Arms Park","Welsh National Stadium","Dragon Stadium"]},
+                // --- Iconische andere stadions ---
+                {q:"Welke bijnaam heeft Madison Square Garden in New York?",a:"The World's Most Famous Arena (thuisbasis van de NY Knicks en NY Rangers)",c:"Stadions",w:["The Big Apple Arena","The Broadway Bowl","The Manhattan Dome"]},
+                {q:"Wat is de bijnaam van Lord's Cricket Ground in Londen?",a:"The Home of Cricket — het oudste en meest prestigieuze cricketveld ter wereld (sinds 1814)",c:"Stadions",w:["The Oval","The Green","The Pitch"]},
+                {q:"Wat was de bijnaam van het originele Yankee Stadium (1923-2008)?",a:"The House That Ruth Built — vernoemd naar honkballegende Babe Ruth",c:"Stadions",w:["The Big Ballpark","The Bronx Bomber","The Sultan's Palace"]},
+                {q:"Welk bedrijf sponsort stadions in München, Turijn, Londen (Twickenham), Nice, São Paulo en Wenen?",a:"Allianz — met o.a. Allianz Arena, Allianz Stadium, Allianz Stadium Twickenham",c:"Stadions",w:["Emirates","Etihad","Gazprom"]},
+                // --- Olympische stadions ---
+                {q:"Welk stadion is het enige dat zowel de Zomer- als Winterolympische openingsceremonies heeft georganiseerd?",a:"Het Vogelnest (Bird's Nest) in Peking — Zomerspelen 2008 en Winterspelen 2022",c:"Stadions",w:["Stade de France in Parijs","Olympiastadion in Londen","Olympiastadion in Berlijn"]},
+                {q:"In welk Nederlands stadion werd in 1928 voor het eerst de Olympische vlam aangestoken?",a:"Het Olympisch Stadion in Amsterdam — dit was de eerste keer in de Olympische geschiedenis",c:"Stadions",w:["De Kuip in Rotterdam","Het Philips Stadion in Eindhoven","De Johan Cruijff ArenA"]},
 
                 // ===== ATLETIEK WERELDRECORDS =====
                 // --- Mannen sprint ---
