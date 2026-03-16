@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Sportquiz</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -127,6 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v34 — 16 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -400,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v33');
+                const stored = localStorage.getItem('sportquiz_questions_v34');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -437,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v33'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v34'); } catch(e) {}
                 location.reload();
             }
         }
@@ -446,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v33', data);
+                localStorage.setItem('sportquiz_questions_v34', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3725,6 +3729,44 @@
                 // --- Olympische stadions ---
                 {q:"Welk stadion is het enige dat zowel de Zomer- als Winterolympische openingsceremonies heeft georganiseerd?",a:"Het Vogelnest (Bird's Nest) in Peking — Zomerspelen 2008 en Winterspelen 2022",c:"Stadions",w:["Stade de France in Parijs","Olympiastadion in Londen","Olympiastadion in Berlijn"]},
                 {q:"In welk Nederlands stadion werd in 1928 voor het eerst de Olympische vlam aangestoken?",a:"Het Olympisch Stadion in Amsterdam — dit was de eerste keer in de Olympische geschiedenis",c:"Stadions",w:["De Kuip in Rotterdam","Het Philips Stadion in Eindhoven","De Johan Cruijff ArenA"]},
+
+                // === ACTUALITEIT 16 MAART 2026 - UPDATE 3 ===
+                // --- Champions League achtste finales heenwedstrijden ---
+                {q:"Wat was de uitslag van Real Madrid - Manchester City in de CL achtste finale (10 maart)?",a:"3-0 voor Real Madrid",c:"Voetbal",w:["2-1 voor Real Madrid","1-1 gelijkspel","2-0 voor Manchester City"]},
+                {q:"Welk team versloeg Chelsea met 5-2 in de CL achtste finale heenwedstrijd?",a:"Paris Saint-Germain (verdedigend kampioen)",c:"Voetbal",w:["Real Madrid","Bayern München","Arsenal"]},
+                {q:"Met welke verrassende uitslag won Bodø/Glimt thuis van Sporting CP in de CL?",a:"3-0 — de Noorse sensatie domineert opnieuw in de Champions League",c:"Voetbal",w:["2-1","1-0","4-2"]},
+                {q:"Welk team vernederde Atalanta met 6-1 uit in de CL achtste finale?",a:"Bayern München",c:"Voetbal",w:["Real Madrid","Liverpool","Barcelona"]},
+                {q:"Wat was de uitslag van Atlético Madrid - Tottenham in de CL?",a:"5-2 voor Atlético Madrid",c:"Voetbal",w:["3-1 voor Atlético","2-2 gelijkspel","1-0 voor Tottenham"]},
+                {q:"Wat was de uitslag van Galatasaray - Liverpool in de CL achtste finale?",a:"1-0 voor Galatasaray",c:"Voetbal",w:["2-1 voor Liverpool","0-0 gelijkspel","3-2 voor Liverpool"]},
+                // --- Paralympische Winterspelen 2026 resultaten ---
+                {q:"Welk land won de medaillespiegel van de Paralympische Winterspelen 2026?",a:"China (15 goud, 13 zilver, 16 brons — 44 medailles totaal)",c:"Winterspelen 2026",w:["Verenigde Staten (13 goud, 24 totaal)","Duitsland (2 goud, 17 totaal)","Italië (7 goud, 16 totaal)"]},
+                {q:"Hoeveel medailles won Nederland op de Paralympische Winterspelen 2026?",a:"Vijf medailles, waarvan twee goud",c:"Winterspelen 2026",w:["Drie medailles, waarvan één goud","Zeven medailles, waarvan drie goud","Twee medailles, geen goud"]},
+                {q:"Welke Nederlandse para-atleet won twee gouden medailles bij het sit-skiën op de Paralympische Winterspelen 2026?",a:"Jeroen Kampschreur",c:"Winterspelen 2026",w:["Lisa Bunschoten","Chris Vos","Bibian Mentel-Spee"]},
+                {q:"Welk Nederlands echtpaar won beiden een medaille bij het para-snowboarden op de Paralympische Winterspelen 2026?",a:"Lisa Bunschoten-Vos en Chris Vos",c:"Winterspelen 2026",w:["Suzanne Schulting en haar partner","Irene Schouten en haar partner","Bibian Mentel en Edwin Spee"]},
+                {q:"Welk land won voor de vijfde keer op rij goud bij het para-ijshockey op de Paralympische Winterspelen?",a:"De Verenigde Staten (6-2 winst tegen Canada in de finale)",c:"Winterspelen 2026",w:["Canada","Noorwegen","Zuid-Korea"]},
+                // --- Six Nations finale ---
+                {q:"Wie won het Six Nations 2026?",a:"Frankrijk — zij wonnen de titel maar misten de Grand Slam na een nederlaag tegen Schotland",c:"Rugby",w:["Ierland","Engeland","Schotland"]},
+                {q:"Welk team versloeg Frankrijk in het Six Nations 2026 en voorkwam daarmee de Grand Slam?",a:"Schotland (50-40 in een recordwedstrijd)",c:"Rugby",w:["Ierland","Engeland","Wales"]},
+                {q:"Hoe won Frankrijk de laatste Six Nations-wedstrijd tegen Engeland?",a:"48-46, met een allerlaatste penalty van Thomas Ramos",c:"Rugby",w:["35-30 na verlenging","42-21 met een try in de slotminuut","28-14 comfortabel"]},
+                {q:"Welk team won de Triple Crown in het Six Nations 2026?",a:"Ierland (door overwinningen op Engeland, Schotland en Wales)",c:"Rugby",w:["Frankrijk","Schotland","Engeland"]},
+                {q:"Welke historische eerste overwinning boekte Italië in het Six Nations 2026?",a:"Italië versloeg Engeland voor het eerst ooit in het Six Nations",c:"Rugby",w:["Italië versloeg Frankrijk","Italië won de Triple Crown","Italië eindigde als eerste"]},
+                {q:"Hoe eindigde Engeland in het Six Nations 2026?",a:"Vijfde — hun slechtste resultaat ooit sinds de start van het Six Nations in 2000",c:"Rugby",w:["Vierde","Zesde (laatste)","Derde"]},
+                // --- F1 Australische GP ---
+                {q:"Wie won de eerste Formule 1 race van 2026 (Australische Grand Prix)?",a:"George Russell (Mercedes) — Mercedes behaalde een 1-2 finish met Antonelli tweede",c:"Formule 1",w:["Lando Norris (McLaren)","Charles Leclerc (Ferrari)","Max Verstappen (Red Bull)"]},
+                {q:"Hoe eindigde Max Verstappen in de Australische GP 2026?",a:"Zesde — meer dan 54 seconden achter winnaar Russell",c:"Formule 1",w:["Tweede","Vierde","Hij viel uit"]},
+                {q:"Welk team behaalde een 1-2 finish bij de openingsrace van het F1-seizoen 2026?",a:"Mercedes (Russell eerste, Kimi Antonelli tweede)",c:"Formule 1",w:["Ferrari","McLaren","Red Bull"]},
+                {q:"Hoe eindigde Lewis Hamilton in zijn eerste race voor Ferrari (Australië 2026)?",a:"Vierde, achter teamgenoot Leclerc (derde)",c:"Formule 1",w:["Eerste","Op het podium (derde)","Hij viel uit"]},
+                // --- Tennis Indian Wells ---
+                {q:"Wie won het ATP Indian Wells (BNP Paribas Open) 2026?",a:"Jannik Sinner — hij versloeg Daniil Medvedev in de finale en completeerde daarmee alle zes ATP Masters 1000 hardcourt-titels",c:"Tennis",w:["Carlos Alcaraz","Novak Djokovic","Daniil Medvedev"]},
+                {q:"Wie won het WTA Indian Wells 2026?",a:"Aryna Sabalenka — zij versloeg Elena Rybakina 3-6, 6-3, 7-6 in de finale",c:"Tennis",w:["Elena Rybakina","Iga Swiatek","Coco Gauff"]},
+                // --- Wielrennen ---
+                {q:"Wie won Parijs-Nice 2026?",a:"Jonas Vingegaard (Visma-Lease a Bike) — hij domineerde met een verre aanval",c:"Wielrennen",w:["Tadej Pogačar","Remco Evenepoel","Primož Roglič"]},
+                {q:"Wie won de Tirreno-Adriatico 2026?",a:"Isaac del Toro (UAE Team Emirates)",c:"Wielrennen",w:["Mathieu van der Poel","Tadej Pogačar","Jonas Vingegaard"]},
+                {q:"Welke twee etappes won Mathieu van der Poel in de Tirreno-Adriatico 2026?",a:"Etappe 2 (de gravelrit in Toscane) en etappe 4",c:"Wielrennen",w:["Etappe 1 en 3","Etappe 5 en 7","Etappe 3 en 6"]},
+                // --- Eredivisie extra maart ---
+                {q:"Welke club versloeg PSV met 3-2 in het Philips Stadion op 15 maart 2026?",a:"NEC Nijmegen (Bryan Linssen scoorde twee keer)",c:"Voetbal",w:["FC Volendam","Heracles Almelo","Telstar"]},
+                {q:"Welke verrassende uitslag leed Ajax in speelronde 26 van de Eredivisie?",a:"Een 3-1 nederlaag bij FC Groningen",c:"Voetbal",w:["Een 2-0 nederlaag bij Telstar","Een 4-1 nederlaag bij FC Twente","Een 0-0 gelijkspel tegen PEC Zwolle"]},
+                {q:"Welke promovendus presteerde verrassend sterk in maart 2026 met o.a. een 3-0 zege op NAC en 4-1 op Fortuna?",a:"Telstar",c:"Voetbal",w:["Excelsior","FC Volendam","Heracles Almelo"]},
 
                 // ===== ATLETIEK WERELDRECORDS =====
                 // --- Mannen sprint ---
