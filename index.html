@@ -130,7 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
-            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v38 — 17 maart 2026</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v39 — 17 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -404,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v38');
+                const stored = localStorage.getItem('sportquiz_questions_v39');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -441,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v38'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v39'); } catch(e) {}
                 location.reload();
             }
         }
@@ -450,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v38', data);
+                localStorage.setItem('sportquiz_questions_v39', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3954,6 +3954,60 @@
                 {q:"Welke Spaanse speler werd de jongste speler ooit op een EK na zijn optreden bij EK 2024?",a:"Lamine Yamal",c:"EK Voetbal Historie",w:["Pedri","Renato Sanches","Gavi"]},
                 {q:"Welk land organiseerde het EK van 1960, het eerste toernooi in de geschiedenis?",a:"Frankrijk",c:"EK Voetbal Historie",w:["Italië","België","Portugal"]},
                 {q:"West-Duitsland won het EK van 1972 met een grote zege in de finale. Hoe groot was de eindstand tegen de Sovjet-Unie?",a:"3-0",c:"EK Voetbal Historie",w:["2-0","4-1","2-1"]},
+
+                // === SPORT 2025 (30 vragen) ===
+                {q:"Wie won het PDC Wereldkampioenschap Darts in januari 2025?",a:"Luke Littler",c:"Sport 2025",w:["Michael van Gerwen","Peter Wright","Luke Humphries"]},
+                {q:"Wie werd op 3 januari 2025 de jongste wereldkampioen darts ooit door Michael van Gerwen 7-3 te verslaan?",a:"Luke Littler",c:"Sport 2025",w:["Luke Humphries","Nathan Aspinall","Gerwyn Price"]},
+                {q:"Wie won het mannenenkelspel op de Australian Open 2025?",a:"Jannik Sinner",c:"Sport 2025",w:["Alexander Zverev","Carlos Alcaraz","Novak Djokovic"]},
+                {q:"Wie won het vrouwenenkelspel op de Australian Open 2025 als verrassing door tweevoudig titelhouder Sabalenka te verslaan?",a:"Madison Keys",c:"Sport 2025",w:["Aryna Sabalenka","Coco Gauff","Iga Swiatek"]},
+                {q:"De Philadelphia Eagles wonnen Super Bowl LIX op 9 februari 2025. Welk team versloegen zij?",a:"Kansas City Chiefs",c:"Sport 2025",w:["San Francisco 49ers","Baltimore Ravens","Dallas Cowboys"]},
+                {q:"Wat was de eindstand van Super Bowl LIX (Eagles vs. Chiefs)?",a:"40-22",c:"Sport 2025",w:["34-17","38-21","42-24"]},
+                {q:"Wie won de openingsrace van het Formule 1-seizoen 2025, de Grand Prix van Australië?",a:"Lando Norris",c:"Sport 2025",w:["Max Verstappen","Charles Leclerc","Oscar Piastri"]},
+                {q:"Welk team won op 31 mei 2025 de UEFA Champions League door Inter Milan met 5-0 te verslaan?",a:"Paris Saint-Germain",c:"Sport 2025",w:["Real Madrid","Manchester City","Bayern München"]},
+                {q:"Waar werd de Champions League-finale van 2025 gespeeld?",a:"Allianz Arena, München",c:"Sport 2025",w:["Wembley, Londen","Santiago Bernabéu, Madrid","Stadio Olimpico, Rome"]},
+                {q:"Wie won op 13 april 2025 Parijs-Roubaix voor de derde keer op rij?",a:"Mathieu van der Poel",c:"Sport 2025",w:["Tadej Pogacar","Wout van Aert","Mads Pedersen"]},
+                {q:"Wie won het WK Snooker 2025 in Sheffield als eerste Chinese speler ooit?",a:"Zhao Xintong",c:"Sport 2025",w:["Ding Junhui","Ronnie O'Sullivan","Mark Williams"]},
+                {q:"Welke atleet won op 22 maart 2025 zijn derde opeenvolgende wereldindoortitel polsstokhoogspringen in Nanjing?",a:"Mondo Duplantis",c:"Sport 2025",w:["Sam Kendricks","Emmanouil Karalis","Christopher Nilsen"]},
+                {q:"Wie won het mannenenkelspel op Roland Garros 2025?",a:"Carlos Alcaraz",c:"Sport 2025",w:["Jannik Sinner","Novak Djokovic","Alexander Zverev"]},
+                {q:"Wie won het vrouwenenkelspel op Roland Garros 2025?",a:"Coco Gauff",c:"Sport 2025",w:["Aryna Sabalenka","Iga Swiatek","Elena Rybakina"]},
+                {q:"Welk basketbalteam won op 22 juni 2025 zijn eerste NBA-titel door de Indiana Pacers te verslaan?",a:"Oklahoma City Thunder",c:"Sport 2025",w:["Denver Nuggets","Boston Celtics","Golden State Warriors"]},
+                {q:"Wie won de Tour de France 2025 voor de vierde keer in zijn carrière?",a:"Tadej Pogačar",c:"Sport 2025",w:["Jonas Vingegaard","Remco Evenepoel","Primož Roglič"]},
+                {q:"Welke tennisster won Wimbledon 2025 bij de vrouwen?",a:"Iga Świątek",c:"Sport 2025",w:["Coco Gauff","Aryna Sabalenka","Elena Rybakina"]},
+                {q:"Jannik Sinner won Wimbledon 2025 bij de heren. Welk record vestigde hij daarmee?",a:"Eerste Italiaan die Wimbledon herenenkelspel wint",c:"Sport 2025",w:["Eerste speler met vier Grand Slams op rij","Jongste Wimbledon-winnaar ooit","Eerste nummer 1 die Wimbledon wint"]},
+                {q:"Wie werd Formule 1-wereldkampioen in 2025?",a:"Lando Norris",c:"Sport 2025",w:["Max Verstappen","Oscar Piastri","Charles Leclerc"]},
+                {q:"Met hoeveel punten verschil won Lando Norris het F1-kampioenschap 2025 van Max Verstappen?",a:"2 punten",c:"Sport 2025",w:["11 punten","25 punten","38 punten"]},
+                {q:"Welk wereldrecord verbrak Mondo Duplantis op de WK Atletiek 2025 in Tokyo?",a:"6,30 meter polsstokspringen",c:"Sport 2025",w:["6,25 meter polsstokspringen","6,35 meter polsstokspringen","6,28 meter polsstokspringen"]},
+                {q:"Wie won de Vuelta a España 2025?",a:"Jonas Vingegaard",c:"Sport 2025",w:["Primož Roglič","João Almeida","Tom Pidcock"]},
+                {q:"Welke Franse wielrenster won de Tour de France Femmes 2025?",a:"Pauline Ferrand-Prévot",c:"Sport 2025",w:["Demi Vollering","Kasia Niewiadoma","Elisa Longo Borghini"]},
+                {q:"Wie won het mannenenkelspel op de US Open 2025?",a:"Carlos Alcaraz",c:"Sport 2025",w:["Jannik Sinner","Novak Djokovic","Taylor Fritz"]},
+                {q:"Wie won de Ballon d'Or 2025?",a:"Ousmane Dembélé",c:"Sport 2025",w:["Vinícius Júnior","Erling Haaland","Kylian Mbappé"]},
+                {q:"Welk land won de UEFA Nations League 2025 door Spanje te verslaan via strafschoppen?",a:"Portugal",c:"Sport 2025",w:["Frankrijk","Duitsland","Nederland"]},
+                {q:"Rory McIlroy voltooide in 2025 de Career Grand Slam door welk golftoernooi te winnen?",a:"The Masters (Augusta)",c:"Sport 2025",w:["US Open","The Open Championship","PGA Championship"]},
+                {q:"Bokser Oleksandr Usyk versloeg Daniel Dubois in juli 2025. Wat bereikte hij daarmee?",a:"Twee keer onbetwist wereldkampioen zwaargewicht",c:"Sport 2025",w:["Eerste WBO-kampioen zwaargewicht","Ongeslagen IBF-kampioen","Eerste Europeaan met vier titelbanden"]},
+                {q:"Welke tennisser won als eerste Italiaan ooit de Australian Open in 2025?",a:"Jannik Sinner",c:"Sport 2025",w:["Matteo Berrettini","Lorenzo Musetti","Fabio Fognini"]},
+                {q:"Welke club vertegenwoordigde Ousmane Dembélé toen hij de Ballon d'Or 2025 won?",a:"Paris Saint-Germain",c:"Sport 2025",w:["FC Barcelona","Real Madrid","Manchester City"]},
+
+                // === SPORT 2026 (20 vragen) ===
+                {q:"Wie won het WK Darts 2026 in Alexandra Palace?",a:"Luke Littler",c:"Sport 2026",w:["Michael van Gerwen","Gian van Veen","Luke Humphries"]},
+                {q:"Met welke uitslag versloeg Luke Littler de Nederlander Gian van Veen in de finale van het WK Darts 2026?",a:"7-1",c:"Sport 2026",w:["7-3","7-4","7-0"]},
+                {q:"Wie won het Australian Open 2026 bij de heren?",a:"Carlos Alcaraz",c:"Sport 2026",w:["Novak Djokovic","Jannik Sinner","Daniil Medvedev"]},
+                {q:"Welk historisch record vestigde Carlos Alcaraz door het Australian Open 2026 te winnen?",a:"De jongste man ooit die de Career Grand Slam voltooide",c:"Sport 2026",w:["De eerste Spanjaard die alle Grand Slams won","Het record voor de meeste Grand Slam-titels op rij","De eerste speler die Djokovic drie keer op rij versloeg"]},
+                {q:"Wie won het Australian Open 2026 bij de dames?",a:"Elena Rybakina",c:"Sport 2026",w:["Aryna Sabalenka","Iga Swiatek","Coco Gauff"]},
+                {q:"Welk land eindigde derde op de medaillespiegel van de Winterspelen 2026 in Milaan-Cortina?",a:"Nederland",c:"Sport 2026",w:["Canada","Duitsland","Oostenrijk"]},
+                {q:"Hoeveel gouden medailles won Nederland op de Winterspelen 2026 in Milaan-Cortina?",a:"10",c:"Sport 2026",w:["8","12","7"]},
+                {q:"Welke Nederlandse schaatsster won goud op zowel de 500 meter als de 1000 meter shorttrack op de Winterspelen 2026?",a:"Xandra Velzeboer",c:"Sport 2026",w:["Suzanne Schulting","Jutta Leerdam","Femke Kok"]},
+                {q:"Jutta Leerdam won goud op de Winterspelen 2026 op welke afstand?",a:"1000 meter langebaanschaatsen",c:"Sport 2026",w:["500 meter langebaanschaatsen","1500 meter langebaanschaatsen","Mass start"]},
+                {q:"Welke Noorse langlaufer won zes gouden medailles op de Winterspelen 2026?",a:"Johannes Høsflot Klæbo",c:"Sport 2026",w:["Petter Northug","Martin Johnsrud Sundby","Harald Østberg Amundsen"]},
+                {q:"Welk NFL-team won Super Bowl LX in februari 2026?",a:"Seattle Seahawks",c:"Sport 2026",w:["Kansas City Chiefs","Buffalo Bills","Dallas Cowboys"]},
+                {q:"Wie werd verkozen tot MVP van Super Bowl LX 2026?",a:"Kenneth Walker III",c:"Sport 2026",w:["Geno Smith","Jaxon Smith-Njigba","Drake Maye"]},
+                {q:"Welk land won het Zeslandentoernooi rugby 2026?",a:"Frankrijk",c:"Sport 2026",w:["Ierland","Engeland","Schotland"]},
+                {q:"Wie won de openingsrace van het Formule 1-seizoen 2026, de Grand Prix van Australië?",a:"George Russell",c:"Sport 2026",w:["Lando Norris","Charles Leclerc","Kimi Antonelli"]},
+                {q:"Welk team pakte de eerste en tweede plaats in de Grand Prix van Australië 2026?",a:"Mercedes",c:"Sport 2026",w:["Ferrari","Red Bull","McLaren"]},
+                {q:"Welke speler werd in januari 2026 voor circa £64 miljoen de duurste wintertransfer in de Premier League?",a:"Antoine Semenyo (naar Manchester City)",c:"Sport 2026",w:["Jorgen Strand Larsen","Oscar Bobb","Taty Castellanos"]},
+                {q:"Met welke score versloeg PSG Chelsea in de heenwedstrijd van de Champions League achtste finales 2026?",a:"5-2",c:"Sport 2026",w:["3-1","4-0","3-2"]},
+                {q:"Met welke score won Real Madrid de heenwedstrijd van de Champions League achtste finale 2026 tegen Manchester City?",a:"3-0",c:"Sport 2026",w:["2-1","4-1","2-0"]},
+                {q:"Luke Littler ontving als WK Darts-kampioen 2026 een recordbedrag aan prijzengeld. Hoeveel was dit?",a:"£1 miljoen",c:"Sport 2026",w:["£500.000","£750.000","£1,5 miljoen"]},
+                {q:"Ierland won op de slotdag van het Zeslandentoernooi 2026 de Triple Crown door welk land te verslaan?",a:"Schotland",c:"Sport 2026",w:["Wales","Engeland","Italië"]},
 
             ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
         }
