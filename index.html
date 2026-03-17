@@ -130,7 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
-            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v37 — 17 maart 2026</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v38 — 17 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -404,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v37');
+                const stored = localStorage.getItem('sportquiz_questions_v38');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -441,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v37'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v38'); } catch(e) {}
                 location.reload();
             }
         }
@@ -450,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v37', data);
+                localStorage.setItem('sportquiz_questions_v38', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3906,6 +3906,54 @@
                 {q:"Welk land won het EK 1992 terwijl het zich niet eens had gekwalificeerd?",a:"Denemarken — zij werden 10 dagen voor het toernooi opgeroepen als vervanger van het uitgesloten Joegoslavië, terwijl de spelers op vakantie waren",c:"EK Voetbal Historie",w:["Griekenland","Ierland","Noorwegen"]},
                 {q:"Welk land zorgde voor de grootste verrassing in EK-geschiedenis door het toernooi van 2004 te winnen?",a:"Griekenland — als 150/1 outsider onder de Duitse trainer Otto Rehhagel ('King Otto'), versloegen zij gastland Portugal in de finale met 1-0",c:"EK Voetbal Historie",w:["Denemarken","Tsjechië","Turkije"]},
                 {q:"Wie bedacht de 'Panenka'-strafschop en in welke wedstrijd?",a:"Antonín Panenka (Tsjechoslowakije) — hij chippte de bal zachtjes in het midden van het doel in de EK-finale van 1976 tegen West-Duitsland",c:"EK Voetbal Historie",w:["Zinedine Zidane in de WK-finale 2006","Andrea Pirlo op het EK 2012","Lionel Messi in de Copa América 2021"]},
+
+                // === PADEL (10 extra) ===
+                {q:"In welk jaar en door wie werd padel uitgevonden?",a:"In 1969 door de Mexicaan Enrique Corcuera",c:"Padel",w:["In 1960 door de Spanjaard Alfonso de Hohenlohe","In 1975 door de Argentijn Julio Menditegui","In 1955 door de Amerikaan Jim Bostwick"]},
+                {q:"Wat zijn de afmetingen van een officieel padelbaan?",a:"20 meter lang en 10 meter breed",c:"Padel",w:["18 meter lang en 9 meter breed","24 meter lang en 11 meter breed","20 meter lang en 8 meter breed"]},
+                {q:"Hoe wordt er gescoord in padel?",a:"Hetzelfde als in tennis: 15, 30, 40 en game",c:"Padel",w:["Met punten van 1 tot 11, zoals in beachvolleybal","Met punten van 1 tot 21, zoals in badminton","Met games van 1 tot 7, zonder punten"]},
+                {q:"Hoeveel spelers staan er normaal gesproken op een padelbaan?",a:"Vier spelers (dubbel)",c:"Padel",w:["Twee spelers (enkel)","Drie spelers (één tegen twee)","Zes spelers (drie tegen drie)"]},
+                {q:"Welk onderdeel is kenmerkend voor een padelbaan ten opzichte van een tennisbaan?",a:"Glazen en metalen wanden rondom het speelveld",c:"Padel",w:["Een hoger net dan bij tennis","Een kleiner racket zonder snaren","Een harder type bal dan bij tennis"]},
+                {q:"Fernando Belasteguín, bijgenaamd 'Bela', staat bekend als de GOAT van padel. Uit welk land komt hij?",a:"Argentinië",c:"Padel",w:["Spanje","Mexico","Brazilië"]},
+                {q:"Arturo Coello en Agustín Tapia staan al langere tijd op de eerste plaats van de wereldranglijst. Welke nationaliteiten hebben zij respectievelijk?",a:"Spaans en Argentijns",c:"Padel",w:["Argentijns en Spaans","Spaans en Spaans","Argentijns en Argentijns"]},
+                {q:"Hoe heet het internationale professionele padel-circuit dat in 2022 werd opgericht en in 2023 de World Padel Tour overnam?",a:"Premier Padel",c:"Padel",w:["ATP Padel Tour","Global Padel Tour","World Padel Series"]},
+                {q:"In welk land werd padel al snel de op één na populairste sport, nog vóór golf en tennis?",a:"Argentinië",c:"Padel",w:["Mexico","Brazilië","Spanje"]},
+                {q:"Hoeveel actieve padelspelers waren er wereldwijd in 2023 volgens de International Padel Federation?",a:"Meer dan 25 miljoen",c:"Padel",w:["Meer dan 5 miljoen","Meer dan 10 miljoen","Meer dan 50 miljoen"]},
+
+                // === SPORTGESCHIEDENIS (10 extra) ===
+                {q:"Hoeveel gouden medailles won Jesse Owens bij de Olympische Spelen van 1936 in Berlijn?",a:"4",c:"Sportgeschiedenis",w:["2","3","5"]},
+                {q:"Op welke datum liep Roger Bannister als eerste ter wereld een mijl in minder dan vier minuten?",a:"6 mei 1954",c:"Sportgeschiedenis",w:["3 april 1952","14 augustus 1956","21 juni 1950"]},
+                {q:"Bij welke Olympische discipline introduceerde Dick Fosbury in 1968 zijn revolutionaire 'Fosbury Flop'-techniek?",a:"Hoogspringen",c:"Sportgeschiedenis",w:["Verspringen","Polsstokhoogspringen","Driesprong"]},
+                {q:"Tegen welk land scoorde Diego Maradona zijn beruchte 'Hand van God'-goal tijdens het WK van 1986?",a:"Engeland",c:"Sportgeschiedenis",w:["Brazilië","West-Duitsland","België"]},
+                {q:"Welke Roemeense turnster behaalde bij de Olympische Spelen van 1976 in Montreal als eerste ooit een perfecte score van 10,0?",a:"Nadia Comaneci",c:"Sportgeschiedenis",w:["Olga Korbut","Ludmilla Tourischeva","Věra Čáslavská"]},
+                {q:"Tijdens de 200 meter-medailleceremonie op de Olympische Spelen van 1968 in Mexico-Stad hieven Tommie Smith en John Carlos een gebalde vuist als protest. Wat symboliseerde dit gebaar?",a:"Burgerrechten en Black Power",c:"Sportgeschiedenis",w:["Protest tegen de Vietnamoorlog","Steun voor de vakbondsbeweging","Protest tegen dopingcontroles"]},
+                {q:"Bij welke Europese Cupfinale in 1985 kwamen 39 supporters om het leven door stadiongeweld en het instorten van een muur?",a:"Juventus - Liverpool in Heysel (Brussel)",c:"Sportgeschiedenis",w:["Ajax - Juventus in Rome","Barcelona - Liverpool in Parijs","AC Milan - Benfica in Madrid"]},
+                {q:"In welk jaar werden de eerste moderne Olympische Spelen gehouden en in welke stad?",a:"1896 in Athene",c:"Sportgeschiedenis",w:["1900 in Parijs","1888 in Londen","1892 in Rome"]},
+                {q:"Op welke datum en in welke stad werd de FIFA opgericht?",a:"21 mei 1904 in Parijs",c:"Sportgeschiedenis",w:["10 april 1900 in Londen","15 juni 1908 in Brussel","3 maart 1899 in Amsterdam"]},
+                {q:"Welk land leidde de boycot van de Olympische Spelen in Moskou in 1980, als protest tegen de Sovjet-inval in Afghanistan?",a:"Verenigde Staten",c:"Sportgeschiedenis",w:["West-Duitsland","China","Canada"]},
+
+                // === WK VOETBAL HISTORIE (10 extra) ===
+                {q:"Welke speler scoorde als enige een hattrick in een WK-finale, tijdens het WK van 1966?",a:"Geoff Hurst",c:"WK Voetbal Historie",w:["Bobby Charlton","Martin Peters","Roger Hunt"]},
+                {q:"In welk land werd het WK van 2010 gehouden, voor het eerst op het Afrikaanse continent?",a:"Zuid-Afrika",c:"WK Voetbal Historie",w:["Nigeria","Marokko","Kenia"]},
+                {q:"Wie won de Gouden Bal op het WK van 1986 in Mexico?",a:"Diego Maradona",c:"WK Voetbal Historie",w:["Gary Lineker","Michel Platini","Karl-Heinz Rummenigge"]},
+                {q:"Hoe heet de beruchte overwinning van Uruguay op gastland Brazilië in de beslissende wedstrijd van het WK 1950?",a:"Maracanazo",c:"WK Voetbal Historie",w:["Miracle of Berne","Battle of Berne","Copa Tragedia"]},
+                {q:"Welke keeper won als enige doelman ooit de Gouden Bal op een WK, in 2002?",a:"Oliver Kahn",c:"WK Voetbal Historie",w:["Gianluigi Buffon","Iker Casillas","Peter Schmeichel"]},
+                {q:"Wie scoorde het winnende doelpunt in de WK-finale van 2010, waarbij Spanje Nederland versloeg?",a:"Andrés Iniesta",c:"WK Voetbal Historie",w:["David Villa","Fernando Torres","Xavi"]},
+                {q:"Hoe oud was Pelé toen hij in 1958 doelpunten scoorde in de WK-finale tegen Zweden?",a:"17 jaar",c:"WK Voetbal Historie",w:["19 jaar","16 jaar","18 jaar"]},
+                {q:"Welk land won voor de eerste keer het WK in 1966, als gastland?",a:"Engeland",c:"WK Voetbal Historie",w:["West-Duitsland","Portugal","Sovjet-Unie"]},
+                {q:"Tijdens het WK 2006 werd Zinedine Zidane in de finale met rood van het veld gestuurd na een kopstoot tegen welke Italiaanse speler?",a:"Marco Materazzi",c:"WK Voetbal Historie",w:["Fabio Cannavaro","Andrea Pirlo","Gennaro Gattuso"]},
+                {q:"Wie won de Gouden Bal op het WK van 2010 in Zuid-Afrika?",a:"Diego Forlán",c:"WK Voetbal Historie",w:["Wesley Sneijder","David Villa","Thomas Müller"]},
+
+                // === EK VOETBAL HISTORIE (10 extra) ===
+                {q:"Welk land won het allereerste Europees Kampioenschap voetbal in 1960?",a:"Sovjet-Unie",c:"EK Voetbal Historie",w:["Joegoslavië","Frankrijk","Tsjechoslowakije"]},
+                {q:"In welk land werd het EK voetbal van 1988 gespeeld, waarbij Nederland de titel won?",a:"West-Duitsland",c:"EK Voetbal Historie",w:["Nederland","België","Italië"]},
+                {q:"Hoeveel doelpunten scoorde Michel Platini tijdens het EK van 1984 — een record voor één toernooi?",a:"9",c:"EK Voetbal Historie",w:["7","11","6"]},
+                {q:"Op welke bijzondere manier bereikte Italië de finale van het EK 1968 na een gelijkspel tegen de Sovjet-Unie?",a:"Via een muntenworp",c:"EK Voetbal Historie",w:["Via strafschoppen","Via loting","Via een replay"]},
+                {q:"Wie scoorde het 'golden goal' waarmee Frankrijk de EK-finale van 2000 won van Italië?",a:"David Trezeguet",c:"EK Voetbal Historie",w:["Zinedine Zidane","Thierry Henry","Sylvain Wiltord"]},
+                {q:"Wie is de all-time topscorer aller tijden op het EK voetbal met 14 doelpunten?",a:"Cristiano Ronaldo",c:"EK Voetbal Historie",w:["Michel Platini","Antoine Griezmann","Alan Shearer"]},
+                {q:"Welk land won het EK voetbal van 1964 door het toernooi zelf te organiseren én te winnen?",a:"Spanje",c:"EK Voetbal Historie",w:["Italië","Portugal","Joegoslavië"]},
+                {q:"Welke Spaanse speler werd de jongste speler ooit op een EK na zijn optreden bij EK 2024?",a:"Lamine Yamal",c:"EK Voetbal Historie",w:["Pedri","Renato Sanches","Gavi"]},
+                {q:"Welk land organiseerde het EK van 1960, het eerste toernooi in de geschiedenis?",a:"Frankrijk",c:"EK Voetbal Historie",w:["Italië","België","Portugal"]},
+                {q:"West-Duitsland won het EK van 1972 met een grote zege in de finale. Hoe groot was de eindstand tegen de Sovjet-Unie?",a:"3-0",c:"EK Voetbal Historie",w:["2-0","4-1","2-1"]},
 
             ].map(x => ({question: x.q, answer: x.a, category: x.c, wrongAnswers: x.w || []}));
         }
