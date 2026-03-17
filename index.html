@@ -130,7 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
-            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v34 — 16 maart 2026</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v35 — 17 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -404,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v34');
+                const stored = localStorage.getItem('sportquiz_questions_v35');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -441,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v34'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v35'); } catch(e) {}
                 location.reload();
             }
         }
@@ -450,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v34', data);
+                localStorage.setItem('sportquiz_questions_v35', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3628,60 +3628,60 @@
                 {q:"Met welke spectaculaire uitslag won Galatasaray thuis van Juventus in de CL-playoffs 2026?",a:"5-2",c:"Voetbal",w:["4-1","3-2","6-3"]},
                 // === ACTUALITEIT UPDATE MAART 2026 ===
                 // --- Champions League achtste finales ---
-                {q:"Welke twee topclubs treffen elkaar in de achtste finales van de Champions League 2025-26 (loting 27 februari)?",a:"Real Madrid vs Manchester City",c:"Voetbal",w:["Barcelona vs Bayern Munchen","Liverpool vs PSG","Arsenal vs Juventus"]},
-                {q:"Wie is de titelverdediger in de Champions League 2025-26?",a:"Paris Saint-Germain (won hun eerste CL-titel vorig seizoen)",c:"Voetbal",w:["Real Madrid","Manchester City","Bayern Munchen"]},
-                {q:"Tegen welke club speelt PSG in de achtste finales van de CL 2025-26?",a:"Chelsea",c:"Voetbal",w:["Liverpool","Arsenal","Tottenham"]},
-                {q:"Welke Noorse club haalde sensationeel de achtste finales van de CL 2025-26?",a:"Bodo/Glimt (zij spelen tegen Sporting CP)",c:"Voetbal",w:["Rosenborg","Molde","Brann Bergen"]},
-                {q:"Op welke data worden de achtste finales van de Champions League 2025-26 gespeeld?",a:"10/11 maart (heenwedstrijden) en 17/18 maart (returnwedstrijden)",c:"Voetbal",w:["3/4 en 10/11 maart","17/18 en 24/25 maart","24/25 februari en 3/4 maart"]},
+                {q:"Welke twee topclubs treffen elkaar in de achtste finales van de Champions League 2025-26 (loting 27 februari)?",a:"Real Madrid vs Manchester City",c:"Actualiteit",w:["Barcelona vs Bayern Munchen","Liverpool vs PSG","Arsenal vs Juventus"]},
+                {q:"Wie is de titelverdediger in de Champions League 2025-26?",a:"Paris Saint-Germain (won hun eerste CL-titel vorig seizoen)",c:"Actualiteit",w:["Real Madrid","Manchester City","Bayern Munchen"]},
+                {q:"Tegen welke club speelt PSG in de achtste finales van de CL 2025-26?",a:"Chelsea",c:"Actualiteit",w:["Liverpool","Arsenal","Tottenham"]},
+                {q:"Welke Noorse club haalde sensationeel de achtste finales van de CL 2025-26?",a:"Bodo/Glimt (zij spelen tegen Sporting CP)",c:"Actualiteit",w:["Rosenborg","Molde","Brann Bergen"]},
+                {q:"Op welke data worden de achtste finales van de Champions League 2025-26 gespeeld?",a:"10/11 maart (heenwedstrijden) en 17/18 maart (returnwedstrijden)",c:"Actualiteit",w:["3/4 en 10/11 maart","17/18 en 24/25 maart","24/25 februari en 3/4 maart"]},
                 // --- WK 2026 ---
-                {q:"In welke groep zit Nederland op het WK 2026?",a:"Groep F (met Japan, Tunesie en een Europese play-off winnaar)",c:"Voetbal",w:["Groep A (met Mexico en Zuid-Korea)","Groep C (met Brazilie en Marokko)","Groep H (met Spanje en Senegal)"]},
-                {q:"Wat is de eerste WK-wedstrijd van Nederland op het WK 2026?",a:"Nederland - Japan op 14 juni in het AT&T Stadium in Dallas",c:"Voetbal",w:["Nederland - Tunesie op 11 juni in Houston","Nederland - Polen op 14 juni in Kansas City","Nederland - Japan op 20 juni in New York"]},
-                {q:"Hoeveel landen doen er voor het eerst mee aan het WK 2026?",a:"48 landen (uitbreiding van 32 naar 48, verdeeld over 12 groepen van 4)",c:"Voetbal",w:["32 landen in 8 groepen","40 landen in 10 groepen","64 landen in 16 groepen"]},
-                {q:"In welke drie landen wordt het WK 2026 gehouden?",a:"Verenigde Staten, Canada en Mexico",c:"Voetbal",w:["Verenigde Staten, Brazilie en Argentinie","Canada, Mexico en Colombia","Verenigde Staten, Canada en Jamaica"]},
-                {q:"Wanneer is de WK-finale 2026 en waar?",a:"19 juli 2026 in het MetLife Stadium in New Jersey",c:"Voetbal",w:["26 juli in het AT&T Stadium in Dallas","12 juli in het SoFi Stadium in Los Angeles","19 juli in het Azteca Stadium in Mexico-Stad"]},
-                {q:"Welke play-offs bepalen in maart 2026 de laatste WK-deelnemers voor Europa?",a:"Vier UEFA-play-off routes met o.a. Italie, Polen, Zweden, Oekraine, Turkije en Wales",c:"Voetbal",w:["Alleen Italie en Portugal spelen play-offs","Er zijn geen play-offs meer nodig","Alleen niet-Europese landen spelen nog play-offs"]},
+                {q:"In welke groep zit Nederland op het WK 2026?",a:"Groep F (met Japan, Tunesie en een Europese play-off winnaar)",c:"Actualiteit",w:["Groep A (met Mexico en Zuid-Korea)","Groep C (met Brazilie en Marokko)","Groep H (met Spanje en Senegal)"]},
+                {q:"Wat is de eerste WK-wedstrijd van Nederland op het WK 2026?",a:"Nederland - Japan op 14 juni in het AT&T Stadium in Dallas",c:"Actualiteit",w:["Nederland - Tunesie op 11 juni in Houston","Nederland - Polen op 14 juni in Kansas City","Nederland - Japan op 20 juni in New York"]},
+                {q:"Hoeveel landen doen er voor het eerst mee aan het WK 2026?",a:"48 landen (uitbreiding van 32 naar 48, verdeeld over 12 groepen van 4)",c:"Actualiteit",w:["32 landen in 8 groepen","40 landen in 10 groepen","64 landen in 16 groepen"]},
+                {q:"In welke drie landen wordt het WK 2026 gehouden?",a:"Verenigde Staten, Canada en Mexico",c:"Actualiteit",w:["Verenigde Staten, Brazilie en Argentinie","Canada, Mexico en Colombia","Verenigde Staten, Canada en Jamaica"]},
+                {q:"Wanneer is de WK-finale 2026 en waar?",a:"19 juli 2026 in het MetLife Stadium in New Jersey",c:"Actualiteit",w:["26 juli in het AT&T Stadium in Dallas","12 juli in het SoFi Stadium in Los Angeles","19 juli in het Azteca Stadium in Mexico-Stad"]},
+                {q:"Welke play-offs bepalen in maart 2026 de laatste WK-deelnemers voor Europa?",a:"Vier UEFA-play-off routes met o.a. Italie, Polen, Zweden, Oekraine, Turkije en Wales",c:"Actualiteit",w:["Alleen Italie en Portugal spelen play-offs","Er zijn geen play-offs meer nodig","Alleen niet-Europese landen spelen nog play-offs"]},
                 // --- Eredivisie actueel ---
-                {q:"Welke club staat tweede in de Eredivisie per maart 2026?",a:"Feyenoord (48 punten uit 24 wedstrijden)",c:"Voetbal",w:["Ajax","AZ","FC Twente"]},
-                {q:"Hoeveel punten voorsprong heeft PSV op nummer 2 Feyenoord in de Eredivisie (maart 2026)?",a:"17 punten",c:"Voetbal",w:["12 punten","8 punten","21 punten"]},
-                {q:"Welke Eredivisie-speler werd voor de vierde keer uitgeroepen tot Player of the Month in februari 2026, een record?",a:"Joey Veerman (PSV)",c:"Voetbal",w:["Luuk de Jong (PSV)","Brian Brobbey (Ajax)","Santiago Gimenez (Feyenoord)"]},
+                {q:"Welke club staat tweede in de Eredivisie per maart 2026?",a:"Feyenoord (48 punten uit 24 wedstrijden)",c:"Actualiteit",w:["Ajax","AZ","FC Twente"]},
+                {q:"Hoeveel punten voorsprong heeft PSV op nummer 2 Feyenoord in de Eredivisie (maart 2026)?",a:"17 punten",c:"Actualiteit",w:["12 punten","8 punten","21 punten"]},
+                {q:"Welke Eredivisie-speler werd voor de vierde keer uitgeroepen tot Player of the Month in februari 2026, een record?",a:"Joey Veerman (PSV)",c:"Actualiteit",w:["Luuk de Jong (PSV)","Brian Brobbey (Ajax)","Santiago Gimenez (Feyenoord)"]},
                 // --- Paralympische Winterspelen 2026 ---
-                {q:"Wanneer vinden de Paralympische Winterspelen 2026 plaats?",a:"6 tot en met 15 maart 2026 in Milaan en Cortina d'Ampezzo",c:"Winterspelen 2026",w:["1 tot en met 10 maart 2026","13 tot en met 22 maart 2026","20 februari tot en met 1 maart 2026"]},
-                {q:"Waar vindt de openingsceremonie van de Paralympische Winterspelen 2026 plaats?",a:"In de Verona Arena in Verona (een oud Romeins amfitheater)",c:"Winterspelen 2026",w:["In het San Siro stadion in Milaan","In het Olympisch stadion in Rome","In de Fiera Milano"]},
-                {q:"Hoeveel para-atleten doen mee aan de Paralympische Winterspelen 2026?",a:"665 para-atleten (een recordaantal)",c:"Winterspelen 2026",w:["500 para-atleten","750 para-atleten","400 para-atleten"]},
-                {q:"In hoeveel sporten wordt er gestreden op de Paralympische Winterspelen 2026?",a:"Zes sporten (para-alpineskien, para-biatlon, para-langlaufen, para-ijshockey, para-snowboard, rolstoelcurling)",c:"Winterspelen 2026",w:["Vier sporten","Acht sporten","Tien sporten"]},
-                {q:"Welke bijzondere mijlpaal vieren de Paralympische Winterspelen 2026?",a:"Het 50-jarig jubileum van de Paralympische Winterspelen",c:"Winterspelen 2026",w:["Het 25-jarig jubileum","Het 75-jarig jubileum","Het is de eerste keer in Italie"]},
-                {q:"Welke Nederlandse para-snowboardster was een pionier die goud won bij het paralympisch debuut van para-snowboard in 2014?",a:"Bibian Mentel-Spee (zij won ook in 2018 twee keer goud ondanks kankerbehandelingen)",c:"Winterspelen 2026",w:["Lisa Bunschoten","Chris Vos","Renske Bos"]},
+                {q:"Wanneer vinden de Paralympische Winterspelen 2026 plaats?",a:"6 tot en met 15 maart 2026 in Milaan en Cortina d'Ampezzo",c:"Actualiteit",w:["1 tot en met 10 maart 2026","13 tot en met 22 maart 2026","20 februari tot en met 1 maart 2026"]},
+                {q:"Waar vindt de openingsceremonie van de Paralympische Winterspelen 2026 plaats?",a:"In de Verona Arena in Verona (een oud Romeins amfitheater)",c:"Actualiteit",w:["In het San Siro stadion in Milaan","In het Olympisch stadion in Rome","In de Fiera Milano"]},
+                {q:"Hoeveel para-atleten doen mee aan de Paralympische Winterspelen 2026?",a:"665 para-atleten (een recordaantal)",c:"Actualiteit",w:["500 para-atleten","750 para-atleten","400 para-atleten"]},
+                {q:"In hoeveel sporten wordt er gestreden op de Paralympische Winterspelen 2026?",a:"Zes sporten (para-alpineskien, para-biatlon, para-langlaufen, para-ijshockey, para-snowboard, rolstoelcurling)",c:"Actualiteit",w:["Vier sporten","Acht sporten","Tien sporten"]},
+                {q:"Welke bijzondere mijlpaal vieren de Paralympische Winterspelen 2026?",a:"Het 50-jarig jubileum van de Paralympische Winterspelen",c:"Actualiteit",w:["Het 25-jarig jubileum","Het 75-jarig jubileum","Het is de eerste keer in Italie"]},
+                {q:"Welke Nederlandse para-snowboardster was een pionier die goud won bij het paralympisch debuut van para-snowboard in 2014?",a:"Bibian Mentel-Spee (zij won ook in 2018 twee keer goud ondanks kankerbehandelingen)",c:"Actualiteit",w:["Lisa Bunschoten","Chris Vos","Renske Bos"]},
                 // --- Six Nations Rugby 2026 ---
-                {q:"Welk land is op koers voor een Grand Slam in het Six Nations Rugby 2026?",a:"Frankrijk (ongeslagen na drie rondes)",c:"Rugby",w:["Ierland","Engeland","Schotland"]},
-                {q:"Welke historische primeur vond plaats tijdens het Six Nations 2026?",a:"Hollie Davidson werd de eerste vrouw die een wedstrijd in het mannen Six Nations floot",c:"Rugby",w:["Er werd voor het eerst op donderdag gespeeld","Italie won voor het eerst van Engeland","Er werd een nieuw puntenrecord gebroken"]},
-                {q:"Welke verrassende uitslag zorgde voor opschudding in het Six Nations 2026?",a:"Ierland won met 42-21 van Engeland (grootste Ierse uitoverwinning op Engeland ooit)",c:"Rugby",w:["Italie versloeg Frankrijk met 30-10","Schotland won van Ierland met 35-0","Wales versloeg Frankrijk met 28-14"]},
+                {q:"Welk land is op koers voor een Grand Slam in het Six Nations Rugby 2026?",a:"Frankrijk (ongeslagen na drie rondes)",c:"Actualiteit",w:["Ierland","Engeland","Schotland"]},
+                {q:"Welke historische primeur vond plaats tijdens het Six Nations 2026?",a:"Hollie Davidson werd de eerste vrouw die een wedstrijd in het mannen Six Nations floot",c:"Actualiteit",w:["Er werd voor het eerst op donderdag gespeeld","Italie won voor het eerst van Engeland","Er werd een nieuw puntenrecord gebroken"]},
+                {q:"Welke verrassende uitslag zorgde voor opschudding in het Six Nations 2026?",a:"Ierland won met 42-21 van Engeland (grootste Ierse uitoverwinning op Engeland ooit)",c:"Actualiteit",w:["Italie versloeg Frankrijk met 30-10","Schotland won van Ierland met 35-0","Wales versloeg Frankrijk met 28-14"]},
 
                 // === ACTUALITEIT MAART 2026 - UPDATE 2 ===
                 // --- Formula 1 2026 ---
-                {q:"Wie is de regerend Formule 1-wereldkampioen bij de start van het seizoen 2026?",a:"Lando Norris (McLaren) — hij versloeg Max Verstappen in 2025 met slechts 2 punten verschil",c:"Formule 1",w:["Max Verstappen","Charles Leclerc","Carlos Sainz"]},
-                {q:"Welk nieuw team maakt zijn debuut in de Formule 1 in 2026?",a:"Cadillac F1 — het elfde team, waardoor er voor het eerst sinds 2016 weer 22 coureurs op de grid staan",c:"Formule 1",w:["Audi (dat is het omgedoopte Sauber)","Porsche","Lamborghini"]},
-                {q:"Bij welk team rijdt Lewis Hamilton vanaf 2026?",a:"Ferrari (samen met Charles Leclerc)",c:"Formule 1",w:["Mercedes","Red Bull","Aston Martin"]},
-                {q:"Welke ingrijpende technische verandering is er in de Formule 1 in 2026?",a:"DRS is afgeschaft en vervangen door actieve aerodynamica met een 'straight mode' en een inhaalknop",c:"Formule 1",w:["De auto's rijden volledig elektrisch","Er is geen limiet meer op het budget","De races zijn ingekort naar 200 km"]},
-                {q:"Wie zijn de coureurs van Cadillac F1 in hun debuutseizoen 2026?",a:"Sergio Pérez en Valtteri Bottas",c:"Formule 1",w:["Daniel Ricciardo en Kevin Magnussen","Pierre Gasly en Esteban Ocon","Nico Hülkenberg en Mick Schumacher"]},
-                {q:"Welke motorleverancier verlaat de Formule 1 in 2026 na decennia?",a:"Renault — voor het eerst sinds 2000 rijdt er geen auto met Renault-motor",c:"Formule 1",w:["Honda","Mercedes","Ferrari"]},
-                {q:"Wie is de jongste rookie op de F1-grid in 2026?",a:"Arvid Lindblad (18 jaar, Racing Bulls) — de enige rookie van het seizoen",c:"Formule 1",w:["Oliver Bearman (19 jaar, Haas)","Gabriel Bortoleto (20 jaar, Audi)","Franco Colapinto (22 jaar, Alpine)"]},
-                {q:"Bij welk team rijdt Max Verstappen in 2026?",a:"Red Bull (met nieuwe teamgenoot Isack Hadjar)",c:"Formule 1",w:["Mercedes","Ferrari","Aston Martin"]},
+                {q:"Wie is de regerend Formule 1-wereldkampioen bij de start van het seizoen 2026?",a:"Lando Norris (McLaren) — hij versloeg Max Verstappen in 2025 met slechts 2 punten verschil",c:"Actualiteit",w:["Max Verstappen","Charles Leclerc","Carlos Sainz"]},
+                {q:"Welk nieuw team maakt zijn debuut in de Formule 1 in 2026?",a:"Cadillac F1 — het elfde team, waardoor er voor het eerst sinds 2016 weer 22 coureurs op de grid staan",c:"Actualiteit",w:["Audi (dat is het omgedoopte Sauber)","Porsche","Lamborghini"]},
+                {q:"Bij welk team rijdt Lewis Hamilton vanaf 2026?",a:"Ferrari (samen met Charles Leclerc)",c:"Actualiteit",w:["Mercedes","Red Bull","Aston Martin"]},
+                {q:"Welke ingrijpende technische verandering is er in de Formule 1 in 2026?",a:"DRS is afgeschaft en vervangen door actieve aerodynamica met een 'straight mode' en een inhaalknop",c:"Actualiteit",w:["De auto's rijden volledig elektrisch","Er is geen limiet meer op het budget","De races zijn ingekort naar 200 km"]},
+                {q:"Wie zijn de coureurs van Cadillac F1 in hun debuutseizoen 2026?",a:"Sergio Pérez en Valtteri Bottas",c:"Actualiteit",w:["Daniel Ricciardo en Kevin Magnussen","Pierre Gasly en Esteban Ocon","Nico Hülkenberg en Mick Schumacher"]},
+                {q:"Welke motorleverancier verlaat de Formule 1 in 2026 na decennia?",a:"Renault — voor het eerst sinds 2000 rijdt er geen auto met Renault-motor",c:"Actualiteit",w:["Honda","Mercedes","Ferrari"]},
+                {q:"Wie is de jongste rookie op de F1-grid in 2026?",a:"Arvid Lindblad (18 jaar, Racing Bulls) — de enige rookie van het seizoen",c:"Actualiteit",w:["Oliver Bearman (19 jaar, Haas)","Gabriel Bortoleto (20 jaar, Audi)","Franco Colapinto (22 jaar, Alpine)"]},
+                {q:"Bij welk team rijdt Max Verstappen in 2026?",a:"Red Bull (met nieuwe teamgenoot Isack Hadjar)",c:"Actualiteit",w:["Mercedes","Ferrari","Aston Martin"]},
                 // --- Tennis update ---
-                {q:"Wie won de Australian Open 2026 bij de mannen?",a:"Carlos Alcaraz — hij versloeg Novak Djokovic in de finale en werd de jongste man ooit met een Career Grand Slam",c:"Tennis",w:["Novak Djokovic","Jannik Sinner","Alexander Zverev"]},
-                {q:"Hoe oud was Carlos Alcaraz toen hij de Career Grand Slam voltooide op de Australian Open 2026?",a:"22 jaar (de jongste man ooit die alle vier de Grand Slams won)",c:"Tennis",w:["21 jaar","23 jaar","24 jaar"]},
-                {q:"Wie won de Australian Open 2026 bij de vrouwen?",a:"Elena Rybakina (zij versloeg Aryna Sabalenka in de finale)",c:"Tennis",w:["Aryna Sabalenka","Iga Swiatek","Coco Gauff"]},
-                {q:"Wie won de ABN AMRO Open Rotterdam 2026?",a:"Alex de Minaur — hij versloeg Felix Auger-Aliassime 6-3, 6-2 in de finale",c:"Tennis",w:["Daniil Medvedev","Jannik Sinner","Stefanos Tsitsipas"]},
+                {q:"Wie won de Australian Open 2026 bij de mannen?",a:"Carlos Alcaraz — hij versloeg Novak Djokovic in de finale en werd de jongste man ooit met een Career Grand Slam",c:"Actualiteit",w:["Novak Djokovic","Jannik Sinner","Alexander Zverev"]},
+                {q:"Hoe oud was Carlos Alcaraz toen hij de Career Grand Slam voltooide op de Australian Open 2026?",a:"22 jaar (de jongste man ooit die alle vier de Grand Slams won)",c:"Actualiteit",w:["21 jaar","23 jaar","24 jaar"]},
+                {q:"Wie won de Australian Open 2026 bij de vrouwen?",a:"Elena Rybakina (zij versloeg Aryna Sabalenka in de finale)",c:"Actualiteit",w:["Aryna Sabalenka","Iga Swiatek","Coco Gauff"]},
+                {q:"Wie won de ABN AMRO Open Rotterdam 2026?",a:"Alex de Minaur — hij versloeg Felix Auger-Aliassime 6-3, 6-2 in de finale",c:"Actualiteit",w:["Daniil Medvedev","Jannik Sinner","Stefanos Tsitsipas"]},
                 // --- Eredivisie extra ---
-                {q:"Welke club keerde in 2025-26 terug in de Eredivisie na 47 jaar afwezigheid?",a:"Telstar (via de play-offs gepromoveerd)",c:"Voetbal",w:["De Graafschap","MVV Maastricht","Roda JC"]},
-                {q:"Welke Engelse speler tekende in februari 2026 bij Feyenoord als vrije speler?",a:"Raheem Sterling (ex-Chelsea, Manchester City en Liverpool)",c:"Voetbal",w:["Jack Grealish","Jadon Sancho","Dele Alli"]},
-                {q:"Wie is de trainer van Feyenoord in het seizoen 2025-26?",a:"Robin van Persie",c:"Voetbal",w:["Arne Slot","Brian Priske","Giovanni van Bronckhorst"]},
-                {q:"Welke club versloeg koploper PSV verrassend met 2-1 op 1 maart 2026?",a:"FC Volendam",c:"Voetbal",w:["Heracles Almelo","NAC Breda","Telstar"]},
-                {q:"Hoe heet de Eredivisie officieel sinds het seizoen 2025-26?",a:"De VriendenLoterij Eredivisie (nieuwe naamgevingsrechten)",c:"Voetbal",w:["De KPN Eredivisie","De ING Eredivisie","De Toto Eredivisie"]},
+                {q:"Welke club keerde in 2025-26 terug in de Eredivisie na 47 jaar afwezigheid?",a:"Telstar (via de play-offs gepromoveerd)",c:"Actualiteit",w:["De Graafschap","MVV Maastricht","Roda JC"]},
+                {q:"Welke Engelse speler tekende in februari 2026 bij Feyenoord als vrije speler?",a:"Raheem Sterling (ex-Chelsea, Manchester City en Liverpool)",c:"Actualiteit",w:["Jack Grealish","Jadon Sancho","Dele Alli"]},
+                {q:"Wie is de trainer van Feyenoord in het seizoen 2025-26?",a:"Robin van Persie",c:"Actualiteit",w:["Arne Slot","Brian Priske","Giovanni van Bronckhorst"]},
+                {q:"Welke club versloeg koploper PSV verrassend met 2-1 op 1 maart 2026?",a:"FC Volendam",c:"Actualiteit",w:["Heracles Almelo","NAC Breda","Telstar"]},
+                {q:"Hoe heet de Eredivisie officieel sinds het seizoen 2025-26?",a:"De VriendenLoterij Eredivisie (nieuwe naamgevingsrechten)",c:"Actualiteit",w:["De KPN Eredivisie","De ING Eredivisie","De Toto Eredivisie"]},
                 // --- Six Nations extra ---
-                {q:"Met welke recordscore versloeg Frankrijk Wales in het Six Nations 2026?",a:"54-12 (de meeste punten ooit gescoord door Frankrijk tegen Wales)",c:"Rugby",w:["42-10","48-7","38-15"]},
-                {q:"Wat gebeurde er met de Six Nations-trofee na ronde 3 van het toernooi 2026?",a:"De trofee raakte beschadigd door brand en werd uit gebruik genomen — een replica wordt uitgereikt",c:"Rugby",w:["De trofee werd gestolen","De trofee viel en brak","De trofee werd verkocht op een veiling"]},
-                {q:"Welke Engelse speler behaalde zijn 100e cap tijdens het Six Nations 2026?",a:"Maro Itoje",c:"Rugby",w:["Owen Farrell","Ben Youngs","Courtney Lawes"]},
-                {q:"Welk land won de Calcutta Cup in het Six Nations 2026?",a:"Schotland (31-20 tegen Engeland)",c:"Rugby",w:["Engeland","Ierland","Wales"]},
+                {q:"Met welke recordscore versloeg Frankrijk Wales in het Six Nations 2026?",a:"54-12 (de meeste punten ooit gescoord door Frankrijk tegen Wales)",c:"Actualiteit",w:["42-10","48-7","38-15"]},
+                {q:"Wat gebeurde er met de Six Nations-trofee na ronde 3 van het toernooi 2026?",a:"De trofee raakte beschadigd door brand en werd uit gebruik genomen — een replica wordt uitgereikt",c:"Actualiteit",w:["De trofee werd gestolen","De trofee viel en brak","De trofee werd verkocht op een veiling"]},
+                {q:"Welke Engelse speler behaalde zijn 100e cap tijdens het Six Nations 2026?",a:"Maro Itoje",c:"Actualiteit",w:["Owen Farrell","Ben Youngs","Courtney Lawes"]},
+                {q:"Welk land won de Calcutta Cup in het Six Nations 2026?",a:"Schotland (31-20 tegen Engeland)",c:"Actualiteit",w:["Engeland","Ierland","Wales"]},
 
                 // ===== NAMEN VAN STADIONS =====
                 // --- Nederlandse stadions ---
@@ -3732,41 +3732,41 @@
 
                 // === ACTUALITEIT 16 MAART 2026 - UPDATE 3 ===
                 // --- Champions League achtste finales heenwedstrijden ---
-                {q:"Wat was de uitslag van Real Madrid - Manchester City in de CL achtste finale (10 maart)?",a:"3-0 voor Real Madrid",c:"Voetbal",w:["2-1 voor Real Madrid","1-1 gelijkspel","2-0 voor Manchester City"]},
-                {q:"Welk team versloeg Chelsea met 5-2 in de CL achtste finale heenwedstrijd?",a:"Paris Saint-Germain (verdedigend kampioen)",c:"Voetbal",w:["Real Madrid","Bayern München","Arsenal"]},
-                {q:"Met welke verrassende uitslag won Bodø/Glimt thuis van Sporting CP in de CL?",a:"3-0 — de Noorse sensatie domineert opnieuw in de Champions League",c:"Voetbal",w:["2-1","1-0","4-2"]},
-                {q:"Welk team vernederde Atalanta met 6-1 uit in de CL achtste finale?",a:"Bayern München",c:"Voetbal",w:["Real Madrid","Liverpool","Barcelona"]},
-                {q:"Wat was de uitslag van Atlético Madrid - Tottenham in de CL?",a:"5-2 voor Atlético Madrid",c:"Voetbal",w:["3-1 voor Atlético","2-2 gelijkspel","1-0 voor Tottenham"]},
-                {q:"Wat was de uitslag van Galatasaray - Liverpool in de CL achtste finale?",a:"1-0 voor Galatasaray",c:"Voetbal",w:["2-1 voor Liverpool","0-0 gelijkspel","3-2 voor Liverpool"]},
+                {q:"Wat was de uitslag van Real Madrid - Manchester City in de CL achtste finale (10 maart)?",a:"3-0 voor Real Madrid",c:"Actualiteit",w:["2-1 voor Real Madrid","1-1 gelijkspel","2-0 voor Manchester City"]},
+                {q:"Welk team versloeg Chelsea met 5-2 in de CL achtste finale heenwedstrijd?",a:"Paris Saint-Germain (verdedigend kampioen)",c:"Actualiteit",w:["Real Madrid","Bayern München","Arsenal"]},
+                {q:"Met welke verrassende uitslag won Bodø/Glimt thuis van Sporting CP in de CL?",a:"3-0 — de Noorse sensatie domineert opnieuw in de Champions League",c:"Actualiteit",w:["2-1","1-0","4-2"]},
+                {q:"Welk team vernederde Atalanta met 6-1 uit in de CL achtste finale?",a:"Bayern München",c:"Actualiteit",w:["Real Madrid","Liverpool","Barcelona"]},
+                {q:"Wat was de uitslag van Atlético Madrid - Tottenham in de CL?",a:"5-2 voor Atlético Madrid",c:"Actualiteit",w:["3-1 voor Atlético","2-2 gelijkspel","1-0 voor Tottenham"]},
+                {q:"Wat was de uitslag van Galatasaray - Liverpool in de CL achtste finale?",a:"1-0 voor Galatasaray",c:"Actualiteit",w:["2-1 voor Liverpool","0-0 gelijkspel","3-2 voor Liverpool"]},
                 // --- Paralympische Winterspelen 2026 resultaten ---
-                {q:"Welk land won de medaillespiegel van de Paralympische Winterspelen 2026?",a:"China (15 goud, 13 zilver, 16 brons — 44 medailles totaal)",c:"Winterspelen 2026",w:["Verenigde Staten (13 goud, 24 totaal)","Duitsland (2 goud, 17 totaal)","Italië (7 goud, 16 totaal)"]},
-                {q:"Hoeveel medailles won Nederland op de Paralympische Winterspelen 2026?",a:"Vijf medailles, waarvan twee goud",c:"Winterspelen 2026",w:["Drie medailles, waarvan één goud","Zeven medailles, waarvan drie goud","Twee medailles, geen goud"]},
-                {q:"Welke Nederlandse para-atleet won twee gouden medailles bij het sit-skiën op de Paralympische Winterspelen 2026?",a:"Jeroen Kampschreur",c:"Winterspelen 2026",w:["Lisa Bunschoten","Chris Vos","Bibian Mentel-Spee"]},
-                {q:"Welk Nederlands echtpaar won beiden een medaille bij het para-snowboarden op de Paralympische Winterspelen 2026?",a:"Lisa Bunschoten-Vos en Chris Vos",c:"Winterspelen 2026",w:["Suzanne Schulting en haar partner","Irene Schouten en haar partner","Bibian Mentel en Edwin Spee"]},
-                {q:"Welk land won voor de vijfde keer op rij goud bij het para-ijshockey op de Paralympische Winterspelen?",a:"De Verenigde Staten (6-2 winst tegen Canada in de finale)",c:"Winterspelen 2026",w:["Canada","Noorwegen","Zuid-Korea"]},
+                {q:"Welk land won de medaillespiegel van de Paralympische Winterspelen 2026?",a:"China (15 goud, 13 zilver, 16 brons — 44 medailles totaal)",c:"Actualiteit",w:["Verenigde Staten (13 goud, 24 totaal)","Duitsland (2 goud, 17 totaal)","Italië (7 goud, 16 totaal)"]},
+                {q:"Hoeveel medailles won Nederland op de Paralympische Winterspelen 2026?",a:"Vijf medailles, waarvan twee goud",c:"Actualiteit",w:["Drie medailles, waarvan één goud","Zeven medailles, waarvan drie goud","Twee medailles, geen goud"]},
+                {q:"Welke Nederlandse para-atleet won twee gouden medailles bij het sit-skiën op de Paralympische Winterspelen 2026?",a:"Jeroen Kampschreur",c:"Actualiteit",w:["Lisa Bunschoten","Chris Vos","Bibian Mentel-Spee"]},
+                {q:"Welk Nederlands echtpaar won beiden een medaille bij het para-snowboarden op de Paralympische Winterspelen 2026?",a:"Lisa Bunschoten-Vos en Chris Vos",c:"Actualiteit",w:["Suzanne Schulting en haar partner","Irene Schouten en haar partner","Bibian Mentel en Edwin Spee"]},
+                {q:"Welk land won voor de vijfde keer op rij goud bij het para-ijshockey op de Paralympische Winterspelen?",a:"De Verenigde Staten (6-2 winst tegen Canada in de finale)",c:"Actualiteit",w:["Canada","Noorwegen","Zuid-Korea"]},
                 // --- Six Nations finale ---
-                {q:"Wie won het Six Nations 2026?",a:"Frankrijk — zij wonnen de titel maar misten de Grand Slam na een nederlaag tegen Schotland",c:"Rugby",w:["Ierland","Engeland","Schotland"]},
-                {q:"Welk team versloeg Frankrijk in het Six Nations 2026 en voorkwam daarmee de Grand Slam?",a:"Schotland (50-40 in een recordwedstrijd)",c:"Rugby",w:["Ierland","Engeland","Wales"]},
-                {q:"Hoe won Frankrijk de laatste Six Nations-wedstrijd tegen Engeland?",a:"48-46, met een allerlaatste penalty van Thomas Ramos",c:"Rugby",w:["35-30 na verlenging","42-21 met een try in de slotminuut","28-14 comfortabel"]},
-                {q:"Welk team won de Triple Crown in het Six Nations 2026?",a:"Ierland (door overwinningen op Engeland, Schotland en Wales)",c:"Rugby",w:["Frankrijk","Schotland","Engeland"]},
-                {q:"Welke historische eerste overwinning boekte Italië in het Six Nations 2026?",a:"Italië versloeg Engeland voor het eerst ooit in het Six Nations",c:"Rugby",w:["Italië versloeg Frankrijk","Italië won de Triple Crown","Italië eindigde als eerste"]},
-                {q:"Hoe eindigde Engeland in het Six Nations 2026?",a:"Vijfde — hun slechtste resultaat ooit sinds de start van het Six Nations in 2000",c:"Rugby",w:["Vierde","Zesde (laatste)","Derde"]},
+                {q:"Wie won het Six Nations 2026?",a:"Frankrijk — zij wonnen de titel maar misten de Grand Slam na een nederlaag tegen Schotland",c:"Actualiteit",w:["Ierland","Engeland","Schotland"]},
+                {q:"Welk team versloeg Frankrijk in het Six Nations 2026 en voorkwam daarmee de Grand Slam?",a:"Schotland (50-40 in een recordwedstrijd)",c:"Actualiteit",w:["Ierland","Engeland","Wales"]},
+                {q:"Hoe won Frankrijk de laatste Six Nations-wedstrijd tegen Engeland?",a:"48-46, met een allerlaatste penalty van Thomas Ramos",c:"Actualiteit",w:["35-30 na verlenging","42-21 met een try in de slotminuut","28-14 comfortabel"]},
+                {q:"Welk team won de Triple Crown in het Six Nations 2026?",a:"Ierland (door overwinningen op Engeland, Schotland en Wales)",c:"Actualiteit",w:["Frankrijk","Schotland","Engeland"]},
+                {q:"Welke historische eerste overwinning boekte Italië in het Six Nations 2026?",a:"Italië versloeg Engeland voor het eerst ooit in het Six Nations",c:"Actualiteit",w:["Italië versloeg Frankrijk","Italië won de Triple Crown","Italië eindigde als eerste"]},
+                {q:"Hoe eindigde Engeland in het Six Nations 2026?",a:"Vijfde — hun slechtste resultaat ooit sinds de start van het Six Nations in 2000",c:"Actualiteit",w:["Vierde","Zesde (laatste)","Derde"]},
                 // --- F1 Australische GP ---
-                {q:"Wie won de eerste Formule 1 race van 2026 (Australische Grand Prix)?",a:"George Russell (Mercedes) — Mercedes behaalde een 1-2 finish met Antonelli tweede",c:"Formule 1",w:["Lando Norris (McLaren)","Charles Leclerc (Ferrari)","Max Verstappen (Red Bull)"]},
-                {q:"Hoe eindigde Max Verstappen in de Australische GP 2026?",a:"Zesde — meer dan 54 seconden achter winnaar Russell",c:"Formule 1",w:["Tweede","Vierde","Hij viel uit"]},
-                {q:"Welk team behaalde een 1-2 finish bij de openingsrace van het F1-seizoen 2026?",a:"Mercedes (Russell eerste, Kimi Antonelli tweede)",c:"Formule 1",w:["Ferrari","McLaren","Red Bull"]},
-                {q:"Hoe eindigde Lewis Hamilton in zijn eerste race voor Ferrari (Australië 2026)?",a:"Vierde, achter teamgenoot Leclerc (derde)",c:"Formule 1",w:["Eerste","Op het podium (derde)","Hij viel uit"]},
+                {q:"Wie won de eerste Formule 1 race van 2026 (Australische Grand Prix)?",a:"George Russell (Mercedes) — Mercedes behaalde een 1-2 finish met Antonelli tweede",c:"Actualiteit",w:["Lando Norris (McLaren)","Charles Leclerc (Ferrari)","Max Verstappen (Red Bull)"]},
+                {q:"Hoe eindigde Max Verstappen in de Australische GP 2026?",a:"Zesde — meer dan 54 seconden achter winnaar Russell",c:"Actualiteit",w:["Tweede","Vierde","Hij viel uit"]},
+                {q:"Welk team behaalde een 1-2 finish bij de openingsrace van het F1-seizoen 2026?",a:"Mercedes (Russell eerste, Kimi Antonelli tweede)",c:"Actualiteit",w:["Ferrari","McLaren","Red Bull"]},
+                {q:"Hoe eindigde Lewis Hamilton in zijn eerste race voor Ferrari (Australië 2026)?",a:"Vierde, achter teamgenoot Leclerc (derde)",c:"Actualiteit",w:["Eerste","Op het podium (derde)","Hij viel uit"]},
                 // --- Tennis Indian Wells ---
-                {q:"Wie won het ATP Indian Wells (BNP Paribas Open) 2026?",a:"Jannik Sinner — hij versloeg Daniil Medvedev in de finale en completeerde daarmee alle zes ATP Masters 1000 hardcourt-titels",c:"Tennis",w:["Carlos Alcaraz","Novak Djokovic","Daniil Medvedev"]},
-                {q:"Wie won het WTA Indian Wells 2026?",a:"Aryna Sabalenka — zij versloeg Elena Rybakina 3-6, 6-3, 7-6 in de finale",c:"Tennis",w:["Elena Rybakina","Iga Swiatek","Coco Gauff"]},
+                {q:"Wie won het ATP Indian Wells (BNP Paribas Open) 2026?",a:"Jannik Sinner — hij versloeg Daniil Medvedev in de finale en completeerde daarmee alle zes ATP Masters 1000 hardcourt-titels",c:"Actualiteit",w:["Carlos Alcaraz","Novak Djokovic","Daniil Medvedev"]},
+                {q:"Wie won het WTA Indian Wells 2026?",a:"Aryna Sabalenka — zij versloeg Elena Rybakina 3-6, 6-3, 7-6 in de finale",c:"Actualiteit",w:["Elena Rybakina","Iga Swiatek","Coco Gauff"]},
                 // --- Wielrennen ---
-                {q:"Wie won Parijs-Nice 2026?",a:"Jonas Vingegaard (Visma-Lease a Bike) — hij domineerde met een verre aanval",c:"Wielrennen",w:["Tadej Pogačar","Remco Evenepoel","Primož Roglič"]},
-                {q:"Wie won de Tirreno-Adriatico 2026?",a:"Isaac del Toro (UAE Team Emirates)",c:"Wielrennen",w:["Mathieu van der Poel","Tadej Pogačar","Jonas Vingegaard"]},
-                {q:"Welke twee etappes won Mathieu van der Poel in de Tirreno-Adriatico 2026?",a:"Etappe 2 (de gravelrit in Toscane) en etappe 4",c:"Wielrennen",w:["Etappe 1 en 3","Etappe 5 en 7","Etappe 3 en 6"]},
+                {q:"Wie won Parijs-Nice 2026?",a:"Jonas Vingegaard (Visma-Lease a Bike) — hij domineerde met een verre aanval",c:"Actualiteit",w:["Tadej Pogačar","Remco Evenepoel","Primož Roglič"]},
+                {q:"Wie won de Tirreno-Adriatico 2026?",a:"Isaac del Toro (UAE Team Emirates)",c:"Actualiteit",w:["Mathieu van der Poel","Tadej Pogačar","Jonas Vingegaard"]},
+                {q:"Welke twee etappes won Mathieu van der Poel in de Tirreno-Adriatico 2026?",a:"Etappe 2 (de gravelrit in Toscane) en etappe 4",c:"Actualiteit",w:["Etappe 1 en 3","Etappe 5 en 7","Etappe 3 en 6"]},
                 // --- Eredivisie extra maart ---
-                {q:"Welke club versloeg PSV met 3-2 in het Philips Stadion op 15 maart 2026?",a:"NEC Nijmegen (Bryan Linssen scoorde twee keer)",c:"Voetbal",w:["FC Volendam","Heracles Almelo","Telstar"]},
-                {q:"Welke verrassende uitslag leed Ajax in speelronde 26 van de Eredivisie?",a:"Een 3-1 nederlaag bij FC Groningen",c:"Voetbal",w:["Een 2-0 nederlaag bij Telstar","Een 4-1 nederlaag bij FC Twente","Een 0-0 gelijkspel tegen PEC Zwolle"]},
-                {q:"Welke promovendus presteerde verrassend sterk in maart 2026 met o.a. een 3-0 zege op NAC en 4-1 op Fortuna?",a:"Telstar",c:"Voetbal",w:["Excelsior","FC Volendam","Heracles Almelo"]},
+                {q:"Welke club versloeg PSV met 3-2 in het Philips Stadion op 15 maart 2026?",a:"NEC Nijmegen (Bryan Linssen scoorde twee keer)",c:"Actualiteit",w:["FC Volendam","Heracles Almelo","Telstar"]},
+                {q:"Welke verrassende uitslag leed Ajax in speelronde 26 van de Eredivisie?",a:"Een 3-1 nederlaag bij FC Groningen",c:"Actualiteit",w:["Een 2-0 nederlaag bij Telstar","Een 4-1 nederlaag bij FC Twente","Een 0-0 gelijkspel tegen PEC Zwolle"]},
+                {q:"Welke promovendus presteerde verrassend sterk in maart 2026 met o.a. een 3-0 zege op NAC en 4-1 op Fortuna?",a:"Telstar",c:"Actualiteit",w:["Excelsior","FC Volendam","Heracles Almelo"]},
 
                 // ===== ATLETIEK WERELDRECORDS =====
                 // --- Mannen sprint ---
