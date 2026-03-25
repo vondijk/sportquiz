@@ -130,7 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
-            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v44 — 25 maart 2026</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v45 — 25 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -404,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38','v39','v40','v41','v42','v43'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38','v39','v40','v41','v42','v43','v44'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v44');
+                const stored = localStorage.getItem('sportquiz_questions_v45');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -441,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v44'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v45'); } catch(e) {}
                 location.reload();
             }
         }
@@ -450,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v44', data);
+                localStorage.setItem('sportquiz_questions_v45', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3709,52 +3709,70 @@
                 // --- Skieen ---
                 // --- Nederlandse sport ---
 
-                // === ACTUALITEIT 25 MAART 2026 ===
                 // --- Tennis ---
-                {q:"Wie won de Australian Open 2026 bij de mannen door Novak Djokovic te verslaan?",a:"Carlos Alcaraz",c:"Actualiteit",w:["Jannik Sinner","Daniil Medvedev","Alexander Zverev"]},
-                {q:"Welke tennisster won de Australian Open 2026 bij de vrouwen door Aryna Sabalenka te verslaan?",a:"Elena Rybakina",c:"Actualiteit",w:["Iga Swiatek","Coco Gauff","Jessica Pegula"]},
-                {q:"Carlos Alcaraz werd bij de Australian Open 2026 de jongste man ooit die de Career Grand Slam voltooide. Wiens record verbrak hij?",a:"Don Budge",c:"Actualiteit",w:["Rafael Nadal","Rod Laver","Andre Agassi"]},
                 // --- Darts ---
-                {q:"Wie won het WK Darts 2026 in Alexandra Palace door Gian van Veen met 7-1 te verslaan?",a:"Luke Littler",c:"Actualiteit",w:["Luke Humphries","Michael van Gerwen","Gary Anderson"]},
                 // --- American Football ---
-                {q:"Welk NFL-team won Super Bowl LX in februari 2026 met 29-13?",a:"Seattle Seahawks",c:"Actualiteit",w:["Kansas City Chiefs","San Francisco 49ers","Buffalo Bills"]},
-                {q:"Wie werd uitgeroepen tot MVP van Super Bowl LX na 135 rushing yards?",a:"Kenneth Walker III",c:"Actualiteit",w:["Geno Smith","DK Metcalf","Jaxon Smith-Njigba"]},
                 // --- Zwemmen ---
-                {q:"Welke Australische zwemmer brak in maart 2026 het wereldrecord op de 50 meter vrije slag dat sinds 2009 op naam stond van Cesar Cielo?",a:"Cameron McEvoy",c:"Actualiteit",w:["Kyle Chalmers","Pan Zhanle","David Popovici"]},
                 // --- Wielrennen ---
-                {q:"Welke wielrenner won de Omloop Het Nieuwsblad 2026 na een solo van 16 kilometer?",a:"Mathieu van der Poel",c:"Actualiteit",w:["Wout van Aert","Mads Pedersen","Jasper Stuyven"]},
-                {q:"Welke Mexicaanse wielrenner won de Tirreno-Adriatico 2026 als eerste Mexicaan ooit?",a:"Isaac del Toro",c:"Actualiteit",w:["Egan Bernal","Jonas Vingegaard","Tadej Pogacar"]},
-                {q:"Wie won het algemeen klassement van Parijs-Nice 2026?",a:"Jonas Vingegaard",c:"Actualiteit",w:["Tadej Pogacar","Remco Evenepoel","Isaac del Toro"]},
-                {q:"Welke Nederlandse wielrenster won de Omloop Het Nieuwsblad 2026 bij de vrouwen?",a:"Demi Vollering",c:"Actualiteit",w:["Lorena Wiebes","Marianne Vos","Charlotte Kool"]},
-                {q:"Wie won verrassend de Strade Bianche Donne 2026 in Siena?",a:"Elise Chabbey",c:"Actualiteit",w:["Demi Vollering","Lotte Kopecky","Kasia Niewiadoma"]},
                 // --- Golf ---
-                {q:"Wie is de titelverdediger bij de Masters golf 2026, nadat hij in 2025 de Career Grand Slam voltooide?",a:"Rory McIlroy",c:"Actualiteit",w:["Scottie Scheffler","Jon Rahm","Bryson DeChambeau"]},
                 // --- Cheltenham Festival ---
-                {q:"Wie won de Cheltenham Gold Cup 2026?",a:"Gaelic Warrior",c:"Actualiteit",w:["Galopin Des Champs","Jango Baie","Grey Dawning"]},
-                {q:"Welk paard won de Champion Hurdle op het Cheltenham Festival 2026?",a:"Lossiemouth",c:"Actualiteit",w:["Brighterdaysahead","Golden Ace","The New Lion"]},
-                {q:"Wie won de Queen Mother Champion Chase op het Cheltenham Festival 2026?",a:"Il Etait Temps",c:"Actualiteit",w:["Energumene","Jonbon","Majborough"]},
                 // --- Paralympics ---
-                {q:"Hoeveel gouden medailles won Jeroen Kampschreur bij de Paralympische Winterspelen 2026?",a:"Drie",c:"Actualiteit",w:["Twee","Vier","Een"]},
                 // --- Biathlon ---
-                {q:"Welk Frans duo won in 2025-2026 zowel de mannen- als vrouwen-Wereldbeker biatlon?",a:"Eric Perrot en Lou Jeanmonnot",c:"Actualiteit",w:["Quentin Fillon Maillet en Julia Simon","Emilien Jacquelin en Justine Braisaz","Martin Fourcade en Anais Chevalier"]},
                 // --- Langlaufen ---
-                {q:"Welke Amerikaanse langlaufster won de algemene Wereldbeker 2025-2026?",a:"Jessie Diggins",c:"Actualiteit",w:["Moa Ilar","Maja Dahlqvist","Frida Karlsson"]},
-                {q:"Welke Noorse langlaufer won in 2025-2026 zowel de sprint-, afstands- als algemene Wereldbeker?",a:"Johannes Hosflot Klaebo",c:"Actualiteit",w:["Harald Ostberg Amundsen","Simen Hegstad Kruger","Paal Golberg"]},
                 // --- Dakar Rally ---
-                {q:"Wie won de Dakar Rally 2026 bij de autos met de Dacia Sandrider?",a:"Nasser Al-Attiyah",c:"Actualiteit",w:["Sebastien Loeb","Carlos Sainz","Nani Roma"]},
-                {q:"Welk automerk behaalde in januari 2026 zijn eerste Dakar Rally-zege ooit?",a:"Dacia",c:"Actualiteit",w:["Ford","Hyundai","Peugeot"]},
-                {q:"Wie won de Dakar Rally 2026 bij de motoren met slechts 2 seconden voorsprong?",a:"Luciano Benavides",c:"Actualiteit",w:["Toby Price","Sam Sunderland","Kevin Benavides"]},
                 // --- Boksen ---
-                {q:"Shakur Stevenson werd in januari 2026 wereldkampioen in zijn vierde gewichtsklasse. Welke titel won hij?",a:"WBO super lichtgewicht",c:"Actualiteit",w:["WBC weltergewicht","IBF lichtgewicht","WBA middengewicht"]},
-                {q:"Welke bokser werd in februari 2026 WBC-wereldkampioen weltergewicht door Mario Barrios te verslaan?",a:"Ryan Garcia",c:"Actualiteit",w:["Errol Spence Jr.","Terence Crawford","Jaron Ennis"]},
                 // --- Esports ---
-                {q:"Welk CS2-esportsteam won het PGL Cluj-Napoca 2026 toernooi zonder een map te verliezen in de playoffs?",a:"Team Vitality",c:"Actualiteit",w:["Natus Vincere","FaZe Clan","G2 Esports"]},
                 // --- Alpineskieen ---
-                {q:"Wie won voor de vijfde keer op rij de Wereldbeker alpineskieen bij de mannen in seizoen 2025-2026?",a:"Marco Odermatt",c:"Actualiteit",w:["Aleksander Aamodt Kilde","Lucas Braathen","Henrik Kristoffersen"]},
                 // --- Extra ---
-                {q:"Wie won de Dakar Rally 2026 bij de trucks?",a:"Vaidotas Zala",c:"Actualiteit",w:["Martin Macik","Dmitry Sotnikov","Eduard Nikolaev"]},
-                {q:"Welke wielrenner won Dwars door Vlaanderen 2026 in een sprint in Waregem?",a:"Neilson Powless",c:"Actualiteit",w:["Wout van Aert","Tiesj Benoot","Mathieu van der Poel"]},
-                {q:"Wie werd verkozen tot Sportvrouw van Drenthe 2026 op het Sportgala?",a:"Jorinde van Klinken",c:"Actualiteit",w:["Femke Kok","Joy Beune","Suzanne Schulting"]},
+
+                // === ACTUALITEIT 25 MAART 2026 ===
+                // --- WRC Rally ---
+                {q:"Wie won in januari 2026 de Rallye Monte-Carlo en werd de jongste winnaar ooit van deze rally?",a:"Oliver Solberg",c:"Actualiteit",w:["Elfyn Evans","Sebastien Ogier","Kalle Rovanpera"]},
+                {q:"Welke Toyota-coureur behaalde bij de Safari Rally Kenia 2026 zijn eerste WRC-overwinning?",a:"Takamoto Katsuta",c:"Actualiteit",w:["Oliver Solberg","Elfyn Evans","Sami Pajari"]},
+                // --- Cricket ---
+                {q:"Welk land won in maart 2026 het ICC T20 World Cup cricket door Nieuw-Zeeland te verslaan in de finale?",a:"India",c:"Actualiteit",w:["Australie","Engeland","Pakistan"]},
+                {q:"In welke twee landen werd het ICC T20 World Cup cricket 2026 georganiseerd?",a:"India en Sri Lanka",c:"Actualiteit",w:["India en Bangladesh","Engeland en Ierland","Australie en Nieuw-Zeeland"]},
+                // --- World Baseball Classic ---
+                {q:"Welk land won in maart 2026 voor het eerst de World Baseball Classic door de VS met 3-2 te verslaan?",a:"Venezuela",c:"Actualiteit",w:["Dominicaanse Republiek","Japan","Cuba"]},
+                {q:"Wie werd uitgeroepen tot MVP van de World Baseball Classic 2026?",a:"Maikel Garcia",c:"Actualiteit",w:["Ronald Acuna Jr.","Salvador Perez","Eugenio Suarez"]},
+                // --- Tafeltennis ---
+                {q:"Welke Chinese tafeltennisster won de vrouwen enkelspel bij de WTT Singapore Smash 2026?",a:"Sun Yingsha",c:"Actualiteit",w:["Wang Manyu","Chen Meng","Wang Yidi"]},
+                {q:"Welk Frans broederpaar won bij de WTT Singapore Smash 2026 het dubbelspel?",a:"Felix en Alexis Lebrun",c:"Actualiteit",w:["Gauzy en Lebesson","Simon en Flore","Gionis en Filus"]},
+                // --- Badminton ---
+                {q:"Wie won de All England Open badminton 2026 dames enkelspel door de nummer 1 An Se-young te verslaan?",a:"Wang Zhiyi",c:"Actualiteit",w:["Tai Tzu-ying","Chen Yufei","Akane Yamaguchi"]},
+                // --- Snooker ---
+                {q:"Welke Chinese snookerspeler won in februari 2026 het Players Championship door John Higgins met 10-7 te verslaan?",a:"Zhao Xintong",c:"Actualiteit",w:["Ding Junhui","Liang Wenbo","Yan Bingtao"]},
+                // --- NHL ---
+                {q:"Welk NHL-team was in maart 2026 het eerste dat zich plaatste voor de Stanley Cup Playoffs en 100 punten bereikte?",a:"Colorado Avalanche",c:"Actualiteit",w:["Dallas Stars","Carolina Hurricanes","New York Rangers"]},
+                {q:"Welke ijshockeyspeler keerde bij de NHL trade deadline van maart 2026 terug naar de Colorado Avalanche?",a:"Nazem Kadri",c:"Actualiteit",w:["Gabriel Landeskog","Andre Burakovsky","Valeri Nichushkin"]},
+                // --- Tennis Miami Open ---
+                {q:"Welke Amerikaan versloeg op de Miami Open 2026 wereldnummer 1 Carlos Alcaraz in de derde ronde?",a:"Sebastian Korda",c:"Actualiteit",w:["Taylor Fritz","Tommy Paul","Ben Shelton"]},
+                {q:"Welke Canadese tennisster bereikte verrassend de kwartfinale van de Miami Open 2026 bij de vrouwen?",a:"Victoria Mboko",c:"Actualiteit",w:["Leylah Fernandez","Bianca Andreescu","Marina Stakusic"]},
+                // --- Formula E ---
+                {q:"Wie leidt het Formula E-kampioenschap 2026 na de E-Prix van Madrid, rijdend voor Porsche?",a:"Pascal Wehrlein",c:"Actualiteit",w:["Antonio Felix da Costa","Mitch Evans","Edoardo Mortara"]},
+                // --- Wielrennen Volta a Catalunya ---
+                {q:"Welke renner van INEOS Grenadiers won de eerste etappe van de Volta a Catalunya 2026?",a:"Dorian Godon",c:"Actualiteit",w:["Tom Pidcock","Oscar Onley","Carlos Rodriguez"]},
+                {q:"Welke Deense wielrenner won de tweede etappe van de Volta a Catalunya 2026 in een sprint?",a:"Magnus Cort",c:"Actualiteit",w:["Mads Pedersen","Magnus Sheffield","Jasper Philipsen"]},
+                // --- Hockey ---
+                {q:"Welke hockeyclub is in maart 2026 koploper van de Tulp Hoofdklasse Heren?",a:"Oranje-Rood",c:"Actualiteit",w:["Bloemendaal","Pinoke","Kampong"]},
+                {q:"In welke twee landen wordt het WK hockey van 2026 gehouden?",a:"Nederland en Belgie",c:"Actualiteit",w:["Nederland en Duitsland","Belgie en Frankrijk","Nederland en Engeland"]},
+                // --- Padel ---
+                {q:"Welk padelkoppel won de eerste Premier Padel P1 van 2026 in Riyad?",a:"Arturo Coello en Agustin Tapia",c:"Actualiteit",w:["Federico Chingotto en Alejandro Galan","Ale Galan en Juan Lebron","Fernando Belasteguin en Sanyo Gutierrez"]},
+                // --- Golf ---
+                {q:"Welke golfer won in maart 2026 The Players Championship op TPC Sawgrass?",a:"Cameron Young",c:"Actualiteit",w:["Matt Fitzpatrick","Rory McIlroy","Scottie Scheffler"]},
+                // --- IndyCar ---
+                {q:"Naar welk IndyCar-team maakte Mick Schumacher de overstap voor 2026?",a:"Rahal Letterman Lanigan Racing",c:"Actualiteit",w:["Andretti Global","Team Penske","Chip Ganassi Racing"]},
+                {q:"Welke coureur won de openingsrace van het IndyCar-seizoen 2026 in St. Petersburg?",a:"Alex Palou",c:"Actualiteit",w:["Scott McLaughlin","Will Power","Colton Herta"]},
+                // --- NBA trades ---
+                {q:"Welke guard werd bij de NBA trade deadline van 2026 door de LA Clippers geruild naar Cleveland?",a:"James Harden",c:"Actualiteit",w:["Russell Westbrook","Chris Paul","Kyrie Irving"]},
+                // --- WEC ---
+                {q:"Welk Zuid-Koreaans luxemerk debuteerde in 2026 in de Hypercar-klasse van het FIA World Endurance Championship?",a:"Genesis",c:"Actualiteit",w:["Hyundai","Kia","SsangYong"]},
+                // --- Australian Open dubbelspel ---
+                {q:"Wie wonnen het herendubbelspel op de Australian Open 2026?",a:"Christian Harrison en Neal Skupski",c:"Actualiteit",w:["Marcel Granollers en Horacio Zeballos","Wesley Koolhof en Nikola Mektic","Rohan Bopanna en Matthew Ebden"]},
+                {q:"Welke Taiwanese badmintonner won de All England Open 2026 heren enkelspel als eerste Taiwanees ooit?",a:"Lin Chun-Yi",c:"Actualiteit",w:["Chou Tien-chen","Wang Tzu-wei","Lee Zii Jia"]},
+                {q:"Welke Thaise snookerspeler versloeg Ronnie O'Sullivan in de finale van de World Open 2026 inclusief een 147 break?",a:"Thepchaiya Un-Nooh",c:"Actualiteit",w:["Noppon Saengkham","Phisit Chandsri","Dechawat Poomjaeng"]},
+                {q:"Welke NBA-speler werd bij de trade deadline van februari 2026 door Dallas naar Washington gestuurd?",a:"Anthony Davis",c:"Actualiteit",w:["Giannis Antetokounmpo","LeBron James","Kevin Durant"]},
+                {q:"Welk land won in februari 2026 voor het eerst de Fed Cup (Billie Jean King Cup) tennis door Tsjechie te verslaan?",a:"Polen",c:"Actualiteit",w:["Itallie","Frankrijk","Spanje"]},
 
                 // ===== ATLETIEK WERELDRECORDS =====
                 // --- Mannen sprint ---
