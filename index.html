@@ -130,7 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
-            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v50 — 25 maart 2026</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v51 — 25 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -404,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38','v39','v40','v41','v42','v43','v44','v45','v46','v47','v48','v49'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38','v39','v40','v41','v42','v43','v44','v45','v46','v47','v48','v49','v50'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v50');
+                const stored = localStorage.getItem('sportquiz_questions_v51');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -441,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v50'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v51'); } catch(e) {}
                 location.reload();
             }
         }
@@ -450,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v50', data);
+                localStorage.setItem('sportquiz_questions_v51', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3782,50 +3782,64 @@
                 // --- Noorwegen OS record ---
                 // --- Diverse sport ---
 
-                // === ACTUALITEIT 25 MAART 2026 ===
                 // --- Zwemmen ---
-                {q:"Welke Australische zwemmer brak in maart 2026 het wereldrecord op de 50 meter vrije slag dat sinds 2009 op naam stond van Cesar Cielo?",a:"Cameron McEvoy",c:"Actualiteit",w:["Kyle Chalmers","Jack Alexy","Cody Simpson"]},
-                {q:"Welke tijd zwom Cameron McEvoy bij het nieuwe wereldrecord 50m vrije slag in Shenzhen?",a:"20,88 seconden",c:"Actualiteit",w:["20,91 seconden","20,79 seconden","21,03 seconden"]},
                 // --- WK Shorttrack Montreal ---
-                {q:"In welke stad vonden de WK shorttrack 2026 plaats?",a:"Montreal",c:"Actualiteit",w:["Seoul","Calgary","Dordrecht"]},
-                {q:"Welke Zuid-Koreaanse shorttrackatlete won bij de WK shorttrack 2026 twee individuele gouden medailles (1000m en 1500m)?",a:"Kim Gil-li",c:"Actualiteit",w:["Choi Min-jeong","Lee Yu-bin","Shim Suk-hee"]},
-                {q:"Welke Canadese shorttracker verdedigde op de WK shorttrack 2026 zijn wereldtitel op de 500 meter?",a:"Steven Dubois",c:"Actualiteit",w:["William Dandjinou","Charles Hamelin","Pascal Dion"]},
-                {q:"Welke Nederlander won zilver op de 1000 meter bij de WK shorttrack 2026 in Montreal?",a:"Jens van 't Wout",c:"Actualiteit",w:["Sjinkie Knegt","Itzhak de Laat","Daan Breeuwsma"]},
                 // --- Australian Open gemengd dubbelspel ---
-                {q:"Welk Australisch duo verdedigde bij de Australian Open 2026 met succes de titel in het gemengd dubbelspel?",a:"Olivia Gadecki en John Peers",c:"Actualiteit",w:["Ajla Tomljanovic en Max Purcell","Storm Hunter en Matt Ebden","Ellen Perez en Jordan Thompson"]},
                 // --- Turnen ---
-                {q:"Welke Ierse olympisch kampioen won goud op het paard voltige bij de turnen World Cup in Antalya (maart 2026)?",a:"Rhys McClenaghan",c:"Actualiteit",w:["Carlos Yulo","Stephen Nedoroscik","Max Whitlock"]},
                 // --- Snowboard / Freestyle Ski OS ---
-                {q:"Welke 17-jarige snowboardster werd op de Winterspelen 2026 de eerste Zuid-Koreaanse met olympisch goud in een sneeuwsport?",a:"Choi Gaon",c:"Actualiteit",w:["Chloe Kim","Ono Mitsuki","Kokomo Murase"]},
-                {q:"Welke Japanse snowboardster veroverde op de Winterspelen 2026 goud op de slopestyle bij de vrouwen?",a:"Mari Fukada",c:"Actualiteit",w:["Reira Iwabuchi","Kokomo Murase","Miyabi Onitsuka"]},
-                {q:"Welke Amerikaanse freestyleskier completeerde op de Winterspelen 2026 zijn medaillecollectie met goud op de halfpipe?",a:"Alex Ferreira",c:"Actualiteit",w:["David Wise","Aaron Blunck","Nico Porteous"]},
-                {q:"Eileen Gu werd op de Winterspelen 2026 de meest gedecoreerde freestyleskiester ooit. Hoeveel olympische medailles heeft zij in totaal?",a:"Zes",c:"Actualiteit",w:["Vier","Vijf","Zeven"]},
-                {q:"Welke Japanner won goud op snowboard halfpipe bij de mannen op de Winterspelen 2026?",a:"Yuto Totsuka",c:"Actualiteit",w:["Scotty James","Shaun White","Valentino Guseli"]},
                 // --- Skieen Kristallen Bollen ---
-                {q:"Lucas Pinheiro Braathen won de Kristallen Bol reuzenslalom 2026. Voor welk land was dit de eerste Crystal Globe ooit?",a:"Brazilie",c:"Actualiteit",w:["Noorwegen","Argentinie","Chili"]},
-                {q:"Hoeveel slalomzeges behaalde Mikaela Shiffrin in het Wereldbekerseizoen 2025-2026, een record?",a:"Negen",c:"Actualiteit",w:["Zeven","Acht","Tien"]},
                 // --- Motorsport ---
-                {q:"Welk merk behaalde bij de 12 Uur van Sebring 2026 een 1-2 finish in de GTP-klasse?",a:"Porsche (Penske Motorsport)",c:"Actualiteit",w:["Toyota","Ferrari","Cadillac"]},
-                {q:"Wie won de WRC Rally Sweden 2026, waarmee Toyota een 1-2-3-4 finish behaalde?",a:"Elfyn Evans",c:"Actualiteit",w:["Thierry Neuville","Ott Tanak","Sebastien Ogier"]},
                 // --- NBA All-Star ---
-                {q:"Wie won de 2026 NBA All-Star Game MVP Award?",a:"Anthony Edwards",c:"Actualiteit",w:["LeBron James","Giannis Antetokounmpo","Luka Doncic"]},
                 // --- Golf ---
-                {q:"Welke golfer won de Genesis Invitational 2026 op Riviera, zijn eerste PGA Tour-overwinning?",a:"Jacob Bridgeman",c:"Actualiteit",w:["Rory McIlroy","Kurt Kitayama","Scottie Scheffler"]},
-                {q:"Welke golfer won de WM Phoenix Open 2026 na een play-off tegen Hideki Matsuyama?",a:"Chris Gotterup",c:"Actualiteit",w:["Xander Schauffele","Collin Morikawa","Justin Thomas"]},
                 // --- Cricket ---
-                {q:"Wie werd de duurste buitenlandse speler ooit op de IPL 2026-veiling?",a:"Cameron Green (Kolkata Knight Riders)",c:"Actualiteit",w:["Trent Boult","Pat Cummins","Mitchell Starc"]},
                 // --- Esports ---
-                {q:"Welk esportsteam won VCT Masters Santiago 2026 in Valorant door Paper Rex met 3-0 te verslaan?",a:"Nongshim RedForce",c:"Actualiteit",w:["T1","Gen.G","Sentinels"]},
                 // --- Langlauf ---
-                {q:"Welke Amerikaanse langlaufster won in maart 2026 haar vierde algemene Wereldbeker-kristallen bol in de laatste wedstrijd van haar carriere?",a:"Jessie Diggins",c:"Actualiteit",w:["Rosie Brennan","Sophie Caldwell","Kikkan Randall"]},
                 // --- Diverse ---
-                {q:"Welke Colombiaanse golfer won de Cognizant Classic 2026?",a:"Nico Echavarria",c:"Actualiteit",w:["Camilo Villegas","Sebastian Munoz","Joaquin Niemann"]},
-                {q:"Marco Odermatt won zijn vijfde opeenvolgende algemene Kristallen Bol. Wiens record evenaarde hij daarmee?",a:"Marc Girardelli (tweede plek all-time)",c:"Actualiteit",w:["Ingemar Stenmark","Hermann Maier","Alberto Tomba"]},
-                {q:"Welke Nederlandse shorttrackster won bij de WK shorttrack 2026 in Montreal goud op de 500 meter?",a:"Xandra Velzeboer",c:"Actualiteit",w:["Suzanne Schulting","Selma Poutsma","Yara van Kerkhof"]},
-                {q:"Welke Oostenrijkse skiester veroverde de Kristallen Bol voor de reuzenslalom in seizoen 2025-2026?",a:"Julia Scheib",c:"Actualiteit",w:["Katharina Liensberger","Cornelia Hutter","Stephanie Venier"]},
-                {q:"Wie werd uitgeroepen tot MVP van VCT Masters Santiago 2026 in Valorant?",a:"Dambi (Lee Hyeok-gyu)",c:"Actualiteit",w:["f0rsakeN","Aspas","TenZ"]},
-                {q:"Welke Argentijnse motorrijder won de Dakar Rally 2026 bij de motoren met slechts twee seconden voorsprong?",a:"Luciano Benavides",c:"Actualiteit",w:["Ricky Brabec","Daniel Sanders","Kevin Benavides"]},
-                {q:"Welke Australische zwemmer brak het wereldrecord 50m vrije slag dat 17 jaar oud was?",a:"Cameron McEvoy",c:"Actualiteit",w:["Kyle Chalmers","Pan Zhanle","David Popovici"]},
+
+                // === ACTUALITEIT 25 MAART 2026 ===
+                // --- Wielrennen ---
+                {q:"Welke Belgische wielrenner won de GP de Denain 2026 na een solo op de kasseien?",a:"Alec Segaert",c:"Actualiteit",w:["Wout van Aert","Milan Menten","Jasper Philipsen"]},
+                {q:"Voor welk team rijdt Karlijn Swinkels, winnares van de Trofeo Alfredo Binda 2026?",a:"UAE Team ADQ",c:"Actualiteit",w:["SD Worx-Protime","FDJ-SUEZ","Lidl-Trek"]},
+                // --- Tennis ---
+                {q:"Welke Canadese tiener bereikte op 19-jarige leeftijd de WTA-finale in Doha 2026 en debuteerde in de top 10?",a:"Victoria Mboko",c:"Actualiteit",w:["Leylah Fernandez","Bianca Andreescu","Eugenie Bouchard"]},
+                {q:"Welke Amerikaanse tennisser won de ATP Dallas Open 2026 na drie kampioenschapspunten weg te werken tegen Taylor Fritz?",a:"Ben Shelton",c:"Actualiteit",w:["Frances Tiafoe","Tommy Paul","Sebastian Korda"]},
+                {q:"Welke Tsjechische tennisster won het WTA-toernooi van Doha 2026?",a:"Karolina Muchova",c:"Actualiteit",w:["Barbora Krejcikova","Marketa Vondrousova","Petra Kvitova"]},
+                // --- Hockey ---
+                {q:"Welke club is in seizoen 2025-2026 ongeslagen koploper van de Tulp Hoofdklasse hockey bij de vrouwen?",a:"SCHC",c:"Actualiteit",w:["Den Bosch","Amsterdam","Kampong"]},
+                // --- Winterspelen: Snowboard/Freestyle ---
+                {q:"Welke 17-jarige Zuid-Koreaanse snowboardster won verrassend goud op de halfpipe bij de Winterspelen 2026?",a:"Choi Gaon",c:"Actualiteit",w:["Chloe Kim","Ono Mitsuki","Kokomo Murase"]},
+                {q:"Welke Australische snowboardster won goud op de snowboardcross bij de Winterspelen 2026 in Livigno?",a:"Josie Baff",c:"Actualiteit",w:["Belle Brockhoff","Lindsey Jacobellis","Eva Adamczykova"]},
+                {q:"Welke Italiaan won olympisch goud op de ski cross bij de Winterspelen 2026?",a:"Simone Deromedis",c:"Actualiteit",w:["Federico Pellegrino","Dominik Paris","Alex Fiva"]},
+                {q:"Welke Amerikaanse won verrassend goud op de moguls bij de vrouwen op de Winterspelen 2026?",a:"Elizabeth Lemley",c:"Actualiteit",w:["Jakara Anthony","Jaelin Kauf","Perrine Laffont"]},
+                {q:"Welke Italiaanse schaatsster won olympisch goud op zowel de 3000m als de 5000m bij de Winterspelen 2026?",a:"Francesca Lollobrigida",c:"Actualiteit",w:["Irene Schouten","Ragne Wiklund","Merel Conijn"]},
+                // --- Skieen Kristallen Bollen ---
+                {q:"Mikaela Shiffrin won haar zesde algemene Wereldbeker alpineskieen. Wiens record evenaarde zij?",a:"Annemarie Moser-Proll",c:"Actualiteit",w:["Lindsey Vonn","Vreni Schneider","Tina Maze"]},
+                {q:"Welke Italiaanse veroverde de kristallen bol voor de afdaling bij de vrouwen in 2025-2026?",a:"Laura Pirovano",c:"Actualiteit",w:["Sofia Goggia","Federica Brignone","Cornelia Hutter"]},
+                {q:"Sofia Goggia won de kristallen bol voor welke discipline in seizoen 2025-2026?",a:"Super-G",c:"Actualiteit",w:["Afdaling","Reuzenslalom","Combinatie"]},
+                // --- Biathlon ---
+                {q:"Welke Fransman won voor het eerst de grote kristallen bol in het biathlon bij de mannen in 2025-2026?",a:"Eric Perrot",c:"Actualiteit",w:["Johannes Thingnes Bo","Sturla Holm Laegreid","Quentin Fillon Maillet"]},
+                {q:"Welke Francaise won de algemene Wereldbeker biathlon bij de vrouwen in 2025-2026?",a:"Lou Jeanmonnot",c:"Actualiteit",w:["Julia Simon","Justine Braisaz-Bouchet","Dorothea Wierer"]},
+                // --- Darts ---
+                {q:"Wie won in november 2025 de Grand Slam of Darts door Luke Humphries met 16-11 te verslaan?",a:"Luke Littler",c:"Actualiteit",w:["Michael van Gerwen","Gerwyn Price","Nathan Aspinall"]},
+                {q:"Wie versloeg Luke Littler in de finale van de Players Championship Finals 2025 met 11-8?",a:"Nathan Aspinall",c:"Actualiteit",w:["Luke Humphries","Gerwyn Price","Michael van Gerwen"]},
+                // --- WSBK ---
+                {q:"Welke Italiaanse motorcoureur op Ducati won alle drie de races bij de WSBK-opener 2026 op Phillip Island?",a:"Nicolo Bulega",c:"Actualiteit",w:["Toprak Razgatlioglu","Alvaro Bautista","Axel Bassani"]},
+                // --- IJshockey ---
+                {q:"Welk Duits ijshockeyteam leidde het DEL-klassement in seizoen 2025-26 met 113 punten?",a:"Kolner Haie",c:"Actualiteit",w:["Eisbaren Berlin","Straubing Tigers","Adler Mannheim"]},
+                {q:"Welk KHL-team werd in 2025-26 kampioen van het reguliere seizoen in de Eastern Conference?",a:"Metallurg Magnitogorsk",c:"Actualiteit",w:["CSKA Moskou","SKA Sint-Petersburg","Avangard Omsk"]},
+                // --- SailGP ---
+                {q:"Welk team won het SailGP Season 5-kampioenschap in de Grand Final in Abu Dhabi?",a:"Emirates Great Britain",c:"Actualiteit",w:["Australia","New Zealand","United States"]},
+                {q:"Welke Britse zeiler was de stuurman van Emirates Great Britain bij hun SailGP-titel?",a:"Dylan Fletcher",c:"Actualiteit",w:["Ben Ainslie","Giles Scott","Tom Slingsby"]},
+                // --- Roeien ---
+                {q:"Welke drie nieuwe raceafstanden werden in februari 2026 voor het eerst gehouden bij de World Rowing Virtual Indoor Championships?",a:"1000 meter, 5000 meter en 1 minuut",c:"Actualiteit",w:["500 meter, 2000 meter en 6000 meter","100 meter, 1500 meter en 10 minuten","250 meter, 3000 meter en 5 minuten"]},
+                // --- MotoGP ---
+                {q:"Welke Italiaanse MotoGP-coureur rijdt in 2026 voor Aprilia en won de eerste vier races van het seizoen?",a:"Marco Bezzecchi",c:"Actualiteit",w:["Pecco Bagnaia","Fabio di Giannantonio","Enea Bastianini"]},
+                // --- Diverse ---
+                {q:"Welke Australische zwemmer brak in maart 2026 het 17 jaar oude wereldrecord op de 50m vrije slag met 20,88 seconden?",a:"Cameron McEvoy",c:"Actualiteit",w:["Kyle Chalmers","Pan Zhanle","David Popovici"]},
+                {q:"Welke Oegandees liep in maart 2026 in Lissabon een wereldrecord op de halve marathon in 57 minuten en 20 seconden?",a:"Jacob Kiplimo",c:"Actualiteit",w:["Joshua Cheptegei","Kelvin Kiptum","Eliud Kipchoge"]},
+                {q:"Welke Zwitserse wielrenster won de Strade Bianche Donne 2026 nadat meerdere favorieten verkeerd reden?",a:"Elise Chabbey",c:"Actualiteit",w:["Demi Vollering","Kasia Niewiadoma","Lotte Kopecky"]},
+                {q:"Welke Japanse snowboardster won olympisch goud op de slopestyle bij de vrouwen op de Winterspelen 2026?",a:"Mari Fukada",c:"Actualiteit",w:["Reira Iwabuchi","Kokomo Murase","Miyabi Onitsuka"]},
+                {q:"Wie won de Vendee Globe solozeiltocht rond de wereld in januari 2025 in een recordtijd van 64 dagen?",a:"Charlie Dalin",c:"Actualiteit",w:["Yoann Richomme","Thomas Ruyant","Sebastien Simon"]},
 
                 // ===== ATLETIEK WERELDRECORDS =====
                 // --- Mannen sprint ---
