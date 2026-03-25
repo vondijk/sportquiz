@@ -130,7 +130,7 @@
     <div class="container">
         <header>
             <h1>Sportquiz</h1>
-            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v41 — 23 maart 2026</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;">v42 — 25 maart 2026</div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalQuestions">0</div>
@@ -404,9 +404,9 @@
             console.log('[QUIZ] loadQuestions() gestart');
             try {
                 // Verwijder oude localStorage keys
-                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38','v39','v40'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
+                try { ['v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35','v36','v37','v38','v39','v40','v41'].forEach(v => localStorage.removeItem('sportquiz_questions_'+v)); } catch(ex) {}
 
-                const stored = localStorage.getItem('sportquiz_questions_v41');
+                const stored = localStorage.getItem('sportquiz_questions_v42');
                 console.log('[QUIZ] localStorage v25 data: ' + (stored ? stored.length + ' tekens' : 'LEEG'));
                 if (stored) {
                     const parsed = JSON.parse(stored);
@@ -441,7 +441,7 @@
 
         function resetQuiz() {
             if (confirm('Weet je zeker dat je alle data wilt resetten? Dit herlaadt alle standaard vragen.')) {
-                try { localStorage.removeItem('sportquiz_questions_v41'); } catch(e) {}
+                try { localStorage.removeItem('sportquiz_questions_v42'); } catch(e) {}
                 location.reload();
             }
         }
@@ -450,7 +450,7 @@
             try {
                 const data = JSON.stringify(questions);
                 console.log('[QUIZ] Opslaan in localStorage: ' + data.length + ' tekens');
-                localStorage.setItem('sportquiz_questions_v41', data);
+                localStorage.setItem('sportquiz_questions_v42', data);
             } catch(e) {
                 console.error('[QUIZ] saveQuestions error:', e);
             }
@@ -3669,45 +3669,57 @@
                 // --- Darts ---
                 // --- Diverse sporten ---
 
-                // === ACTUALITEIT 23 MAART 2026 ===
                 // --- Formule 1 ---
-                {q:"Wie won de Formule 1 Grand Prix van Australie 2026?",a:"George Russell",c:"Actualiteit",w:["Max Verstappen","Kimi Antonelli","Lewis Hamilton"]},
-                {q:"Welke coureur behaalde zijn eerste Formule 1-zege bij de Grand Prix van China 2026?",a:"Kimi Antonelli",c:"Actualiteit",w:["Isack Hadjar","Oliver Bearman","Franco Colapinto"]},
-                {q:"Op welke positie eindigde Max Verstappen bij de Grand Prix van Australie 2026?",a:"Zesde",c:"Actualiteit",w:["Eerste","Derde","Tiende"]},
-                {q:"Welk F1-team behaalde een 1-2 finish bij zowel de GP van Australie als de GP van China 2026?",a:"Mercedes",c:"Actualiteit",w:["Red Bull Racing","Ferrari","McLaren"]},
-                {q:"Wie zijn de twee coureurs van het nieuwe Cadillac F1-team in 2026?",a:"Sergio Perez en Valtteri Bottas",c:"Actualiteit",w:["Lando Norris en Daniel Ricciardo","Colton Herta en Zhou Guanyu","Pierre Gasly en Esteban Ocon"]},
                 // --- Wielrennen ---
-                {q:"Wie won Milaan-San Remo 2026 na een fotofinish?",a:"Tadej Pogacar",c:"Actualiteit",w:["Wout van Aert","Tom Pidcock","Mathieu van der Poel"]},
-                {q:"Wie werd tweede in Milaan-San Remo 2026?",a:"Tom Pidcock",c:"Actualiteit",w:["Wout van Aert","Jasper Philipsen","Mathieu van der Poel"]},
-                {q:"Wie werd derde in Milaan-San Remo 2026?",a:"Wout van Aert",c:"Actualiteit",w:["Mathieu van der Poel","Jasper Philipsen","Remco Evenepoel"]},
-                {q:"Wie won voor de tweede keer op rij de wielerwedstrijd Dwars door Drenthe in 2026?",a:"Roy Hoogendoorn",c:"Actualiteit",w:["Steijn Oosterveld","Mathis Avondts","Fabio Jakobsen"]},
                 // --- Eredivisie ---
-                {q:"Welke twee clubs staan in de KNVB Bekerfinale 2026?",a:"AZ en NEC",c:"Actualiteit",w:["PSV en Ajax","Feyenoord en AZ","Ajax en NEC"]},
-                {q:"Met welke uitslag versloeg NEC kampioen PSV in de halve finale van de KNVB Beker 2026?",a:"3-2",c:"Actualiteit",w:["2-1","1-0","4-3"]},
-                {q:"Wat was de uitslag van de Klassieker Feyenoord - Ajax op 22 maart 2026?",a:"1-1",c:"Actualiteit",w:["2-0","0-1","2-2"]},
-                {q:"Wie maakte het doelpunt voor Ajax in de Klassieker van 22 maart 2026?",a:"Sean Steur",c:"Actualiteit",w:["Mika Godts","Brian Brobbey","Kenneth Taylor"]},
-                {q:"Met welke verrassende uitslag verloor PSV op 22 maart 2026 bij Telstar?",a:"3-1 voor Telstar",c:"Actualiteit",w:["2-0 voor Telstar","1-0 voor Telstar","2-1 voor Telstar"]},
-                {q:"Wie is de topscorer van de Eredivisie 2025/2026 met 22 doelpunten?",a:"Ayase Ueda",c:"Actualiteit",w:["Troy Parrott","Mika Godts","Guus Til"]},
-                {q:"Welke trainer werd bij Ajax ontslagen en opgevolgd door Oscar Garcia?",a:"Fred Grim",c:"Actualiteit",w:["Francesco Farioli","John Heitinga","Maurice Steijn"]},
-                {q:"In welk stadion wordt de KNVB Bekerfinale 2026 gespeeld op 19 april?",a:"De Kuip (Stadion Feijenoord)",c:"Actualiteit",w:["Johan Cruijff ArenA","Philips Stadion","Galgenwaard"]},
                 // --- Champions League ---
-                {q:"Tegen welk team speelt Real Madrid in de kwartfinales van de Champions League 2025-26?",a:"Bayern Munchen",c:"Actualiteit",w:["Liverpool","Arsenal","Barcelona"]},
-                {q:"Tegen welk team speelt Barcelona in de kwartfinales van de Champions League 2025-26?",a:"Atletico Madrid",c:"Actualiteit",w:["Paris Saint-Germain","Liverpool","Real Madrid"]},
                 // --- Premier League ---
-                {q:"Welk team staat bovenaan de Premier League in maart 2026?",a:"Arsenal",c:"Actualiteit",w:["Manchester City","Liverpool","Manchester United"]},
                 // --- Six Nations Rugby ---
-                {q:"Welk land behaalde in het Six Nations 2026 voor het eerst een overwinning op Engeland na 32 opeenvolgende nederlagen?",a:"Italie",c:"Actualiteit",w:["Schotland","Wales","Frankrijk"]},
-                {q:"Welke Franse rugbyspeler brak het record voor meeste tries in een enkel Six Nations toernooi met 9 tries?",a:"Louis Bielle-Biarrey",c:"Actualiteit",w:["Antoine Dupont","Thomas Ramos","Damian Penaud"]},
                 // --- Darts ---
-                {q:"Welke Nederlander versloeg Luke Littler op de openingsavond van de Premier League Darts 2026?",a:"Gian van Veen",c:"Actualiteit",w:["Michael van Gerwen","Danny Noppert","Dirk van Duijvenbode"]},
                 // --- WK Indoor Atletiek ---
-                {q:"In welke stad werden de WK Indoor Atletiek 2026 gehouden?",a:"Torun (Polen)",c:"Actualiteit",w:["Birmingham (Engeland)","Belgrado (Servie)","Glasgow (Schotland)"]},
-                {q:"Welke Britse atlete won goud op de 800 meter bij de WK Indoor Atletiek 2026?",a:"Keely Hodgkinson",c:"Actualiteit",w:["Laura Muir","Jemma Reekie","Dina Asher-Smith"]},
                 // --- Diverse sporten ---
-                {q:"In welk merk GT3-auto reed Max Verstappen op de Nurburgring bij de NLS2 race in maart 2026?",a:"Mercedes-AMG GT3",c:"Actualiteit",w:["Red Bull Porsche GT3","Ferrari 296 GT3","BMW M4 GT3"]},
-                {q:"Waarom werd Max Verstappen gediskwalificeerd na zijn NLS2-zege op de Nurburgring?",a:"Een bandenregelovertreding (7 in plaats van 6 sets banden)",c:"Actualiteit",w:["Te snel in de pitstraat","Onreglementaire brandstof","Te laat gewogen"]},
-                {q:"Welk land werd in februari 2026 Europees kampioen handbal bij de mannen?",a:"Denemarken",c:"Actualiteit",w:["Kroatie","Zweden","Frankrijk"]},
-                {q:"In welke stad vond het Drentse Sportgala 2026 plaats op 9 maart?",a:"In het ATLAS Theater in Emmen",c:"Actualiteit",w:["De Tamboer in Hoogeveen","De Nieuwe Kolk in Assen","Theater De Steen in Meppel"]},
+
+                // === ACTUALITEIT 25 MAART 2026 ===
+                // --- Nederlands voetbal ---
+                {q:"Welke club bereikte de finale van de KNVB Beker 2025/26 door PSV met 3-2 te verslaan?",a:"NEC",c:"Actualiteit",w:["AZ","Feyenoord","FC Utrecht"]},
+                {q:"Wie scoorde de beslissende treffer voor NEC in de bekerzege op PSV?",a:"Basar Onal",c:"Actualiteit",w:["Bryan Linssen","Tavares","Tjaronn Chery"]},
+                {q:"Hoe won AZ de halve finale van de KNVB Beker tegen Telstar?",a:"Dankzij twee eigen doelpunten van Telstar",c:"Actualiteit",w:["Door een hattrick van Parrott","Na strafschoppen","Door een doelpunt in blessuretijd"]},
+                {q:"Welke AZ-middenvelder werd voor het eerst opgeroepen voor het Nederlands elftal in maart 2026?",a:"Kees Smit",c:"Actualiteit",w:["Peer Koopmeiners","Sven Mijnans","Ruben van Bommel"]},
+                {q:"Tegen welke twee landen speelt Oranje oefeninterlands in maart 2026?",a:"Noorwegen en Ecuador",c:"Actualiteit",w:["Duitsland en Belgie","Engeland en Frankrijk","Denemarken en Colombia"]},
+                {q:"Wat was de uitslag van de Klassieker Feyenoord - Ajax op 22 maart 2026?",a:"1-1",c:"Actualiteit",w:["2-1 voor Feyenoord","0-2 voor Ajax","3-3"]},
+                {q:"Welke club staat in maart 2026 ruim bovenaan in de Eredivisie?",a:"PSV",c:"Actualiteit",w:["Ajax","Feyenoord","AZ"]},
+                {q:"In welke WK 2026-poule zit Nederland, samen met onder andere Japan en Tunesie?",a:"Groep F",c:"Actualiteit",w:["Groep A","Groep C","Groep D"]},
+                {q:"Welke trainer werd bij AZ ontslagen als vierde ontslagen Eredivisie-trainer dit seizoen?",a:"Maarten Martens",c:"Actualiteit",w:["Pascal Jansen","John van den Brom","Leeroy Echteld"]},
+                {q:"Waar wordt de KNVB Bekerfinale 2025/26 tussen NEC en AZ gespeeld op 19 april?",a:"De Kuip in Rotterdam",c:"Actualiteit",w:["Johan Cruijff Arena","Philips Stadion","AFAS Stadion"]},
+                // --- Formule 1 ---
+                {q:"Welk team leidde het F1-kampioenschap na de eerste twee races van 2026 met zeges in Australie en China?",a:"Mercedes",c:"Actualiteit",w:["Red Bull Racing","Ferrari","McLaren"]},
+                {q:"Welke 19-jarige coureur werd bij de GP van China 2026 de jongste polesitter in de F1-geschiedenis?",a:"Kimi Antonelli",c:"Actualiteit",w:["Oliver Bearman","Max Verstappen","Oscar Piastri"]},
+                // --- WK Indoor Atletiek ---
+                {q:"In welke Poolse stad werden de WK Indoor Atletiek 2026 gehouden?",a:"Torun",c:"Actualiteit",w:["Warschau","Krakau","Gdansk"]},
+                {q:"Welke Britse atlete won goud op de 800 meter bij de WK Indoor 2026 met een kampioenschapsrecord?",a:"Keely Hodgkinson",c:"Actualiteit",w:["Laura Muir","Jemma Reekie","Dina Asher-Smith"]},
+                {q:"Welke Oekraiense atlete won goud op het hoogspringen bij de WK Indoor 2026 met 2,01 meter?",a:"Yaroslava Mahuchikh",c:"Actualiteit",w:["Yuliia Levchenko","Nicola Olyslagers","Angelina Topic"]},
+                // --- Champions League / Premier League ---
+                {q:"Tegen welk team speelt FC Barcelona in de kwartfinales van de Champions League 2025-26?",a:"Atletico Madrid",c:"Actualiteit",w:["Real Madrid","Liverpool","Arsenal"]},
+                {q:"Welk team staat in maart 2026 bovenaan de Premier League met 70 punten?",a:"Arsenal",c:"Actualiteit",w:["Manchester City","Liverpool","Manchester United"]},
+                {q:"Welk NBA-team leidt de Eastern Conference in maart 2026 met een record van 52-19?",a:"Detroit Pistons",c:"Actualiteit",w:["Boston Celtics","New York Knicks","Milwaukee Bucks"]},
+                // --- Tennis ---
+                {q:"Welke tennisser trok zich terug voor de Miami Open 2026 vanwege een schouderblessure?",a:"Novak Djokovic",c:"Actualiteit",w:["Rafael Nadal","Carlos Alcaraz","Daniil Medvedev"]},
+                // --- UFC ---
+                {q:"Welke UFC-vechter won op 21 maart 2026 in Londen het main event tegen Lerone Murphy?",a:"Movsar Evloev",c:"Actualiteit",w:["Islam Makhachev","Ilia Topuria","Alexander Volkanovski"]},
+                // --- Wielrennen ---
+                {q:"Wie won Milaan-San Remo 2026 na een fotofinish op de Via Roma?",a:"Tadej Pogacar",c:"Actualiteit",w:["Wout van Aert","Tom Pidcock","Mathieu van der Poel"]},
+                {q:"Wie werd tweede in Milaan-San Remo 2026, vlak achter Pogacar?",a:"Tom Pidcock",c:"Actualiteit",w:["Wout van Aert","Jasper Philipsen","Mathieu van der Poel"]},
+                {q:"Wie won Dwars door Vlaanderen 2026 na een sprint in Waregem?",a:"Neilson Powless",c:"Actualiteit",w:["Wout van Aert","Tiesj Benoot","Mathieu van der Poel"]},
+                {q:"Wie won de Nokere Koerse 2026 bij de vrouwen?",a:"Lotte Kopecky",c:"Actualiteit",w:["Charlotte Kool","Lorena Wiebes","Marianne Vos"]},
+                // --- Darts ---
+                {q:"Wie leidt het klassement van de Premier League Darts 2026 na week 7?",a:"Jonny Clayton",c:"Actualiteit",w:["Luke Littler","Luke Humphries","Michael van Gerwen"]},
+                {q:"Wie won Night 7 van de Premier League Darts 2026 in Dublin?",a:"Luke Littler",c:"Actualiteit",w:["Jonny Clayton","Gerwyn Price","Luke Humphries"]},
+                // --- MotoGP ---
+                {q:"Wie won de MotoGP Grand Prix van Brazilie in maart 2026?",a:"Marco Bezzecchi",c:"Actualiteit",w:["Jorge Martin","Marc Marquez","Pecco Bagnaia"]},
+                // --- Schaatsen ---
+                {q:"Wie werd wereldkampioen sprint schaatsen 2026 bij de mannen in Heerenveen?",a:"Jenning de Boo",c:"Actualiteit",w:["Jordan Stolz","Kai Verbij","Thomas Krol"]},
+                // --- Rugby ---
+                {q:"Welk land won het Six Nations rugby 2026 kampioenschap?",a:"Frankrijk",c:"Actualiteit",w:["Ierland","Engeland","Schotland"]},
 
                 // ===== ATLETIEK WERELDRECORDS =====
                 // --- Mannen sprint ---
